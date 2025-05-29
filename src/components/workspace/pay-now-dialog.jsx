@@ -1,6 +1,6 @@
 import React from "react";
 import usePayNowDialog from "../../hooks/use-pay-now-dialog";
-import CardLayout from "../bootstrap/card/card";
+import CardLayout from "../bootstrap/payment/card/card";
 import { Dialog, DialogContent } from "../../components/ui/dialog";
 
 const PayNowDialog = () => {

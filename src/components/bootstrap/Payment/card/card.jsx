@@ -6,7 +6,7 @@ import Hline from "../line/hline.jsx";
 import Text from "../text/text.jsx";
 
 import { Card, Container, Row, Col } from "react-bootstrap";
-import PaymentForm from "../../workspace/payment-form.jsx";
+import PaymentForm from "../../../workspace/payment-form.jsx";
 
 const CardLayout = () => {
   return (
