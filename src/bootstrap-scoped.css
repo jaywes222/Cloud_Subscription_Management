@@ -1,16 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 .bs body {
   font-family: Poppins, sans-serif !important;
 }
 
-
-
-.bs p, 
-.bs .form-control.custom-border, 
-.bs .form-container.form-label, 
-.bs .form-container label, 
-.bs .custom-radio .form-check-label, 
+.bs p,
+.bs .form-control.custom-border,
+.bs .form-container.form-label,
+.bs .form-container label,
+.bs .custom-radio .form-check-label,
 .bs .thankyou-text p {
   font-size: 14px;
   color: black;
@@ -37,7 +35,7 @@
   color: #008000;
 }
 
-.bs .table-cell.text-grey, 
+.bs .table-cell.text-grey,
 .bs .thankyou-text p {
   color: #737373;
 }
@@ -63,8 +61,8 @@
 
 /* Checked state circle */
 .bs .custom-radio input[type="radio"]:checked {
-  border-color: #C58C4F;
-  background-color: #C58C4F;
+  border-color: #c58c4f;
+  background-color: #c58c4f;
 }
 
 /* Inner white dot */
@@ -93,7 +91,7 @@
 }
 
 .bs .form-control.custom-border {
-  color: var(--cui-input-color, rgba(44, 56, 74, .95)) !important;
+  color: var(--cui-input-color, rgba(44, 56, 74, 0.95)) !important;
   border: 1px solid var(--cui-input-border-color, #b1b7c1);
 }
 
@@ -103,7 +101,7 @@
   box-shadow: 0 0 2px #c58c4f !important;
 }
 
-.bs .form-container.form-label, 
+.bs .form-container.form-label,
 .bs .form-container label {
   font-weight: 400 !important;
 }
@@ -137,8 +135,8 @@
   /* darker for total */
 }
 
-.bs h4, 
-.bs h5, 
+.bs h4,
+.bs h5,
 .bs h6 {
   line-height: 1.5 !important;
   font-weight: 500 !important;
@@ -148,7 +146,6 @@
   margin: 0.5rem 0;
   border-color: #ddd;
 }
-
 
 /* Container - center and max width */
 .bs .container {
@@ -216,11 +213,21 @@
 }
 
 /* Utility: mb-3, mb-4 etc. margin bottom spacing */
-.bs .mb-1 { margin-bottom: 0.25rem !important; }
-.bs .mb-2 { margin-bottom: 0.5rem !important; }
-.bs .mb-3 { margin-bottom: 1rem !important; }
-.bs .mb-4 { margin-bottom: 1.5rem !important; }
-.bs .mb-5 { margin-bottom: 3rem !important; }
+.bs .mb-1 {
+  margin-bottom: 0.25rem !important;
+}
+.bs .mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+.bs .mb-3 {
+  margin-bottom: 1rem !important;
+}
+.bs .mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+.bs .mb-5 {
+  margin-bottom: 3rem !important;
+}
 
 /* Utility: py-2 (padding y-axis) */
 .bs .py-2 {
@@ -251,4 +258,119 @@
   }
 }
 
+/* ACTIVATION STYLES */
 
+.bs .card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.bs .package-info {
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.bs .nav {
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.bs .activate-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.bs .list-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875em;
+}
+
+.bs .plus-icon {
+  margin-right: 0.25rem;
+  color: orange;
+}
+
+.bs .uploaded-icon {
+  margin-right: 0.25rem;
+  color: #198754;
+}
+
+.bs .package-container {
+  width: 100%;
+  border: 1px solid #dee2e6;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: #f8f9fa;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.bs .package-name {
+  color: #c58c4f;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.bs .package-items {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+}
+
+.bs .terms-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-evenly;
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  overflow-y: auto;
+}
+
+.bs .terms-checkbox {
+  margin-top: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* RE-ACTIVATION STYLES */
+
+.bs .live-title {
+  font-size: 1.25rem;
+  color: #198754;
+  margin-bottom: 0.25rem;
+}
+
+.bs .item-spacing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875em;
+}
+
+.bs .order-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 0.875em;
+}
+
+.bs .order-receipt {
+  margin-top: 0.5rem;
+  color: #6c757d;
+  font-size: 0.875em;
+}
