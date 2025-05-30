@@ -1,14 +1,11 @@
 import React from "react";
-import { Container } from "react-bootstrap";
 
 const HorizontalLineExample = () => {
-    return (
-        <div className="bs">
-            <Container className="py-3">
-                <hr className="my-2" />
-            </Container>
-        </div>
-    );
+  return (
+    <div className="p-3">
+      <hr className="my-2 border-t border-gray-300" />
+    </div>
+  );
 };
 
 export default HorizontalLineExample;
