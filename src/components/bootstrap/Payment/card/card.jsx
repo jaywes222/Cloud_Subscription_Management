@@ -15,7 +15,7 @@ const CardLayout = () => {
         <div className="d-flex justify-content-center">
           <Card
             className="shadow"
-            style={{ maxWidth: "1100px", width: "100%"}}
+            style={{ maxWidth: "1100px", width: "100%" }}
           >
             <Card.Body>
               <h5 className="p-1">Make Payment</h5>
