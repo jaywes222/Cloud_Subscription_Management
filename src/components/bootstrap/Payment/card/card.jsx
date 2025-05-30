@@ -6,7 +6,7 @@ import Hline from "../line/hline.jsx";
 import Text from "../text/text.jsx";
 
 import { Card, Container, Row, Col } from "react-bootstrap";
-import PaymentForm from "../../workspace/payment-form.jsx";
+import PaymentForm from "../../../workspace/payment-form.jsx";
 
 const CardLayout = () => {
   return (
@@ -15,7 +15,7 @@ const CardLayout = () => {
         <div className="d-flex justify-content-center">
           <Card
             className="shadow"
-            style={{ maxWidth: "1100px", width: "100%"}}
+            style={{ maxWidth: "1100px", width: "100%" }}
           >
             <Card.Body>
               <h5 className="p-1">Make Payment</h5>
