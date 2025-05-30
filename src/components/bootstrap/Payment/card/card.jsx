@@ -15,7 +15,6 @@ const CardLayout = () => {
           style={{ padding: "10px" }}
         >
           <div className="pb-2">
-            <h1>GREATNESS</h1>
             <h5 className="p-1 text-lg font-semibold">Make Payment</h5>
           </div>
 
