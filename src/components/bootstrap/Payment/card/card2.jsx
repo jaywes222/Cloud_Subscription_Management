@@ -1,31 +1,15 @@
 import React from "react";
-import { Card, Container } from "react-bootstrap";
 
 const Card2 = () => {
-    return (
-        <div className="bs">
-            <Container
-                fluid
-                className="d-flex justify-content-start"
-                style={{ padding: "10px" }}
-            >
-                <Card
-                    className="shadow"
-                    style={{
-                        width: "400px",
-                        height: "40px",
-                        overflow: "hidden",
-                    }}
-                >
-                    <Card.Body style={{ padding: "10px" }}>
-                        <p className="d-flex justify-content-center m-0">
-                            CUS005 - Nila Pharmacy
-                        </p>
-                    </Card.Body>
-                </Card>
-            </Container>
-        </div>
-    );
+  return (
+    <div className="p-2">
+      <div className="max-w-[300px] w-full h-[40px] shadow rounded-md overflow-hidden bg-white flex items-center justify-center px-4">
+        <p className="m-0 text-center text-[14px] font-medium">
+          CUS005 - Nila Pharmacy
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Card2;
