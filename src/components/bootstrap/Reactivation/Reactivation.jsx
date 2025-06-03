@@ -8,9 +8,9 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import Payment from "../UI/Payment";
-import OrderSummary from "../UI/OrderSummary";
-import LiveSubscription from "../UI/LiveSubscription";
+import Payment from "./Payment";
+import OrderSummary from "./OrderSummary";
+import LiveSubscription from "./LiveSubscription";
 
 export default function Reactivation() {
   return (

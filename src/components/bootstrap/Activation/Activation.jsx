@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Button, Card, Container, Form, Nav, Tab } from "react-bootstrap";
-import TermsSection from "../Subscription/TermsSection";
+import TermsSection from "./TermsSection";
 import Uploads from "./Uploads";
-import PackageInfo from "../Subscription/PackageInfo";
+import PackageInfo from "./PackageInfo";
 
 // const API_URL = "http://20.164.20.36:86";
 // const API_HEADER = {
