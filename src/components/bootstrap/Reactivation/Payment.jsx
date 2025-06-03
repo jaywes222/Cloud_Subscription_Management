@@ -6,7 +6,7 @@ export default function Payment() {
     <div className="bs">
       <Form>
         <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="12">
+          <Form.Label column sm="12" style={{ fontSize: "20px" }}>
             Choose Payment Method
           </Form.Label>
           <div className="d-flex gap-2">
@@ -40,7 +40,9 @@ export default function Payment() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Transaction Code:</Form.Label>
+          <Form.Label style={{ fontSize: "14px" }}>
+            Transaction Code:
+          </Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter Transaction Code"
@@ -58,11 +60,11 @@ export default function Payment() {
         </Form.Group>
 
         <div className="text-muted mb-2" style={{ fontSize: "14px" }}>
-          <div>
-            <span className="fs-6">Next Payment On:</span> July 16 2025
+          <div className="d-flex justify-content-between align-items-center mb-1">
+            Next Payment On: <span>July 16 2025</span>
           </div>
-          <div>
-            <span className="fs-6">Next Payment Amount:</span>{" "}
+          <div className="d-flex justify-content-between align-items-center mb-1">
+            Next Payment Amount:
             <span className="text-danger">KES 250,000.00</span>
           </div>
         </div>

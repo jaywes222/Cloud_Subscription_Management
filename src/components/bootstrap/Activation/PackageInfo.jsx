@@ -21,15 +21,15 @@ export default function PackageInfo({ packageInfo, setToast }) {
             <p>{packageInfo.name || "Package: Loading..."}</p>
           </h2>
 
-          <div className="pacakge-items">
+          <div className="package-items">
             <div className="text-center">
-              <p>
+              <p className="small">
                 <strong>Branches: </strong>
                 {packageInfo.branches || "N/A"}
               </p>
             </div>
             <div className="text-center">
-              <p>
+              <p className="small">
                 <strong>Users: </strong>
                 {packageInfo.users || "N/A"}
               </p>
