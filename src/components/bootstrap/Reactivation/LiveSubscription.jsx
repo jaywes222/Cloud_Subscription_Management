@@ -26,16 +26,16 @@ const LiveSubscription = () => {
           </Col>
           <Col xs={6}>
             <div className="item-spacing">
-              Last Payment On: <strong>May 16 2025</strong>
+              Last Payment On: <span>May 16 2025</span>
             </div>
             <div className="item-spacing">
-              Expiry Date: <strong>June 16 2025</strong>
+              Expiry Date: <span>June 16 2025</span>
             </div>
             <div className="item-spacing">
               Pending Amount: <span className="text-danger">KES0.00</span>
             </div>
             <div className="item-spacing">
-              Total Payment: <strong>KES250,000.00</strong>
+              Total Payment: <span>KES250,000.00</span>
             </div>
             <div className="item-spacing">
               Mobile Number: <span>0758***306</span>

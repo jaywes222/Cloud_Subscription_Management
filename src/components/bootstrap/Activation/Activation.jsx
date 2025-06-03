@@ -35,11 +35,17 @@ const Activation = ({
   return (
     <div className="bs">
       <Container className="mt-4">
-        <Card className="px-4 w-100" style={{ maxWidth: "45rem" }}>
+        <Card className="px-4 w-100" style={{ maxWidth: "60rem" }}>
           <Card.Body>
             <div className="card-title">
-              <h5 className="fw-bold">Activate Subscription</h5>
-              <Button style={{ backgroundColor: "#c5843f", border: "none" }}>
+              <h5 className="fs-5">Activate Subscription</h5>
+              <Button
+                style={{
+                  backgroundColor: "#c5843f",
+                  border: "none",
+                  fontSize: "14px",
+                }}
+              >
                 Reactivate Now
               </Button>
             </div>
@@ -61,12 +67,12 @@ const Activation = ({
             {/* File Uploads Section */}
             <Tab.Container defaultActiveKey="trainingSheet">
               <Nav variant="tabs" className="nav">
-                <Nav.Item>
+                <Nav.Item className="small">
                   <Nav.Link eventKey="trainingSheet" className="custom-tab">
                     Signed Training Sheets
                   </Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
+                <Nav.Item className="small">
                   <Nav.Link eventKey="masterDoc" className="custom-tab">
                     Approved Master Docs
                   </Nav.Link>
@@ -117,7 +123,11 @@ const Activation = ({
                 type="submit"
                 variant="secondary"
                 disabled={!termsChecked}
-                style={{ backgroundColor: "#c58c4f", border: "none" }}
+                style={{
+                  backgroundColor: "#c58c4f",
+                  border: "none",
+                  fontSize: "14px",
+                }}
                 onClick={() =>
                   formRef.current?.dispatchEvent(
                     new Event("submit", { cancelable: true, bubbles: true })
