@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
+import { Pencil } from "lucide-react";
 import { FaEdit } from "react-icons/fa";
 
 const LiveSubscription = () => {
@@ -12,16 +13,16 @@ const LiveSubscription = () => {
           <Col xs={6}>
             <div className="mb-1 small">CUS005 - NILA PHARMACY</div>
             <div className="item-spacing">
-              phAMACore Lite <FaEdit className="mx-1" />
+              phAMACore Lite <Pencil className="mx-1" size={14} />
             </div>
             <div className="item-spacing">
-              Quarterly <FaEdit className="mx-1" />
+              Quarterly <Pencil className="mx-1" size={14} />
             </div>
             <div className="item-spacing">
-              5 Branches <FaEdit className="mx-1" />
+              5 Branches <Pencil className="mx-1" size={14} />
             </div>
             <div className="item-spacing">
-              3 Users <FaEdit className="mx-1" />
+              3 Users <Pencil className="mx-1" size={14} />
             </div>
           </Col>
           <Col xs={6}>
