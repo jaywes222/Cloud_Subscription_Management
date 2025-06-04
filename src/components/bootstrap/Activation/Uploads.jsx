@@ -10,23 +10,20 @@ const Uploads = ({ handleFileUpload, disableFileUpload }) => {
         variant="secondary"
         onClick={handleFileUpload}
         disabled={disableFileUpload}
-        className="mb-3"
-        style={{
-          backgroundColor: "white",
-          color: "black",
-          borderColor: "grey",
-          fontSize: "14px",
-        }}
+        className="upload-file-btn mb-3"
       >
-        <Plus className="me-1" size={14} style={{ color: "orange" }} />
-        Upload File
+        <span className="d-flex align-items-center">
+          <Plus className="me-1" size={14} style={{ color: "orange" }} />
+          Upload File
+        </span>
       </Button>
 
       {/* Hardcoded File List */}
       <ListGroup>
         {/* Training Sheet Example */}
         <ListGroupItem className="list-item">
-          <span>
+          <span>SOP_Training_2025.xlsx</span>
+          <span className="d-flex align-items-center">
             <CircleCheckBig className="text-success me-1" size={14} /> Uploaded
           </span>
         </ListGroupItem>
@@ -34,7 +31,7 @@ const Uploads = ({ handleFileUpload, disableFileUpload }) => {
         {/* Master Doc Example */}
         <ListGroupItem className="list-item">
           <span>Master_Doc_Template_v2.pdf</span>
-          <span>
+          <span className="d-flex align-items-center">
             <CircleCheckBig className="text-success me-1" size={14} /> Uploaded
           </span>
         </ListGroupItem>

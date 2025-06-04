@@ -42,7 +42,8 @@ const Activation = ({
               <Button
                 style={{
                   backgroundColor: "#c5843f",
-                  border: "none",
+                  borderRadius: "5px",
+                  padding: "5px 10px",
                   fontSize: "14px",
                 }}
               >
@@ -54,7 +55,7 @@ const Activation = ({
               <Form.Control
                 readOnly
                 value={`${cusCode} - ${companyName}`}
-                className="text-center"
+                className="justify-content-center"
                 style={{ fontSize: "14px" }}
               />
             </Form.Group>
@@ -66,7 +67,7 @@ const Activation = ({
 
             {/* File Uploads Section */}
             <Tab.Container defaultActiveKey="trainingSheet">
-              <Nav variant="tabs" className="nav">
+              <Nav variant="tabs" className="nav-main">
                 <Nav.Item className="small">
                   <Nav.Link eventKey="trainingSheet" className="custom-tab">
                     Signed Training Sheets
@@ -98,14 +99,6 @@ const Activation = ({
               </Tab.Content>
             </Tab.Container>
 
-            <Uploads
-              handleSubmit={handleSubmit}
-              handleFileUpload={handleFileUpload}
-              disableFileUpload={disableFileUpload}
-              deleteUploadedFiles={deleteUploadedFiles}
-              uploadedFiles={uploadedFiles}
-            />
-
             {/* Terms Section and Activate Button */}
 
             <TermsSection
@@ -125,7 +118,8 @@ const Activation = ({
                 disabled={!termsChecked}
                 style={{
                   backgroundColor: "#c58c4f",
-                  border: "none",
+                  borderRadius: "5px",
+                  padding: "5px 10px",
                   fontSize: "14px",
                 }}
                 onClick={() =>
