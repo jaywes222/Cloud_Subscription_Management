@@ -1,7 +1,6 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { Pencil } from "lucide-react";
-import { FaEdit } from "react-icons/fa";
 
 const LiveSubscription = () => {
   return (
