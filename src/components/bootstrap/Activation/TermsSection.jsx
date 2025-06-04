@@ -30,37 +30,40 @@ export default function TermsSection({ termsChecked, onChange }) {
         </div>
         <div className="terms-checkbox">
           <div className="d-flex align-items-center">
-            <Form.Check
-              type="checkbox"
-              id="terms"
-              name="terms"
-              checked={termsChecked}
-              onChange={onChange}
-              style={{ fontSize: 14 }}
-              label={
-                <>
-                  By clicking Activate My Account, I agree to the
-                  <a
-                    href={"#"}
-                    onClick={(e) => e.preventDefault()}
-                    className="text-decoration-underline ms-1"
-                    style={{ color: "#c69867" }}
-                  >
-                    Terms & Conditions
-                  </a>{" "}
-                  and
-                  <a
-                    href={"#"}
-                    onClick={(e) => e.preventDefault()}
-                    className="text-decoration-underline ms-1"
-                    style={{ color: "#c69867" }}
-                  >
-                    Privacy Policy
-                  </a>
-                  .
-                </>
-              }
-            />
+            <div className="form-check me-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="terms"
+                name="terms"
+                checked={termsChecked}
+                onChange={onChange}
+                style={{ fontSize: 14 }}
+              />
+            </div>
+            <label className="form-check-label" htmlFor="terms">
+              <span style={{ fontSize: 14 }}>
+                By clicking Activate My Account, I agree to the
+                <a
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  className="text-decoration-underline ms-1"
+                  style={{ color: "#c69867" }}
+                >
+                  Terms & Conditions
+                </a>{" "}
+                and
+                <a
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  className="text-decoration-underline ms-1"
+                  style={{ color: "#c69867" }}
+                >
+                  Privacy Policy
+                </a>
+                .
+              </span>
+            </label>
           </div>
         </div>
       </div>

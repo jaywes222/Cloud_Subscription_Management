@@ -210,19 +210,34 @@
 }
 
 .bs .package-info {
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
-.bs .nav {
+.bs .nav-main {
+  display: flex;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .bs .activate-btn {
   display: flex;
   justify-content: center;
   margin-top: 0.75rem;
+}
+
+.bs .custom-tab {
+  color: #000 !important;
+  background-color: #f8f9fa !important;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+  padding: 10px 20px;
+}
+
+.custom-tab.active {
+  background-color: #c5843f !important;
+  color: black !important;
+  font-weight: 600;
 }
 
 .bs .list-item {
@@ -234,6 +249,16 @@
 .bs .plus-icon {
   margin-right: 0.25rem;
   color: orange;
+}
+
+.bs .upload-file-btn {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid gray;
+  border-radius: 5px;
+  border-color: #c58c4f;
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
 .bs .uploaded-icon {
