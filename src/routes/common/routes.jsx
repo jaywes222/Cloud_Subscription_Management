@@ -5,6 +5,7 @@ import Profile from "../../page/workspace/Profile";
 
 
 import { AUTH_ROUTES,PROTECTED_ROUTES } from "./routePaths";
+import Activation from "../../components/bootstrap/Activation/Activation";
 
 
 export const authenticationRoutePaths = [
@@ -14,5 +15,5 @@ export const authenticationRoutePaths = [
 export const protectedRoutePaths = [
   { path: PROTECTED_ROUTES.WORKSPACE, element: <WorkspaceDashboard /> },
   { path: PROTECTED_ROUTES.PROFILE, element: <Profile /> },
-  // { path: PROTECTED_ROUTES.ACTIVATION, element: <Activation /> },
+  { path: PROTECTED_ROUTES.ACTIVATION, element: <Activation /> },
 ];

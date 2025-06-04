@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import { react, useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
 
 export default function PackageInfo({ packageInfo, setToast }) {
   useEffect(() => {

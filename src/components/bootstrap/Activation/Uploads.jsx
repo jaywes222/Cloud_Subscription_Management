@@ -1,8 +1,6 @@
 import React from "react";
 import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
 import { CircleCheckBig, Plus } from "lucide-react";
-import { BiCheckCircle, BiPlus } from "react-icons/bi"; // Import the checkmark icon
-import { FaPlus } from "react-icons/fa6";
 
 const Uploads = ({ handleFileUpload, disableFileUpload }) => {
   return (
