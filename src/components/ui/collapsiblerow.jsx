@@ -20,7 +20,7 @@ const CollapsibleRow = ({ icon, label, children, isOpen, onToggle }) => (
         </div>
 
         {isOpen && (
-            <div className="mt-2 max-h-48 overflow-y-auto rounded-md border px-4 py-3 text-sm bg-caramel-foreground">
+            <div className="mt-2 rounded-md border px-4 py-3 text-sm bg-caramel-foreground">
                 {children}
             </div>
         )}
