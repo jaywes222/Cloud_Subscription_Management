@@ -59,7 +59,7 @@ const SignIn = () => {
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Welcome back</CardTitle>
               <CardDescription>
-                Login with your Email or Google account
+                Login with your Email
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -120,15 +120,6 @@ const SignIn = () => {
                       <Button type="submit" className="w-full">
                         Login
                       </Button>
-                    </div>
-                    <div className="text-center text-sm">
-                      Don&apos;t have an account?{" "}
-                      <Link
-                        to="/sign-up"
-                        className="underline underline-offset-4"
-                      >
-                        Sign up
-                      </Link>
                     </div>
                   </div>
                 </form>
