@@ -11,6 +11,7 @@ import {
 import Payment from "./Payment";
 import OrderSummary from "./OrderSummary";
 import LiveSubscription from "./LiveSubscription";
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 
 export default function Reactivation() {
   return (
@@ -21,14 +22,14 @@ export default function Reactivation() {
       >
         <Card className="shadow w-100" style={{ maxWidth: "40rem" }}>
           <CardBody>
-            <h4 className="text-start fs-5">Reactivate Subscription</h4>
-            <CardText
+            <DialogTitle className="text-start fs-5">Reactivate Subscription</DialogTitle>
+            <DialogDescription
               className="text-start text-secondary text-small"
               style={{ fontSize: "12px" }}
             >
               Restore your phAMAcore Cloud Subscription with previous settings
               and data. Just confirm payment to continue.
-            </CardText>
+            </DialogDescription>
             <hr />
             <LiveSubscription />
             <hr />

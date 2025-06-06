@@ -75,7 +75,7 @@ const InvoiceTable = ({ invoices = [], className }) => {
 
     return (
         <Table
-            className={cn("overflow-auto max-h-64 sm:max-h-[28rem]", className)}
+            className={cn("w-full", className)}
             role="table"
             aria-label="Invoices and Receipts Table"
         >
