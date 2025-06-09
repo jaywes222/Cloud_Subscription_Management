@@ -6,7 +6,8 @@
 
 .bs .bs .text,
 .bs .info-row,
-.bs .radio-group .radio-label
+.bs .radio-group .radio-label,
+.bs .form-group label
  {
   font-size: 14px;
   color: black;
@@ -142,6 +143,7 @@
 .bs th {
   font-size: 16px;
   font-weight:500;
+  line-height: 1.5;
 }
 
 .bs .amount-green {
@@ -173,7 +175,7 @@
   font-size: 16px;
   line-height: 1.5;
   margin-bottom: 1rem;
-  color: #000;
+  color: black;
 }
 
 .bs .radio-group {
@@ -202,7 +204,7 @@
   align-items: center;
   cursor: pointer;
   font-size: 0.9rem;
-  color: #000;
+  color: black;
   user-select: none;
 }
 
@@ -266,7 +268,7 @@
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
-  color: #000;
+  color: black;
   outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
@@ -308,7 +310,7 @@
   padding: 0.5rem 3rem;
   font-weight: 600;
   font-size: 1rem;
-  color: #000;
+  color: black;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -389,12 +391,19 @@
 }
 
 .bs .total-row {
-  font-weight: 600;
-  color: #000;
+  font-weight: 500;
+
   margin-top: 0.5rem;
 }
 
+.bs .total-row .receipt-name,
+.bs .total-row .receipt-price {
+  margin: 0;
+  color: black!important; /* gray */
 
+  line-height: 1.5;
+  font-weight: 400;
+}
 
 .bs .auto-note {
   text-align: center;
