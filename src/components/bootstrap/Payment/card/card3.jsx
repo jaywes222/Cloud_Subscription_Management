@@ -2,31 +2,24 @@ import React from "react";
 
 const Card3 = () => {
   return (
-    <div className="p-2">
-      <div className="max-w-[300px] w-full h-[100px] shadow rounded-md overflow-hidden bg-white">
-        <div className="flex flex-col items-center justify-center px-0 py-0">
-          <h6 className="text-[#C58C4F] text-center font-semibold">
-            phAMACore Lite
-          </h6>
-          <div className="flex justify-between w-full mt-2 text-[14px]">
-            <div className="text-center w-1/3">
-              <p>
-                Branches:{" "}
-                <span className="font-semibold text-[#C58C4F]">5</span>
-              </p>
-            </div>
+    <div className="bs">
+      <div className="container-card3">
+        <div className="card3">
+          <div className="card-content3">
+            <h6 className="title">phAMACore Lite</h6>
 
-            <div className="text-center w-1/3">
-              <p>
-                Users: <span className="font-semibold text-[#C58C4F]">2</span>
-              </p>
-            </div>
+            <div className="info-row">
+              <div className="info-labels">
+                <div className="info-item">Branches</div>
+                <div className="info-item">Users</div>
+                <div className="info-item">Cycle</div>
+              </div>
 
-            <div className="text-center w-1/3">
-              <p>
-                Cycle:{" "}
-                <span className="font-semibold text-[#C58C4F]">quarterly</span>
-              </p>
+              <div className="info-highlights">
+                <div className="info-item highlight">5</div>
+                <div className="info-item highlight">2</div>
+                <div className="info-item highlight">quarterly</div>
+              </div>
             </div>
           </div>
         </div>
