@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Card, Container } from "react-bootstrap";
 const Card2 = () => {
   return (
     <div className="p-2">
