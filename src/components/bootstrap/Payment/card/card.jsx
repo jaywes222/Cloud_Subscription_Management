@@ -8,41 +8,52 @@ import PaymentForm from "../../../workspace/payment-form.jsx";
 
 const CardLayout = () => {
   return (
-    <div className="bs p-2">
-      <div className="flex justify-center">
-        <div
-          className="shadow bg-white rounded-md w-full max-w-[1000px]"
-          style={{ padding: "10px" }}
-        >
-          <div className="pb-2">
-            <h5 className="p-1 text-lg font-semibold">Make Payment</h5>
-          </div>
-
-          {/* First Row: Two equal columns */}
-          <div className="flex justify-between">
-            <div className="flex flex-col space-y-1">
-              <Card2 />
-              <Card3 />
+    <div className="bs">
+      <div className="container-fluid">
+        <div className="center-content">
+          <div className="payment-box section-scrollable">
+            <div className="payment-header">
+              <h5 className="payment-title">Make Payment</h5>
             </div>
 
-            <div className="w-[48%]">
-              <Table />
+            {/* First Row */}
+            <div className="first-row">
+              <div className="cards-column">
+                <div className="card-placeholder">
+                  <Card2 />
+                </div>
+                <div className="card-placeholder">
+                  {" "}
+                  <Card3 />
+                </div>
+              </div>
+
+              <div className="table-column">
+                <div className="table-placeholder">
+                  {" "}
+                  <Table />
+                </div>
+              </div>
             </div>
-          </div>
 
-          <Hline />
-
-          {/* Second Row: Two equal columns */}
-          <div className="flex flex-row mt-4">
-            <div className="w-1/2 pr-4">
-              <PaymentForm />
+            <div className="line-container">
+              <Hline />
             </div>
 
-            <div
-              className="w-1/2 pl-4 border-l border-gray-300 leading-relaxed"
-              style={{ lineHeight: 2 }}
-            >
-              <Text />
+            {/* Second Row */}
+            <div className="second-row">
+              <div className="form-column">
+                <div className="payment-form-placeholder">
+                  {" "}
+                  <PaymentForm />
+                </div>
+              </div>
+
+              <div className="text-column">
+                <div className="text-placeholder">
+                  <Text />
+                </div>
+              </div>
             </div>
           </div>
         </div>
