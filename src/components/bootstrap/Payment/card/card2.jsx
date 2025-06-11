@@ -2,11 +2,13 @@ import React from "react";
 
 const Card2 = () => {
   return (
-    <div className="p-2">
-      <div className="max-w-[300px] w-full h-[40px] shadow rounded-md overflow-hidden bg-white flex items-center justify-center px-4">
-        <p className="m-0 text-center text-[14px] font-medium">
-          CUS005 - Nila Pharmacy
-        </p>
+    <div className="bs">
+      <div className="container-card2">
+        <div className="card2">
+          <div className="card-body2">
+            <p className="text">CUS005 - Nila Pharmacy</p>
+          </div>
+        </div>
       </div>
     </div>
   );
