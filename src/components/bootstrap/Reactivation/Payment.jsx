@@ -1,74 +1,91 @@
 import React from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 export default function Payment() {
   return (
     <div className="bs">
-      <Form>
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column sm="12" style={{ fontSize: "20px" }}>
-            Choose Payment Method
-          </Form.Label>
-          <div className="d-flex gap-2">
-            <Form.Check
-              type="radio"
-              label="M-PESA"
-              name="paymentMethod"
-              id="m-pesa"
-              defaultChecked
-              style={{ fontSize: "14px" }}
+      <div className="pay-wrapper">
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label style={{ fontSize: "14px" }}>
+              Choose Payment Method
+            </Form.Label>
+            <div className="d-flex gap-3">
+              <Form.Check
+                type="radio"
+                label="M-PESA"
+                name="paymentMethod"
+                id="m-pesa"
+                defaultChecked
+                style={{ fontSize: "14px" }}
+              />
+              <Form.Check
+                type="radio"
+                label="BANK"
+                name="paymentMethod"
+                id="bank"
+                style={{ fontSize: "14px" }}
+              />
+            </div>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label style={{ fontSize: "14px" }}>Mobile Number:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your mobile number"
+              name="mobileNumber"
+              id="mobileNumber"
+              required
+              className="bg-white border w-100"
+              style={{
+                fontSize: "14px",
+                borderRadius: "0.25rem",
+                padding: "0.375rem 0.375rem",
+              }}
             />
-            <Form.Check
-              type="radio"
-              label="BANK"
-              name="paymentMethod"
-              id="bank"
-              style={{ fontSize: "14px" }}
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label style={{ fontSize: "14px" }}>
+              Transaction Code:
+            </Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Transaction Code"
+              className="bg-white border w-100"
+              style={{
+                fontSize: "14px",
+                borderRadius: "0.25rem",
+                padding: "0.375rem 0.375rem",
+              }}
             />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label style={{ fontSize: "14px" }}>Amount Paid:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="KES 0.00"
+              className="bg-white border w-100"
+              style={{
+                fontSize: "14px",
+                borderRadius: "0.25rem",
+                padding: "0.375rem 0.375rem",
+              }}
+            />
+          </Form.Group>
+        </Form>
+        <div className="mb-2 w-100" style={{ fontSize: "12px" }}>
+          <div className="justify-content-between w-100 mb-1">
+            <span className="ms-auto">Next Payment On: </span>
+            <span className="me-auto">July 16 2025</span>
           </div>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label style={{ fontSize: "14px" }}>Mobile Number:</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter your mobile number"
-            name="mobileNumber"
-            id="mobileNumber"
-            required
-            style={{ fontSize: "14px" }}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label style={{ fontSize: "14px" }}>
-            Transaction Code:
-          </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Transaction Code"
-            style={{ fontSize: "14px" }}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label style={{ fontSize: "14px" }}>Amount Paid:</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="KES 0.00"
-            style={{ fontSize: "14px" }}
-          />
-        </Form.Group>
-
-        <div className="text-muted mb-2" style={{ fontSize: "14px" }}>
-          <div className="d-flex justify-content-between align-items-center mb-1">
-            Next Payment On: <span>July 16 2025</span>
-          </div>
-          <div className="d-flex justify-content-between align-items-center mb-1">
-            Next Payment Amount:
-            <span className="text-danger">KES 250,000.00</span>
+          <div className="justify-content-between w-100 mb-1">
+            <span className="ms-auto">Next Payment Amount: </span>
+            <span className="me-auto">KES 250,000.00</span>
           </div>
         </div>
-      </Form>
+      </div>
     </div>
   );
 }
