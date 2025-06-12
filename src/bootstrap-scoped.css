@@ -9,7 +9,7 @@
 .bs .radio-group .radio-label,
 .bs .form-group label {
   font-size: 14px;
-  color: black;
+  color: #000000;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -140,6 +140,7 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
+   color: #000000;
 }
 
 .bs .amount-green {
@@ -171,7 +172,7 @@
   font-size: 16px;
   line-height: 1.5;
   margin-bottom: 1rem;
-  color: black;
+ color: #000000;
 }
 
 .bs .radio-group {
@@ -199,7 +200,7 @@
   align-items: center;
   cursor: pointer;
   font-size: 0.9rem;
-  color: black;
+  color: #000000;
   user-select: none;
 }
 
@@ -261,7 +262,7 @@
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
-  color: black;
+ color: #000000;
   outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
@@ -302,7 +303,7 @@
   padding: 0.5rem 3rem;
   font-weight: 600;
   font-size: 1rem;
-  color: black;
+  color: #000000;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -386,8 +387,7 @@
 .bs .total-row .receipt-name,
 .bs .total-row .receipt-price {
   margin: 0;
-  color: black !important; /* gray */
-
+  color: #000000!important;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -396,7 +396,7 @@
   text-align: center;
   margin-top: 0.5rem;
   font-size: 0.875rem;
-  color: #6b7280 !important; /* gray */
+  color: #6b7280 !important; 
 }
 .bs-hr-container {
   padding: 1rem; /* equivalent to Tailwind's p-3 */

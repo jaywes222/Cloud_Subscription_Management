@@ -4,12 +4,8 @@ import useWorkspaceId from "../../hooks/use-workspace-id";
 import WorkspaceAnalytics from "../../components/workspace/workspace-analytics";
 import { WorkspaceDashboardSkeleton } from "../../components/skeleton-loaders/dashboard-skeleton";
 import PayNowDialog from "../../components/workspace/pay-now-dialog";
-
-const workspaces = [
-  { id: "my-wo8483727", name: "phAMAcore Cloud", plan: "Active" },
-  { id: "ym28483727", name: "CliniCore", plan: "Deactivated" },
-  { id: "cc88483727", name: "CorePay", plan: "Inactive" },
-];
+import { useQuery } from "@tanstack/react-query";
+import { getAllWorkspacesUserIsMemberQueryFn } from "../../lib/api";
 
 const WorkspaceDashboard = () => {
   const workspaceId = useWorkspaceId();
@@ -17,15 +13,24 @@ const WorkspaceDashboard = () => {
   const [activeWorkspaceName, setActiveWorkspaceName] = useState(null);
   const navigate = useNavigate();
 
+  const { data, isPending } = useQuery({
+    queryKey: ["userWorkspaces"],
+    queryFn: getAllWorkspacesUserIsMemberQueryFn,
+    staleTime: 1,
+    refetchOnMount: true,
+  });
+
+  const workspaces = data?.workspaces || [];
+
   useEffect(() => {
     if (!workspaceId) {
       if (workspaces.length > 0) {
-        navigate(`/workspace/${workspaces[0].id}`, { replace: true });
+        navigate(`/workspace/${workspaces[0].code}`, { replace: true });
       }
       return;
     }
 
-    const workspace = workspaces.find((w) => w.id === workspaceId);
+    const workspace = workspaces.find((w) => w.code === workspaceId);
 
     if (workspace) {
       setActiveWorkspaceName(workspace.name);
@@ -35,10 +40,10 @@ const WorkspaceDashboard = () => {
       return () => clearTimeout(timer);
     } else {
       if (workspaces.length > 0) {
-        navigate(`/workspace/${workspaces[0].id}`, { replace: true });
+        navigate(`/workspace/${workspaces[0].code}`, { replace: true });
       }
     }
-  }, [workspaceId, navigate]);
+  }, [workspaceId, workspaces, navigate]);
 
   if (!loading && !activeWorkspaceName && workspaces.length === 0) {
     return (
@@ -48,7 +53,7 @@ const WorkspaceDashboard = () => {
     );
   }
 
-  if (loading)
+  if (loading || isPending)
     return (
       <WorkspaceDashboardSkeleton
         workspaceName={activeWorkspaceName || "Loading..."}

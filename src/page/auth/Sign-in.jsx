@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,13 +21,23 @@ import {
 } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
 import Logo from "../../components/logo";
+import { useMutation } from "@tanstack/react-query";
+import { loginMutationFn } from "../../lib/api";
+import { toast } from "../../hooks/use-toast";
+import { Loader } from "lucide-react";
 
 const SignIn = () => {
+  const navigate = useNavigate();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: loginMutationFn
+  });
+
   const formSchema = z.object({
-    email: z.string().trim().email("Invalid email address").min(1, {
-      message: "Email is required",
+    cuscode: z.string().trim().min(1, {
+      message: "Cuscode is required",
     }),
-    password: z.string().trim().min(1, {
+    password: z.string().trim().min(6, {
       message: "Password is required",
     }),
   });
@@ -35,13 +45,43 @@ const SignIn = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      cuscode: "",
       password: "",
     },
   });
 
   const onSubmit = (values) => {
-    console.log(values);
+    if (isPending) return;
+
+    mutate(values, {
+      onSuccess: (data) => {
+        const token = data.token;
+        localStorage.setItem("token", token);
+
+        if (data.requirePasswordChange) {
+          toast({
+            title: "Password Change Required",
+            description: "Please change your password before proceeding.",
+            variant: "warning",
+          });
+          navigate(`/change-password?cuscode=${data.cusCode}`)
+        } else {
+          toast({
+            title: "Login Successful",
+            description: "You have successfully logged in.",
+            variant: "success",
+          });
+          navigate(`/workspace/:${data.workspaceRedirectUrl}`);
+        }
+      },
+      onError: (error) => {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        })
+      },
+    });
   };
 
   return (
@@ -59,7 +99,7 @@ const SignIn = () => {
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Welcome back</CardTitle>
               <CardDescription>
-                Login with your Email
+                Login with your CusCode
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -70,15 +110,15 @@ const SignIn = () => {
                       <div className="grid gap-2">
                         <FormField
                           control={form.control}
-                          name="email"
+                          name="cuscode"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                Email
+                                CusCode
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  placeholder="m@example.com"
+                                  placeholder="JR8XTV"
                                   className="!h-[48px]"
                                   {...field}
                                 />
@@ -117,7 +157,12 @@ const SignIn = () => {
                           )}
                         />
                       </div>
-                      <Button type="submit" className="w-full">
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isPending}
+                      >
+                        {isPending && <Loader className="animate-spin" />}
                         Login
                       </Button>
                     </div>
