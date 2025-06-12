@@ -7,8 +7,7 @@
 .bs .bs .text,
 .bs .info-row,
 .bs .radio-group .radio-label,
-.bs .form-group label
- {
+.bs .form-group label {
   font-size: 14px;
   color: #000000;
   line-height: 1.5;
@@ -21,12 +20,11 @@
   margin-bottom: 1rem; /* optional spacing */
 }
 
-
 .bs .card2 {
   background-color: white;
-    max-width: 400px;
+  max-width: 400px;
   width: 100%;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   overflow: hidden;
   height: 40px;
@@ -61,7 +59,7 @@
   width: 100%;
   height: 100px;
   background-color: #fff;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   overflow: hidden;
   display: flex;
@@ -77,7 +75,7 @@
 }
 
 .bs .title {
-  color: #C58C4F;
+  color: #c58c4f;
   text-align: center;
   font-weight: 600;
   font-size: 16px;
@@ -107,7 +105,7 @@
 .bs .highlight {
   line-height: 1.5;
   font-weight: 400;
-  color: #C58C4F;
+  color: #c58c4f;
 }
 
 .bs .table-container {
@@ -121,18 +119,15 @@
 .bs table {
   width: 100%;
   border-collapse: collapse;
-
 }
 
 .bs thead tr {
   background-color: #f3f3f3;
 }
 .bs tbody td {
-  font-size: 14px!important;
-  line-height: 1.5!important;
-  font-weight: 400!important;
-   color: #000000;
-
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
 }
 .bs th,
 .bs td {
@@ -143,7 +138,7 @@
 
 .bs th {
   font-size: 16px;
-  font-weight:500;
+  font-weight: 500;
   line-height: 1.5;
    color: #000000;
 }
@@ -173,7 +168,7 @@
 
 .bs .payment-container .form-title {
   text-align: start;
- 
+
   font-size: 16px;
   line-height: 1.5;
   margin-bottom: 1rem;
@@ -185,12 +180,11 @@
   gap: 2rem; /* space between the radios */
   justify-content: center; /* optional, centers horizontally */
   align-items: center; /* vertically center them */
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 .bs .radio-group .radio-label {
+  color: #1f2937 !important; /* dark gray */
 
-  color: #1f2937!important; /* dark gray */
- 
   margin-right: 0.5rem; /* space between label and radio */
 }
 .bs .payment-methods {
@@ -211,7 +205,6 @@
 }
 
 .bs .custom-radio input[type="radio"] {
-  appearance: none;
   -webkit-appearance: none;
   border: 2px solid #ccc;
   border-radius: 50%;
@@ -258,9 +251,8 @@
 }
 
 .bs .form-group label {
-
   margin-bottom: 0.25rem;
-  color: #1f2937!important; /* dark gray */
+  color: #1f2937 !important; /* dark gray */
 }
 
 .bs .form-group input[type="text"],
@@ -300,7 +292,6 @@
   box-sizing: border-box;
 }
 
-
 .bs .submit-button-container {
   display: flex;
   justify-content: center;
@@ -330,17 +321,14 @@
   box-shadow: 0 0 5px #d69e2e;
 }
 
-
-
 .bs .receipt-container {
   background-color: #fff;
- 
+
   border-radius: 4px;
- 
 }
 
 .bs .order-summary-title {
-  font-size:16px; /* approx text-lg */
+  font-size: 16px; /* approx text-lg */
   font-weight: 400;
   margin-bottom: 0.25rem;
   line-height: 1.4;
@@ -353,12 +341,10 @@
   line-height: 1.4;
 }
 
-
-
 .bs .thankyou-message {
   font-size: 14px; /* approx text-sm */
   font-weight: 400 !important;
-  color: #6b7280!important; /* gray */
+  color: #6b7280 !important; /* gray */
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -380,7 +366,7 @@
 .bs .receipt-name,
 .bs .receipt-price {
   margin: 0;
-  color: #6b7280!important; /* gray */
+  color: #6b7280 !important; /* gray */
 
   line-height: 1.5;
   font-weight: 400;
@@ -401,8 +387,7 @@
 .bs .total-row .receipt-name,
 .bs .total-row .receipt-price {
   margin: 0;
-  color: #000000!important; /* gray */
-
+  color: #000000!important;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -411,7 +396,7 @@
   text-align: center;
   margin-top: 0.5rem;
   font-size: 0.875rem;
-  color: #6b7280!important; /* gray */
+  color: #6b7280 !important; 
 }
 .bs-hr-container {
   padding: 1rem; /* equivalent to Tailwind's p-3 */
@@ -423,7 +408,7 @@
   border-top: 1px solid #d1d5db; /* Tailwind's gray-300 */
 }
 
-.bs .container-fluid{
+.bs .container-fluid {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
@@ -446,7 +431,6 @@
   border-radius: 8px;
   padding: 20px;
   box-sizing: border-box;
-  
 }
 
 .bs .payment-header {
@@ -454,7 +438,7 @@
 }
 
 .bs .payment-title {
-  font-size:20px;
+  font-size: 20px;
   font-weight: 500;
   padding: 5px 0;
   margin: 0;
@@ -471,10 +455,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
- 
 }
-
-
 
 .bs .divider {
   margin: 20px 0;
@@ -492,7 +473,6 @@
 }
 
 .bs .payment-form-placeholder {
-
   border-radius: 4px;
   padding: 10px;
 }
@@ -505,12 +485,9 @@
 }
 
 .bs .text-placeholder {
-
   border-radius: 4px;
   padding: 10px;
 }
-
-
 
 /* Utility: justify content center */
 .bs .justify-content-center {
@@ -691,6 +668,16 @@
   font-size: 0.875em;
 }
 
+.bs .item-label-col {
+  min-width: 125px;
+  text-align: left;
+}
+
+.bs .pay-wrapper {
+  width: 100%;
+  padding-right: 15px;
+}
+
 .bs .order-summary {
   display: flex;
   justify-content: space-between;
@@ -706,4 +693,10 @@
   margin-top: 0.5rem;
   color: #6c757d;
   font-size: 0.875em;
+}
+
+.bs .reactivate-btn {
+  background-color: #c58c4f;
+  border-radius: 5px;
+  padding: 5px 10px;
 }
