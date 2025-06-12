@@ -1,7 +1,17 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { WorkspaceDashboardSkeleton } from "../components/skeleton-loaders/dashboard-skeleton";
+import useAuth from "../hooks/api/use-auth";
+
 const ProtectedRoute = () => {
-  return <Outlet />;
+    const { data: authData, isLoading } = useAuth();
+    const user = authData?.user;
+  
+    if (isLoading) {
+      return <WorkspaceDashboardSkeleton />;
+  }
+  
+    return user ? <Outlet /> : <Navigate to="/" replace/>;
 };
 
 export default ProtectedRoute;

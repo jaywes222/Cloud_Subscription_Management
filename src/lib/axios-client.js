@@ -10,6 +10,33 @@ const options = {
 
 const API = axios.create(options);
 
+API.interceptors.request.use(
+	(config) => {
+		const token = localStorage.getItem('token');
+		if (token) {
+			config.headers = config.headers || {};
+			config.headers.Authorization = `Bearer ${token}`;
+		}
+		return config;
+	},
+	(error) => Promise.reject(error)
+);
+
+// Access Key Middleware
+API.interceptors.request.use(
+	(config) => {
+		const accessKey = import.meta.env.VITE_CLIENT_ACCESS_KEY;
+
+		if (accessKey) {
+			config.headers['accesskey'] = accessKey;
+		}
+
+		return config;
+	},
+	(error) => Promise.reject(error)
+);
+
+// ✅ Handles Response Issues
 API.interceptors.response.use(
 	(response) => response,
 	async (error) => {

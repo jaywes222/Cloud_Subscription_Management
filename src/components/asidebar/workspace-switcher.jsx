@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect} from "react";
-import { Check, ChevronDown, Plus } from "lucide-react";
+import { Check, ChevronDown, Loader, Plus } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -19,7 +19,9 @@ import {
   useSidebar,
 } from "../../components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import useWorkspaceId from "../../hooks/use-workspace-id";
+import { getAllWorkspacesUserIsMemberQueryFn } from "../../lib/api";
 import useCreateWorkspaceDialog from "../../hooks/use-create-workspace-dialog";
 
 export function WorkspaceSwitcher() {
@@ -30,44 +32,33 @@ export function WorkspaceSwitcher() {
 
   const [activeWorkspace, setActiveWorkspace] = useState();
 
-  const workspaces = [
-    {
-      id: "my-wo8483727",
-      name: "phAMAcore Cloud",
-      plan: "Active",
-    },
-    {
-      id: "ym28483727",
-      name: "CliniCore",
-      plan: "Deactivated",
-    },
-    {
-      id: "cc88483727",
-      name: "CorePay",
-      plan: "Inactive",
-    },
-  ];
+  const { data, isPending } = useQuery({
+    queryKey: ["userWorkspaces"],
+    queryFn: getAllWorkspacesUserIsMemberQueryFn,
+    staleTime: 1,
+    refetchOnMount: true,
+  });
+
+  const workspaces = data?.workspaces || [];
 
   useEffect(() => {
-    if (workspaceId && workspaces.length) {
-      const workspace = workspaces.find((w) => w.id === workspaceId);
+    if (workspaces.length) {
+      const workspace = workspaceId
+        ? workspaces.find((ws) => ws.code === workspaceId)
+        : workspaces[0];
+      
       if (workspace) {
         setActiveWorkspace(workspace);
-        return;
+        if (!workspaceId) {
+          navigate(`/workspace/${workspace.code}`);
+        }
       }
     }
-
-    if (workspaces.length) {
-      const first = workspaces[0];
-      setActiveWorkspace(first);
-      navigate(`/workspace/${first.id}`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [workspaceId]);
+  }, [workspaceId, workspaces, navigate]);
 
   const onSelect = (workspace) => {
     setActiveWorkspace(workspace);
-    navigate(`/workspace/${workspace.id}`);
+    navigate(`/workspace/${workspace.code}`);
   };
 
   return (
@@ -90,23 +81,31 @@ export function WorkspaceSwitcher() {
                 size="lg"
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-gray-10"
               >
-                <div className="flex aspect-square size-8 items-center font-semibold justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  {activeWorkspace?.name?.split(" ")?.[0]?.charAt(0)}
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {activeWorkspace?.name}
-                  </span>
-                  <span
-                    className={`truncate text-xs ${["Deactivated", "Inactive"].includes(activeWorkspace?.plan)
-                        ? "text-red-600"
-                        : "text-[#28A745]"
-                      }`}
-                  >
-                    {activeWorkspace?.plan}
-                  </span>
-
-                </div>
+                {activeWorkspace ? (
+                  <>
+                    <div className="flex aspect-square size-8 items-center font-semibold justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                      {activeWorkspace?.name?.split(" ")?.[0]?.charAt(0)}
+                    </div>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold">
+                        {activeWorkspace?.name}
+                      </span>
+                      <span
+                        className={`truncate text-xs ${["Deactivated", "Inactive"].includes(activeWorkspace?.description)
+                          ? "text-red-600"
+                          : "text-[#28A745]"}`}
+                      >
+                        {activeWorkspace?.description || "Active"}
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-semibold">
+                      No Active Subscription
+                    </span>
+                  </div>
+                )}
                 <ChevronDown className="ml-auto" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
@@ -120,10 +119,11 @@ export function WorkspaceSwitcher() {
               <DropdownMenuLabel className="text-xs text-muted-foreground">
                 Subscriptions
               </DropdownMenuLabel>
+              {isPending && <Loader className="w-5 h-5 animate-spin" />}
 
               {workspaces.map((workspace) => (
                 <DropdownMenuItem
-                  key={workspace.id}
+                  key={workspace.code}
                   onClick={() => onSelect(workspace)}
                   className="gap-2 p-2 !cursor-pointer"
                 >
@@ -131,8 +131,7 @@ export function WorkspaceSwitcher() {
                     {workspace.name.split(" ")[0]?.charAt(0)}
                   </div>
                   {workspace.name}
-
-                  {workspace.id === workspaceId && (
+                  {workspace.code === workspaceId && (
                     <DropdownMenuShortcut className="tracking-normal !opacity-100">
                       <Check className="w-4 h-4" />
                     </DropdownMenuShortcut>
@@ -160,3 +159,4 @@ export function WorkspaceSwitcher() {
     </>
   );
 }
+
