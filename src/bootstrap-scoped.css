@@ -206,6 +206,7 @@
 
 .bs .custom-radio input[type="radio"] {
   -webkit-appearance: none;
+  appearance: none;
   border: 2px solid #ccc;
   border-radius: 50%;
   width: 20px;
