@@ -1,36 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Separator } from "../../components/ui/separator";
-import WorkspaceHeader from "../../components/workspace/common/workspace-header";
 import { EditableField } from "../../components/workspace/profile/editable-field";
 import useEditProfileFieldDialog from "../../hooks/use-edit-profile-field-dialog";
 import EditProfileFieldDialog from "../../components/workspace/profile/edit-profile-field-dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "../../components/ui/avatar";
 import { PenBoxIcon } from "lucide-react";
+import {useAuthContext} from "../../context/auth-provider"
 
 const Profile = () => {
+  const {isLoading, user} = useAuthContext()
   const { open, onOpen, onClose, field, value } = useEditProfileFieldDialog();
-
-  const [loading, setLoading] = useState(true);
-  const [userProfileData, setUserProfileData] = useState(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setUserProfileData({
-        username: "Walter Nila",
-        companyName: "Nila Pharmacy",
-        email: "walternila@gmail.com",
-        phone: "0758***306",
-        password: "************",
-        profilePicUrl: "/images/default-avatar.png",
-        cusCode: "CUS005",
-      });
-      setLoading(false);
-    }, 500);
-  }, []);
 
   const handleEditClick = (fieldName, fieldValue) => {
     onOpen(fieldName, fieldValue);
   };
+
+  const username = user?.fullname || "Unknown User";
+  const companyName = user?.companyName || "Unknown Company";
+  const email = user?.email || "N/A";
+  const phone = user?.phone || "N/A";
+  const password = "************";
+  const profilePicUrl = user?.profilePicUrl || "/images/default-avatar.png";
+  const cusCode = user?.psCusCode || "CUSXXX";
 
   return (
     <div className="w-full h-auto py-2">
@@ -40,9 +31,9 @@ const Profile = () => {
         <div className="flex items-center space-x-4">
           <div className="relative w-16 h-16">
             <Avatar className="w-16 h-16">
-              <AvatarImage src={userProfileData?.profilePicUrl} alt="Profile Picture" />
+              <AvatarImage src={profilePicUrl} alt="Profile Picture" />
               <AvatarFallback>
-                {userProfileData?.username?.[0]?.toUpperCase() ?? "U"}
+                {username[0]?.toUpperCase() ?? "U"}
               </AvatarFallback>
             </Avatar>
             <div className="absolute bottom-0 right-0 bg-secondary rounded-full p-0.5 shadow cursor-pointer">
@@ -50,7 +41,7 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            <h2 className="text-lg text-caramel font-semibold">{userProfileData?.cusCode} - {userProfileData?.companyName}</h2>
+            <h2 className="text-lg text-caramel font-semibold">{cusCode} - {companyName}</h2>
           </div>
         </div>
       </div>
@@ -63,42 +54,42 @@ const Profile = () => {
             <EditableField
               label="Username"
               field="username"
-              value={userProfileData?.username}
-              loading={loading}
+              value={username}
+              loading={isLoading}
               fullWidth
               readOnly
             />
             <EditableField
               label="Company Name"
               field="companyName"
-              value={userProfileData?.companyName}
-              loading={loading}
+              value={companyName}
+              loading={isLoading}
               fullWidth
               readOnly
             />
             <EditableField
               label="Email"
               field="email"
-              value={userProfileData?.email}
-              loading={loading}
+              value={email}
+              loading={isLoading}
               fullWidth
               readOnly
             />
             <EditableField
               label="Phone"
               field="phone"
-              value={userProfileData?.phone}
-              loading={loading}
+              value={phone}
+              loading={isLoading}
               fullWidth
               readOnly
             />
             <EditableField
               label="Password"
               field="password"
-              value={userProfileData?.password}
+              value={password}
               isPassword
               onEdit={handleEditClick}
-              loading={loading}
+              loading={isLoading}
               fullWidth
             />
           </div>

@@ -22,6 +22,7 @@ import UploadsTable from "./accordion/uploads-table";
 import useWorkspaceId from "../../hooks/use-workspace-id";
 import usePayNowDialog from "../../hooks/use-pay-now-dialog";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../context/auth-provider";
 
 
 const branches = [
@@ -148,49 +149,54 @@ const subscriptionSchedule = [
   },
 ];
 
-
-
-
-
+const subDetails = [
+  { id: "last-payment-on", label: "Last Payment On", value: "May 16 2025" },
+  { id: "next-payment-on", label: "Next Payment On", value: "June 16 2025" },
+  {
+    id: "next-payment-amt",
+    label: "Next Payment Amount",
+    value: "KES250,000.00",
+    isDestructive: true,
+  },
+  { id: "mobile-number", label: "Mobile No", value: "0758***306" },
+];
 
 const WorkspaceAnalytics = () => {
   const workspaceId = useWorkspaceId();
   const { onOpen } = usePayNowDialog();
 
-  const subDetails = [
-    { id: "last-payment-on", label: "Last Payment On", value: "May 16 2025" },
-    { id: "next-payment-on", label: "Next Payment On", value: "June 16 2025" },
-    {
-      id: "next-payment-amt",
-      label: "Next Payment Amount",
-      value: "KES250,000.00",
-      isDestructive: true,
-    },
-    { id: "mobile-number", label: "Mobile No", value: "0758***306" },
-  ];
-
+  const { user, isLoading } = useAuthContext();
   const [openIndex, setOpenIndex] = useState(null);
 
   const handleToggle = (index) => {
     setOpenIndex(prev => (prev === index ? null : index));
   };
 
+  const username = user?.fullname || "Unknown User";
+  const clientPackage = user?.clientPackage || "Unknown Client Package"
+  const companyName = user?.companyName || "Unknown Company";
+  const cusCode = user?.psCusCode || "CUSXXX";
+  const billingCycle = user?.billingCycle || "Unknown Cycle";
+  const branchCount = user?.branchCount || "Unknown Branches";
+  const userCount = user?.userCount || "Unknown Users";
+
+
   return (
     <Card className="w-full h-[calc(100vh-100px)] p-6 rounded-2xl flex flex-col">
       {/* Top Summary Section */}
       <CardHeader className="flex flex-col md:flex-row justify-between items-start gap-12 md:gap-6">
         <div className="flex-1 min-w-[140px]">
-          <CardTitle className="text-xl">CUS005 - NILA PHARMACY</CardTitle>
+          <CardTitle className="text-xl">{cusCode} - {companyName}</CardTitle>
           <p className="text-sm text-caramel font-medium mt-1">
-            phAMAcore Lite
+            {clientPackage}
           </p>
           <div className="text-muted-foreground mt-2 text-sm leading-6">
-            <div>Quarterly <br /></div>
+            <div>{billingCycle} <br /></div>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <p className="flex items-center gap-1 cursor-pointer w-fit">
-                  <span>5 Branches</span>
+                  <span>{branchCount} Branches</span>
                   <ChevronDown className="w-4 h-4" />
                 </p>
               </DropdownMenuTrigger>
@@ -207,7 +213,7 @@ const WorkspaceAnalytics = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <div>3 Users</div>
+            <div>{userCount} Users</div>
           </div>
         </div>
 
