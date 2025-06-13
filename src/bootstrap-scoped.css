@@ -7,7 +7,7 @@
 .bs .bs .text,
 .bs .info-row,
 .bs .radio-group .radio-label,
-.bs .form-group label {
+.bs .form-group label,.bs .item-spacing,.bs .live-title,.bs .item-label-col {
   font-size: 14px;
   color: #000000;
   line-height: 1.5;
@@ -109,7 +109,7 @@
 }
 
 .bs .table-container {
-  max-height: 500px;
+
   overflow-y: auto;
   width: 100%;
   border-radius: 6px;
@@ -147,8 +147,8 @@
   color: #15803d; /* dark green */
 }
 
-.bs .amount-red {
-  color: #7f1d1d; /* dark red */
+.bs .amount-red,.bs .text-danger {
+  color: #7f1d1d!important; /* dark red */
 }
 
 .bs .muted {
@@ -412,10 +412,9 @@
 
 .bs .container-fluid {
   width: 100%;
-  max-width: 1100px;
+  /* max-width: 1100px; */
   margin: 0 auto;
-  height: 100%;
-  max-height: 800px;
+ 
   padding: 30px 15px;
   box-sizing: border-box;
 }
@@ -658,22 +657,17 @@
 /* RE-ACTIVATION STYLES */
 
 .bs .live-title {
-  font-size: 1.25rem;
+  font-size: 14px;
+  line-height: 1.5 ;
   color: #198754;
   margin-bottom: 0.25rem;
 }
 
-.bs .item-spacing {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.875em;
+.bs .item-label-col{
+  color: #6b7280!important;
 }
 
-.bs .item-label-col {
-  min-width: 125px;
-  text-align: left;
-}
+
 
 .bs .pay-wrapper {
   width: 100%;

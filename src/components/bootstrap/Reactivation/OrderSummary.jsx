@@ -1,32 +1,53 @@
 import React from "react";
-import { ListGroup } from "react-bootstrap";
 
-export default function OrderSummary() {
+const Text = () => {
   return (
     <div className="bs">
-      <h6 className="fs-5">Order Summary</h6>
-      <div className="text-black-50 small mb-1">Order No: 97XY-YWE34</div>
-      <div className="mb-3 small">Thank you for your purchase!</div>
-      <ListGroup variant="flush">
-        <ListGroup.Item className="order-summary">
-          phAMACore Lite <span> KES 0</span>
-        </ListGroup.Item>
-        <ListGroup.Item className="order-summary">
-          eTims <span> KES 0</span>
-        </ListGroup.Item>
-        <ListGroup.Item className="order-summary">
-          Transaction Fee <span> KES 0</span>
-        </ListGroup.Item>
-        <ListGroup.Item className="order-summary">
-          Service Charge <span> KES 0</span>
-        </ListGroup.Item>
-        <ListGroup.Item className="order-summary">
-          Total <span> KES 0</span>
-        </ListGroup.Item>
-      </ListGroup>
-      <div className="order-receipt">
-        ** This is an auto-generated receipt **
+      <div className="receipt-container">
+        <h5 className="order-summary-title">Order Summary</h5>
+        <h6 className="order-number">Order No:97XYrWE34</h6>
+
+        <div className="thankyou-text">
+          <p className="thankyou-message">Thank You For Your Purchase</p>
+
+          <div className="thankyou-container">
+            <div className="receipt-row">
+              <p className="receipt-name">phAMACore Lite</p>
+              <p className="receipt-price">KES 0</p>
+            </div>
+
+            <div className="receipt-row">
+              <p className="receipt-name">eTims</p>
+              <p className="receipt-price">KES 0</p>
+            </div>
+
+            <div className="receipt-row">
+              <p className="receipt-name">Transaction Fee</p>
+              <p className="receipt-price">KES 0</p>
+            </div>
+
+            <div className="receipt-row">
+              <p className="receipt-name">Service Charge</p>
+              <p className="receipt-price">KES 0</p>
+            </div>
+
+            <hr className="divider" />
+
+            <div className="receipt-row total-row">
+              <div className="receipt-name total-text">
+                <p>Total</p>
+              </div>
+              <div className="receipt-price total-text">
+                <p>KES 0</p>
+              </div>
+            </div>
+
+            <p className="auto-note">**This is an auto-generated receipt**</p>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default Text;
