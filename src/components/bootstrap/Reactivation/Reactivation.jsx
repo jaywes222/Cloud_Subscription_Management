@@ -18,16 +18,24 @@ export default function Reactivation() {
     <div className="bs">
       <Container
         className="d-flex justify-content-center align-items-start"
-        style={{ overflowY: "auto", minHeight: "630px" }}
+        style={{ overflowY: "auto" }}
       >
-        <Card className="shadow px-4 py-2" style={{ maxWidth: "40rem" }}>
+        <Card className="shadow px-4 py-5">
           <CardBody style={{ overflowY: "auto" }}>
-            <DialogTitle className="text-start fs-5">
+            <DialogTitle
+              className="text-start "
+              style={{
+                fontWeight: 500,
+                padding: "5px 0",
+                margin: 0,
+                fontSize: "20px",
+              }}
+            >
               Reactivate Subscription
             </DialogTitle>
             <DialogDescription
-              className="text-start text-secondary text-small"
-              style={{ fontSize: "12px" }}
+              className="text-start  text-small"
+              style={{ fontSize: "14px", color: "#6c757d" }}
             >
               Restore your phAMAcore Cloud Subscription with previous settings
               and data. Just confirm payment to continue.
@@ -35,19 +43,23 @@ export default function Reactivation() {
             <hr />
             <LiveSubscription />
             <hr />
-            <Row className="d-flex justify-content-between">
-              <Col md={6}>
-                <Payment />
-              </Col>
-              <Col md={6} className="ps-3" style={{ borderLeft: "1px solid" }}>
-                <OrderSummary />
-              </Col>
-            </Row>
-            <div className="d-grid gap-2 mt-3">
-              <Button
-                variant="primary"
-                className="reactivate-btn"
-              >
+            <div className="second-row">
+              <div className="form-column">
+                <div className="payment-form-placeholder">
+                  {" "}
+                  <Payment />
+                </div>
+              </div>
+
+              <div className="text-column">
+                <div className="text-placeholder">
+                  <OrderSummary />
+                </div>
+              </div>
+            </div>
+
+            <div className="d-grid gap-2 mt-3 bs">
+              <Button variant="light" className="submit-button">
                 Reactivate Now
               </Button>
             </div>
