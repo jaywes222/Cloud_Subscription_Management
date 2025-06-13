@@ -30,7 +30,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: loginMutationFn
+    mutationFn: loginMutationFn,
   });
 
   const formSchema = z.object({
@@ -64,14 +64,17 @@ const SignIn = () => {
             description: "Please change your password before proceeding.",
             variant: "warning",
           });
-          navigate(`/change-password?cuscode=${data.cusCode}`)
+          console.log("requirePasswordChange");
+          navigate(`/change-password?cuscode=${data.cusCode}`);
         } else {
           toast({
             title: "Login Successful",
             description: "You have successfully logged in.",
             variant: "success",
           });
+          console.log("Login Successful", data);
           navigate(`/workspace/:${data.workspaceRedirectUrl}`);
+          // navigate(`/change-password`);
         }
       },
       onError: (error) => {
@@ -79,7 +82,7 @@ const SignIn = () => {
           title: "Error",
           description: error.message,
           variant: "destructive",
-        })
+        });
       },
     });
   };
@@ -98,9 +101,7 @@ const SignIn = () => {
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Welcome back</CardTitle>
-              <CardDescription>
-                Login with your CusCode
-              </CardDescription>
+              <CardDescription>Login with your CusCode</CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...form}>
