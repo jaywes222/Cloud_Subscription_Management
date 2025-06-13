@@ -140,7 +140,7 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-   color: #000000;
+  color: #000000;
 }
 
 .bs .amount-green {
@@ -172,7 +172,7 @@
   font-size: 16px;
   line-height: 1.5;
   margin-bottom: 1rem;
- color: #000000;
+  color: #000000;
 }
 
 .bs .radio-group {
@@ -264,7 +264,7 @@
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
- color: #000000;
+  color: #000000;
   outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
@@ -389,7 +389,7 @@
 .bs .total-row .receipt-name,
 .bs .total-row .receipt-price {
   margin: 0;
-  color: #000000!important;
+  color: #000000 !important;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -398,7 +398,7 @@
   text-align: center;
   margin-top: 0.5rem;
   font-size: 0.875rem;
-  color: #6b7280 !important; 
+  color: #6b7280 !important;
 }
 .bs-hr-container {
   padding: 1rem; /* equivalent to Tailwind's p-3 */
@@ -412,10 +412,10 @@
 
 .bs .container-fluid {
   width: 100%;
-  max-width: 1100px;
+  /* max-width: 1100px; */
   margin: 0 auto;
-  height: 100%;
-  max-height: 800px;
+  /* height: 100%;
+  max-height: 800px; */
   padding: 30px 15px;
   box-sizing: border-box;
 }
