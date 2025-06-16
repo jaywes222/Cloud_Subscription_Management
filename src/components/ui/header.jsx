@@ -124,10 +124,6 @@ const Header = () => {
               <User className="w-4 h-4" />
               View Profile
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleProfileClick}>
-              <KeyRound className="w-4 h-4" />
-              Change Password
-            </DropdownMenuItem>
 
             {/* Optional Logout */}
             <DropdownMenuSeparator />

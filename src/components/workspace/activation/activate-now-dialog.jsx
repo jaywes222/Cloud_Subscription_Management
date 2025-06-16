@@ -8,7 +8,10 @@ const ActivateNowDialog = () => {
 
     return (
         <Dialog modal={true} open={open} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-xl border-0" style={{ minHeight: "700px" }}>
+            <DialogContent
+                className="w-full max-w-2xl border-0 !p-0 overflow-hidden"
+                style={{ height: "auto", maxHeight: "90vh" }}
+            >
                 <Activation />
             </DialogContent>
         </Dialog>
