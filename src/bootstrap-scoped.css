@@ -54,7 +54,7 @@
  
   font-size: 14px;
   line-height: 1.5;
-  color: #000000;
+  color: #343a40;
 }
 
 .bs .mpesa-steps-1 li {
@@ -140,14 +140,10 @@
 }
 
 .bs .custom-radio {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #000000;
-  -webkit-user-select: none;
-  user-select: none;
+  margin-bottom: 0; /* Remove bottom margin if present */
+  border: 1px solid #e5e7eb; /* Optional: a thin line between options */
+  padding: 1rem 1.25rem;
+  width: 100%; /* Optional: full width */
 }
 
 
@@ -268,6 +264,8 @@
   box-shadow: 0 0 5px #d69e2e;
 }
 
+<<<<<<< HEAD
+=======
 .bs .receipt-container {
   background-color: #fff;
 
@@ -355,6 +353,7 @@
   border-top: 1px solid #d1d5db; /* Tailwind's gray-300 */
 }
 
+>>>>>>> a16f47275b32abcf23823f4bcc4a65cdda252a41
 .bs .container-fluid {
   width: 100%;
   /* max-width: 1100px; */
