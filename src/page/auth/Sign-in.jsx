@@ -74,7 +74,6 @@ const SignIn = () => {
           });
           console.log("Login Successful", data);
           navigate(`/workspace/:${data.workspaceRedirectUrl}`);
-          // navigate(`/change-password`);
         }
       },
       onError: (error) => {

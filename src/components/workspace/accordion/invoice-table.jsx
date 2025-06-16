@@ -10,24 +10,6 @@ import {
 } from "../../../components/ui/table";
 import { cn } from "../../../lib/utils";
 
-// Status Indicator with color
-const StatusIndicator = ({ status }) => {
-    const normalized = (status || "pending").toLowerCase();
-    const colorClass =
-        normalized === "paid"
-            ? "bg-green-500"
-            : normalized === "unpaid"
-                ? "bg-yellow-500"
-                : "bg-red-500";
-
-    return (
-        <div className="flex items-center gap-2">
-            <span className={cn("inline-block w-2 h-2 rounded-full", colorClass)} />
-            <span className="capitalize text-sm text-muted-foreground">{status}</span>
-        </div>
-    );
-};
-
 // Actions
 const ActionButtons = ({ onView, onDownload }) => (
     <div className="flex items-center gap-2">
@@ -42,7 +24,7 @@ const ActionButtons = ({ onView, onDownload }) => (
 
 const InvoiceTable = ({ invoices = [], className }) => {
     const rows = useMemo(() => {
-        return invoices.map((invoice) => (
+        return invoices.slice(0, 12).map((invoice) => (
             <TableRow
                 key={invoice.id}
                 tabIndex={0}
@@ -60,9 +42,6 @@ const InvoiceTable = ({ invoices = [], className }) => {
                     {invoice.paymentMethod || "Unknown"}
                 </TableCell>
                 <TableCell>
-                    <StatusIndicator status={invoice.status} />
-                </TableCell>
-                <TableCell>
                     <ActionButtons
                         onView={() => console.log("View", invoice)}
                         onDownload={() => console.log("Download", invoice)}
@@ -74,24 +53,31 @@ const InvoiceTable = ({ invoices = [], className }) => {
     }, [invoices]);
 
     return (
-        <Table
-            className={cn("w-full", className)}
-            role="table"
-            aria-label="Invoices and Receipts Table"
-        >
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Invoice ID</TableHead>
-                    <TableHead>Date Issued</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Payment Method</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Actions</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>{rows}</TableBody>
-        </Table>
+        <div className="w-full space-y-2">
+            <Table
+                className={cn("w-full", className)}
+                role="table"
+                aria-label="Invoices and Receipts Table"
+            >
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Invoice ID</TableHead>
+                        <TableHead>Date Issued</TableHead>
+                        <TableHead>Description</TableHead>
+                        <TableHead>Amount</TableHead>
+                        <TableHead>Payment Method</TableHead>
+                        <TableHead>Actions</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>{rows}</TableBody>
+            </Table>
+
+            {invoices.length > 12 && (
+                <p className="text-sm text-muted-foreground italic">
+                    Showing first 12 of {invoices.length} invoices.
+                </p>
+            )}
+        </div>
     );
 };
 

@@ -1,16 +1,22 @@
 import React, { createContext, useContext, useEffect } from "react";
 import useWorkspaceId from "../hooks/use-workspace-id";
+import useAuth from './../hooks/api/use-auth';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const workspaceId = useWorkspaceId();
+    const {
+        data: authData,
+        error: authError,
+        isLoading: authLoading,
+        isFetching,
+        refetch: refetchAuth
+    } = useAuth();
 
-    useEffect(() => {
-    }, []);
+    const user = authData;
 
     return (
-        <AuthContext.Provider value={{ workspaceId }}>
+        <AuthContext.Provider value={{ user, authError, authLoading, isFetching, refetchAuth }}>
             {children}
         </AuthContext.Provider>
     );
