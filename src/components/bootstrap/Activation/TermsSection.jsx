@@ -13,7 +13,6 @@ export default function TermsSection({ termsChecked, onChange }) {
             <br />
             <br />
             <br />
-            <br />
             <strong>My Subscription begins Today.</strong>
             <br />
             <br />
@@ -42,7 +41,7 @@ export default function TermsSection({ termsChecked, onChange }) {
               />
             </div>
             <label className="form-check-label" htmlFor="terms">
-              <span style={{ fontSize: 14 }}>
+              <span style={{ fontSize: 12 }}>
                 By clicking Activate My Account, I agree to the
                 <a
                   href="#"
