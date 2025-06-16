@@ -5,15 +5,8 @@ import Uploads from "./Uploads";
 import PackageInfo from "./PackageInfo";
 import useReactivateNowDialog from "../../../hooks/use-reactivate-now-dialog";
 import ReactivateNowDialog from "../../workspace/activation/reactivate-now-dialog";
-
-// const API_URL = "http://20.164.20.36:86";
-// const API_HEADER = {
-//   accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-//   Authorization: `Bearer ${JSON.parse(localStorage.getItem("authToken"))}`,
-//   // "Content-Type": "multipart/form-data",
-// };
-// const ACCESS_KEY =
-//   "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9";
+import { useQuery } from "@tanstack/react-query";
+import { getFilesQueryFn } from "../../../lib/api";
 
 const Activation = ({
   cusCode,
@@ -35,6 +28,15 @@ const Activation = ({
   });
 
   const { onOpen } = useReactivateNowDialog();
+
+  const { data, isPending } = useQuery({
+    queryKey: ["uploadedFiles"],
+    queryFn: getFilesQueryFn, 
+    refetchOnMount: true,
+    // onSuccess: () => {
+    //   console.log("Uploaded file(s): ", data);
+    // },
+  })
 
   return (
     <div className="bs">
@@ -86,12 +88,6 @@ const Activation = ({
               </Nav>
 
               <Tab.Content>
-                {/* <Tab.Pane eventKey="trainingSheet">
-                <p>Training Sheets Upload</p>
-              </Tab.Pane>
-              <Tab.Pane eventKey="masterDoc">
-                <p>Master Documents Upload</p>
-              </Tab.Pane> */}
                 <Tab.Pane eventKey="uploads">
                   <Uploads
                     handleSubmit={handleSubmit}
