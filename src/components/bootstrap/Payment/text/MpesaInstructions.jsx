@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Card, ListGroup, Button, Row, Col } from "react-bootstrap";
+import Stk from "./Stk";
+import Confirmation from "../pay/confirmation";
 
 const MpesaInstructions = () => {
   const navigate = useNavigate();
@@ -40,51 +42,96 @@ const MpesaInstructions = () => {
             </ListGroup>
           </>
         ) : show === "STK" ? (
-          "STK"
+          <Stk />
         ) : (
-          "confirm"
+          <Confirmation />
         )}
 
         <Row className="mpesa-steps-1-footer">
-          <Col xs={12} md="auto" className="mb-2">
-            <Button
-              className="custom-complete-button"
-              onClick={() => navigate("/complete")}
-            >
-              Complete
-            </Button>
-          </Col>
-          <Col xs={12} md="auto" className="mb-2">
-            <span
-              className="link"
-              // onClick={() => navigate("/stk")}
-              onClick={() => setShow("mpesa")}
-              role="button"
-            >
-              Pay via MPESA
-            </span>
-          </Col>
-          <Col xs={12} md="auto" className="mb-2">
-            <span
-              className="link"
-              // onClick={() => navigate("/stk")}
-              onClick={() => setShow("STK")}
-              role="button"
-            >
-              Pay via MPESA Express (STK Push)
-            </span>
-          </Col>
-          <Col xs={12} md="auto">
-            <span
-              className="link"
-              // onClick={() => navigate("/confirmation")}
-              onClick={() => setShow("confirm")}
-              role="button"
-            >
-              Confirm My Payment
-            </span>
-          </Col>
+          {show !== "mpesa" && show !== "confirm" && (
+            <Col xs={12} md="auto" className="mb-1">
+              <Button
+                className="custom-complete-button"
+                onClick={() => {
+                  // Add payment logic here if needed
+                  console.log("Initiate Payment");
+                }}
+              >
+                Pay
+              </Button>
+            </Col>
+          )}
+          {show !== "confirm" && (
+            <Col xs={12} md="auto" className="mb-1">
+              <Button
+                className="custom-complete-button"
+                onClick={() => navigate("/complete")}
+              >
+                Complete
+              </Button>
+            </Col>
+          )}
+          {show !== "mpesa" && show !== "STK" && (
+            <Col xs={12} md="auto" className="mb-1">
+              <Button
+                className="custom-complete-button"
+                onClick={() => navigate("/complete")}
+              >
+                Confirm
+              </Button>
+            </Col>
+          )}
+          {show !== "mpesa" && show !== "STK" && show !== "confirm" && (
+            <Col xs={12} md="auto" className="mb-1">
+              <Button
+                className="custom-complete-button"
+                onClick={() => {
+                  // Add payment logic here if needed
+                  console.log("Initiate Payment");
+                }}
+              >
+                Pay
+              </Button>
+            </Col>
+          )}
+          {show !== "mpesa" && (
+            <Col xs={12} md="auto" className="mb-1">
+              <span
+                className="link"
+                // onClick={() => navigate("/stk")}
+                onClick={() => setShow("mpesa")}
+                role="button"
+              >
+                Pay via Paybill
+              </span>
+            </Col>
+          )}
+          {show !== "STK" && show !== "confirm" && (
+            <Col xs={12} md="auto" className="mb-1">
+              <span
+                className="link"
+                // onClick={() => navigate("/stk")}
+                onClick={() => setShow("STK")}
+                role="button"
+              >
+                Pay via MPESA Express (STK Push)
+              </span>
+            </Col>
+          )}
         </Row>
+        {show !== "confirm" && (
+          <Row className="mpesa-steps-1-footer">
+            <Col xs={12} className="text-center ">
+              <span
+                className="link"
+                onClick={() => setShow("confirm")}
+                role="button"
+              >
+                Confirm My Payment
+              </span>
+            </Col>
+          </Row>
+        )}
       </Card>
     </Container>
   );
