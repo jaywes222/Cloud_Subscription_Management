@@ -23,6 +23,7 @@ import useWorkspaceId from "../../hooks/use-workspace-id";
 import usePayNowDialog from "../../hooks/use-pay-now-dialog";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../context/auth-provider";
+import useActivateNowDialog from "../../hooks/use-activate-now-dialog";
 
 
 const branches = [
@@ -163,7 +164,8 @@ const subDetails = [
 
 const WorkspaceAnalytics = () => {
   const workspaceId = useWorkspaceId();
-  const { onOpen } = usePayNowDialog();
+  const { onOpen: onPayNowOpen } = usePayNowDialog();
+  const { onOpen: onActivateNowOpen } = useActivateNowDialog();
 
   const { user, isLoading } = useAuthContext();
   const [openIndex, setOpenIndex] = useState(null);
@@ -233,13 +235,15 @@ const WorkspaceAnalytics = () => {
           </div>
 
           <div className="flex flex-col gap-2 min-w-[140px]">
-            <Button variant="outline" asChild>
-              <Link to={`/workspace/${workspaceId}/activation`} className="!text-[15px]">
-                Activate Now
-              </Link>
+            <Button
+              onClick={onActivateNowOpen}
+              className="!text-[15px]"
+              variant="outline"
+            >
+              Activate Now
             </Button>
             <Button
-              onClick={onOpen}
+              onClick={onPayNowOpen}
               className="!text-[15px]"
               variant="outline"
             >

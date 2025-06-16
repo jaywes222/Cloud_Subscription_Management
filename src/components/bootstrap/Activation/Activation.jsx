@@ -3,8 +3,7 @@ import { Button, Card, Container, Form, Nav, Tab } from "react-bootstrap";
 import TermsSection from "./TermsSection";
 import Uploads from "./Uploads";
 import PackageInfo from "./PackageInfo";
-import useReactivateNowDialog from "../../../hooks/use-reactivate-now-dialog";
-import ReactivateNowDialog from "../../workspace/activation/reactivate-now-dialog";
+import { DialogHeader, DialogTitle } from "../../ui/dialog";
 
 // const API_URL = "http://20.164.20.36:86";
 // const API_HEADER = {
@@ -34,14 +33,12 @@ const Activation = ({
     users: "",
   });
 
-  const { onOpen } = useReactivateNowDialog();
-
   return (
     <div className="bs">
       <Container className="mt-4">
         <Card className="px-4 w-100" style={{ maxWidth: "60rem", fontSize: "20px", }}>
           <Card.Body>
-            <div className="card-title">
+            {/* <div className="card-title">
               <h5 className="fs-5">Activate Subscription</h5>
               <Button
                 style={{
@@ -54,7 +51,10 @@ const Activation = ({
               >
                 Reactivate Now
               </Button>
-            </div>
+            </div> */}
+            <DialogHeader>
+              <DialogTitle>Activate my Subscription</DialogTitle>
+            </DialogHeader>
 
             <Form.Group className="mb-3">
               <Form.Control
@@ -139,7 +139,6 @@ const Activation = ({
           </Card.Body>
         </Card>
       </Container>
-      <ReactivateNowDialog />
     </div>
   );
 };

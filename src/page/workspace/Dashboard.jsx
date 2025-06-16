@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import useWorkspaceId from "../../hooks/use-workspace-id";
 import WorkspaceAnalytics from "../../components/workspace/workspace-analytics";
 import { WorkspaceDashboardSkeleton } from "../../components/skeleton-loaders/dashboard-skeleton";
-import PayNowDialog from "../../components/workspace/pay-now-dialog";
 import { useQuery } from "@tanstack/react-query";
 import { getAllWorkspacesUserIsMemberQueryFn } from "../../lib/api";
+import PayNowDialog from "../../components/workspace/payment/pay-now-dialog";
+import ActivateNowDialog from "../../components/workspace/activation/activate-now-dialog";
 
 const WorkspaceDashboard = () => {
   const workspaceId = useWorkspaceId();
@@ -74,6 +75,7 @@ const WorkspaceDashboard = () => {
       </div>
       <WorkspaceAnalytics />
       <PayNowDialog />
+      <ActivateNowDialog />
     </main>
   );
 };

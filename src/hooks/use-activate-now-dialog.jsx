@@ -1,8 +1,8 @@
 import { parseAsBoolean, useQueryState } from "nuqs";
 
-const useReactivateNowDialog = () => {
+const useActivateNowDialog = () => {
     const [open, setOpen] = useQueryState(
-        "reactivate-now",
+        "activate-now",
         parseAsBoolean.withDefault(false)
     );
 
@@ -16,4 +16,4 @@ const useReactivateNowDialog = () => {
     };
 };
 
-export default useReactivateNowDialog;
+export default useActivateNowDialog;
