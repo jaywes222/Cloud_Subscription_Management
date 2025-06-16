@@ -9,77 +9,122 @@ import {
 } from "../../../components/ui/table";
 import { cn } from "../../../lib/utils";
 
-// Moved StatusIndicator here for reuse
-const StatusIndicator = ({ status }) => {
-    const normalized = (status || "pending").toLowerCase();
-    const colorClass =
-        normalized === "active"
-            ? "bg-green-500"
-            : normalized === "inactive"
-                ? "bg-red-500"
-                : "bg-yellow-500";
+const sampleTransactions = [
+    {
+        id: 1,
+        date: "2025-01-01",
+        description: "January Subscription",
+        debit: 0,
+        credit: 1000,
+    },
+    {
+        id: 2,
+        date: "2025-01-15",
+        description: "Payment Received",
+        debit: 1000,
+        credit: 0,
+    },
+    {
+        id: 3,
+        date: "2025-02-01",
+        description: "February Subscription",
+        debit: 0,
+        credit: 1000,
+    },
+    {
+        id: 4,
+        date: "2025-02-10",
+        description: "Partial Payment",
+        debit: 600,
+        credit: 0,
+    },
+    {
+        id: 5,
+        date: "2025-03-01",
+        description: "March Subscription",
+        debit: 0,
+        credit: 1000,
+    },
+    {
+        id: 6,
+        date: "2025-03-05",
+        description: "Overpayment",
+        debit: 1500,
+        credit: 0,
+    },
+];
+
+const formatKES = (amount) =>
+    new Intl.NumberFormat("en-KE", {
+        style: "currency",
+        currency: "KES",
+        minimumFractionDigits: 2,
+    }).format(amount);
+
+const SubscriptionScheduleTable = ({ transactions = sampleTransactions, billingCycle = "monthly" }) => {
+    let runningBalance = 0;
+    let totalCredit = 0;
+    let totalDebit = 0;
+
+    const slicedTx = transactions.slice(0, 11)
+
+    const rows = slicedTx.map((tx) => {
+        runningBalance += tx.debit - tx.credit;
+        totalDebit += tx.debit;
+        totalCredit += tx.credit;
+
+        return {
+            ...tx,
+            runningBalance: runningBalance,
+        };
+    });
 
     return (
-        <div className="flex items-center gap-2">
-            <span className={cn("inline-block w-2 h-2 rounded-full", colorClass)} />
-            <span className="capitalize text-sm text-muted-foreground">{status}</span>
-        </div>
-    );
-};
-
-const SubscriptionScheduleTable = ({ subscriptions = [], className }) => {
-    const formatKES = (amount) =>
-        new Intl.NumberFormat('en-KE', {
-            style: 'currency',
-            currency: 'KES',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        }).format(amount);
-
-    const renderSchedule = (schedule) =>
-        schedule.map(({ date, amount, status }, idx) => (
-            <div key={idx} className="whitespace-nowrap">
-                <span>{date}: </span>
-                <span
-                    className={cn(
-                        "font-semibold",
-                        status === "paid" ? "text-green-600" : "text-red-600"
-                    )}
-                >
-                    {formatKES(amount)} ({status})
-                </span>
+        <div className="space-y-6 w-full">
+            <div className="w-full border rounded-md">
+                <Table className="w-full">
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Posting Date</TableHead>
+                            <TableHead>Description</TableHead>
+                            <TableHead className="text-right">Debit</TableHead>
+                            <TableHead className="text-right">Credit</TableHead>
+                            <TableHead className="text-right">Balance</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {rows.map((tx) => (
+                            <TableRow key={tx.id}>
+                                <TableCell>{tx.date}</TableCell>
+                                <TableCell>{tx.description}</TableCell>
+                                <TableCell className="text-right text-red-600">
+                                    {tx.debit ? formatKES(tx.debit) : "-"}
+                                </TableCell>
+                                <TableCell className="text-right text-green-600">
+                                    {tx.credit ? formatKES(tx.credit) : "-"}
+                                </TableCell>
+                                <TableCell className={cn("text-right", tx.runningBalance < 0 ? "text-red-500" : "text-green-700")}>
+                                    {formatKES(tx.runningBalance)}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                        <TableRow className="bg-muted font-semibold">
+                            <TableCell colSpan={2}>Total</TableCell>
+                            <TableCell className="text-right text-red-700">{formatKES(totalDebit)}</TableCell>
+                            <TableCell className="text-right text-green-700">{formatKES(totalCredit)}</TableCell>
+                            <TableCell className={cn("text-right", runningBalance < 0 ? "text-red-700" : "text-green-700")}>
+                                {formatKES(runningBalance)}
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
             </div>
-        ));
 
-    return (
-        <Table className={cn("overflow-auto max-h-96", className)} role="table" aria-label="Subscription Schedule Table">
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Sub ID</TableHead>
-                    <TableHead>Subscription Name</TableHead>
-                    <TableHead>Start Date</TableHead>
-                    <TableHead>Cycle</TableHead>
-                    <TableHead>Schedule</TableHead>
-                    <TableHead>Payment Method</TableHead>
-                    <TableHead>Status</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {subscriptions.map((sub) => (
-                    <TableRow key={sub.id} tabIndex={0} aria-label={`Subscription ${sub.name} with status ${sub.status}`}>
-                        <TableCell>{sub.id}</TableCell>
-                        <TableCell>{sub.name}</TableCell>
-                        <TableCell>{sub.startDate}</TableCell>
-                        <TableCell className="capitalize">{sub.cycle}</TableCell>
-                        <TableCell>{renderSchedule(sub.schedule)}</TableCell>
-                        <TableCell>{sub.paymentMethod}</TableCell>
-                        <TableCell>
-                            <StatusIndicator status={sub.status} />
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
+            {transactions.length > 11 && (<p className="text-sm text-muted-foreground italic">
+                Showing first 11 of {transactions.length} transactions + total.
+            </p>
+            )}
+        </div>
     );
 };
 

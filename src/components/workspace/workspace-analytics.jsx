@@ -173,7 +173,7 @@ const WorkspaceAnalytics = () => {
   };
 
   const username = user?.fullname || "Unknown User";
-  const clientPackage = user?.clientPackage || "Unknown Client Package"
+  const packageName = user?.packageName || "Unknown Client Package"
   const companyName = user?.companyName || "Unknown Company";
   const cusCode = user?.psCusCode || "CUSXXX";
   const billingCycle = user?.billingCycle || "Unknown Cycle";
@@ -182,108 +182,107 @@ const WorkspaceAnalytics = () => {
 
 
   return (
-    <Card className="w-full h-[calc(100vh-100px)] p-6 rounded-2xl flex flex-col">
-      {/* Top Summary Section */}
-      <CardHeader className="flex flex-col md:flex-row justify-between items-start gap-12 md:gap-6">
-        <div className="flex-1 min-w-[140px]">
-          <CardTitle className="text-xl">{cusCode} - {companyName}</CardTitle>
-          <p className="text-sm text-caramel font-medium mt-1">
-            {clientPackage}
-          </p>
-          <div className="text-muted-foreground mt-2 text-sm leading-6">
-            <div>{billingCycle} <br /></div>
+    <div className="min-h-screen flex flex-col px-6 py-4">
+      <Card className="flex flex-col flex-1 overflow-hidden rounded-2xl">
+        {/* Top Summary Section */}
+        <CardHeader className="flex flex-col md:flex-row justify-between items-start gap-12 md:gap-6">
+          <div className="flex-1 min-w-[140px]">
+            <CardTitle className="text-xl">{cusCode} - {companyName}</CardTitle>
+            <p className="text-sm text-caramel font-medium mt-1">
+              {packageName}
+            </p>
+            <div className="text-muted-foreground mt-2 text-sm leading-6">
+              <div>{billingCycle} <br /></div>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <p className="flex items-center gap-1 cursor-pointer w-fit">
-                  <span>{branchCount} Branches</span>
-                  <ChevronDown className="w-4 h-4" />
-                </p>
-              </DropdownMenuTrigger>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <p className="flex items-center gap-1 cursor-pointer w-fit">
+                    <span>{branchCount} Branches</span>
+                    <ChevronDown className="w-4 h-4" />
+                  </p>
+                </DropdownMenuTrigger>
 
-              <DropdownMenuContent className="min-w-48 rounded-md py-1">
-                {branches.map((branch, id) => (
-                  <DropdownMenuItem
-                    key={id}
-                    className="pointer-events-none text-muted-foreground"
-                  >
-                    {branch}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                <DropdownMenuContent className="min-w-48 rounded-md py-1">
+                  {branches.map((branch, id) => (
+                    <DropdownMenuItem
+                      key={id}
+                      className="pointer-events-none text-muted-foreground"
+                    >
+                      {branch}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
 
-            <div>{userCount} Users</div>
-          </div>
-        </div>
-
-        <div className="flex-1 min-w-[200px] space-y-2 text-sm">
-          {subDetails.map((detail) => (
-            <div key={detail.id} className="flex justify-between">
-              <span className="text-muted-foreground">{detail.label}:</span>
-              <span
-                className={`font-medium ${detail.isDestructive ? "text-red-600" : "text-gray-800"
-                  }`}
-              >
-                {detail.value}
-              </span>
+              <div>{userCount} Users</div>
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className="flex flex-col gap-2 min-w-[140px]">
-          <Button variant="outline" asChild>
-            <Link to={`/workspace/${workspaceId}/activation`} className="!text-[15px]">
-              Activate Now
-            </Link>
-          </Button>
-          <Button
-            onClick={onOpen}
-            className="!text-[15px]"
-            variant="outline"
-          >
+          <div className="flex-1 min-w-[200px] space-y-2 text-sm">
+            {subDetails.map((detail) => (
+              <div key={detail.id} className="flex justify-between">
+                <span className="text-muted-foreground">{detail.label}:</span>
+                <span
+                  className={`font-medium ${detail.isDestructive ? "text-red-600" : "text-gray-800"
+                    }`}
+                >
+                  {detail.value}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-2 min-w-[140px]">
+            <Button variant="outline" asChild>
+              <Link to={`/workspace/${workspaceId}/activation`} className="!text-[15px]">
+                Activate Now
+              </Link>
+            </Button>
+            <Button
+              onClick={onOpen}
+              className="!text-[15px]"
+              variant="outline"
+            >
               Pay Now
-          </Button>
-          <Button variant="outline" className="text-red-600 border-red-500">
-            Cancel Subscription
-          </Button>
-        </div>
-      </CardHeader>
+            </Button>
+          </div>
+        </CardHeader>
 
-      {/* Scrollable Collapsible Section */}
-      <CardContent className="mt-6 overflow-auto flex-1">
-        <div className="space-y-4 pb-2">
-          {/* Uploads Section */}
-          <CollapsibleRow
-            icon={<Upload className="w-4 h-4" />}
-            label="Uploads (3)"
-            isOpen={openIndex === 0}
-            onToggle={() => handleToggle(0)}
-          >
-            <UploadsTable files={uploadedFiles}/>
-          </CollapsibleRow>
+        {/* Scrollable Collapsible Section */}
+        <CardContent className="flex-1 min-h-0 overflow-hidden px-0 pb-6">
+          <div className="flex flex-col space-y-4 h-full">
+            {/* Uploads Section */}
+            <CollapsibleRow
+              icon={<Upload className="w-4 h-4" />}
+              label="Uploads (3)"
+              isOpen={openIndex === 0}
+              onToggle={() => handleToggle(0)}
+            >
+              <UploadsTable files={uploadedFiles} />
+            </CollapsibleRow>
 
-          {/* Invoices/Receipts Section */}
-          <CollapsibleRow
-            icon={<ReceiptText className="w-4 h-4" />}
-            label="Invoices / Receipts"
-            isOpen={openIndex === 1}
-            onToggle={() => handleToggle(1)}>
-              <InvoiceTable invoices={invoices}/>
-          </CollapsibleRow>
+            {/* Invoices/Receipts Section */}
+            <CollapsibleRow
+              icon={<ReceiptText className="w-4 h-4" />}
+              label="Invoices / Receipts"
+              isOpen={openIndex === 1}
+              onToggle={() => handleToggle(1)}>
+              <InvoiceTable invoices={invoices} />
+            </CollapsibleRow>
 
-          {/* Sub Schedule Section */}
-          <CollapsibleRow
-            icon={<Calendar className="w-4 h-4" />}
-            label="Subscription Schedule"
-            isOpen={openIndex === 2}
-            onToggle={() => handleToggle(2)}>
-            <SubscriptionScheduleTable subscriptions ={subscriptionSchedule} />
-          </CollapsibleRow>
+            {/* Sub Schedule Section */}
+            <CollapsibleRow
+              icon={<Calendar className="w-4 h-4" />}
+              label="Subscription Schedule"
+              isOpen={openIndex === 2}
+              onToggle={() => handleToggle(2)}>
+              <SubscriptionScheduleTable subscriptions={subscriptionSchedule} />
+            </CollapsibleRow>
 
-        </div>
-      </CardContent>
-    </Card>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
