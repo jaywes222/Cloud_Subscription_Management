@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Pay from "../pay/confirmation.jsx";
+
 import PaymentForm from "../../../workspace/payment-form.jsx";
 
 const CardLayout = () => {
@@ -9,7 +9,7 @@ const CardLayout = () => {
         <div className="center-content">
           <div className="payment-box">
             <PaymentForm />
-            <Pay />
+            {/* <Pay /> */}
           </div>
         </div>
       </div>
