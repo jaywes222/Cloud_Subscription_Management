@@ -86,12 +86,6 @@ const Activation = ({
               </Nav>
 
               <Tab.Content>
-                {/* <Tab.Pane eventKey="trainingSheet">
-                <p>Training Sheets Upload</p>
-              </Tab.Pane>
-              <Tab.Pane eventKey="masterDoc">
-                <p>Master Documents Upload</p>
-              </Tab.Pane> */}
                 <Tab.Pane eventKey="uploads">
                   <Uploads
                     handleSubmit={handleSubmit}
