@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCallback } from "react";
 import {
   Dialog,
@@ -9,12 +9,41 @@ import {
   DialogTitle,
 } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { Loader } from "lucide-react";
+import { toast } from "../../hooks/use-toast";
 
 const LogoutDialog = ({ isOpen, setIsOpen }) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleLogout = useCallback(() => {
-    console.log("User logged out");
-    setIsOpen(false);
-  }, [setIsOpen]);
+    setIsLoading(true);
+
+    try {
+      queryClient.removeQueries({ queryKey: ["authUser"] });
+      localStorage.removeItem("token");
+      sessionStorage.clear();
+
+      toast({
+        title: "Signed out",
+        description: "You’ve been logged out successfully.",
+        variant: "success"
+      });
+
+      navigate("/");
+      setIsOpen(false);
+    } catch (error) {
+      toast({
+        title: "Logout failed",
+        description: error?.message || "Something went wrong during logout.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    }
+  }, [queryClient, navigate, setIsOpen]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -27,7 +56,8 @@ const LogoutDialog = ({ isOpen, setIsOpen }) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button type="button" onClick={handleLogout}>
+          <Button disabled={isLoading} type="button" onClick={handleLogout}>
+            {isLoading && <Loader className="animate-spin" />}
             Sign out
           </Button>
           <Button type="button" onClick={() => setIsOpen(false)}>

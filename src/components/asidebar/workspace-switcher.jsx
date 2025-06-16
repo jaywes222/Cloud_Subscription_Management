@@ -22,12 +22,10 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useWorkspaceId from "../../hooks/use-workspace-id";
 import { getAllWorkspacesUserIsMemberQueryFn } from "../../lib/api";
-import useCreateWorkspaceDialog from "../../hooks/use-create-workspace-dialog";
 
 export function WorkspaceSwitcher() {
   const navigate = useNavigate();
   const { isMobile } = useSidebar();
-  const { onOpen } = useCreateWorkspaceDialog();
   const workspaceId = useWorkspaceId();
 
   const [activeWorkspace, setActiveWorkspace] = useState();
@@ -65,12 +63,6 @@ export function WorkspaceSwitcher() {
     <>
       <SidebarGroupLabel className="w-full justify-between pr-0">
         <span>Subscriptions</span>
-        <button
-          onClick={onOpen}
-          className="flex size-5 items-center justify-center rounded-full border"
-        >
-          <Plus className="size-3.5" />
-        </button>
       </SidebarGroupLabel>
 
       <SidebarMenu>
@@ -142,14 +134,14 @@ export function WorkspaceSwitcher() {
               <DropdownMenuSeparator />
 
               <DropdownMenuItem
-                className="gap-2 p-2 !cursor-pointer"
-                onClick={onOpen}
+                className="gap-2 p-2 opacity-50 cursor-not-allowed pointer-events-none"
+                disabled
               >
                 <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                   <Plus className="size-4" />
                 </div>
                 <div className="font-medium text-muted-foreground">
-                  Add subscription
+                  Add subscription <span className="ml-1 text-xs text-caramel">(v2)</span>
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>

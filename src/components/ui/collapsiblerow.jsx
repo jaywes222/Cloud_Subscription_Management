@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 const CollapsibleRow = ({ icon, label, children, isOpen, onToggle }) => (
     <div className="w-full">
         <div
-            className="flex justify-between items-center border rounded-xl px-4 py-3 hover:bg-accent cursor-pointer"
+            className="flex justify-between items-center border rounded px-4 py-3 hover:bg-accent cursor-pointer"
             onClick={onToggle}
         >
             <div className="flex items-center space-x-2 text-sm font-medium">
@@ -20,8 +20,8 @@ const CollapsibleRow = ({ icon, label, children, isOpen, onToggle }) => (
         </div>
 
         {isOpen && (
-            <div className="mt-2 rounded-md border px-4 py-3 text-sm bg-caramel-foreground">
-                {children}
+            <div className="mt-2 rounded border px-0 py-3 text-sm bg-caramel-foreground overflow-visible w-full">
+                <div className="w-full">{children}</div>
             </div>
         )}
     </div>

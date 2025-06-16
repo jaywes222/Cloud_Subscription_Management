@@ -29,7 +29,7 @@ const StatusIndicator = ({ status }) => {
 const UploadsTable = ({ files = [], className }) => {
     return (
         <Table
-            className={cn("overflow-auto max-h-96", className)}
+            className={cn("w-full", className)}
             role="table"
             aria-label="Files Table"
         >
@@ -39,12 +39,12 @@ const UploadsTable = ({ files = [], className }) => {
                     <TableHead>File Name</TableHead>
                     <TableHead>File Type</TableHead>
                     <TableHead>File Size</TableHead>
-                    <TableHead>Last Modified At</TableHead>
+                    <TableHead>File Category</TableHead>
                     <TableHead>Status</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {files.map((file) => (
+                {files.slice(0,12).map((file) => (
                     <TableRow
                         key={file.id}
                         tabIndex={0}
@@ -58,7 +58,7 @@ const UploadsTable = ({ files = [], className }) => {
                                 ? `${(file.size / (1024 * 1024)).toFixed(2)} MB`
                                 : "N/A"}
                         </TableCell>
-                        <TableCell>{file.lastModifiedAt || "N/A"}</TableCell>
+                        <TableCell>{file.category || "N/A"}</TableCell>
                         <TableCell>
                             <StatusIndicator status={file.status} />
                         </TableCell>

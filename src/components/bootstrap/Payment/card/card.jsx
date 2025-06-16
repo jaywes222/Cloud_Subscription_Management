@@ -4,7 +4,7 @@ import Card3 from "./card3.jsx";
 import Table from "../table/table.jsx";
 import Hline from "../line/hline.jsx";
 import Text from "../text/text.jsx";
-import PaymentForm from "../../../workspace/payment-form.jsx";
+import PaymentForm from "../../../workspace/payment/payment-form.jsx";
 
 const CardLayout = () => {
   return (

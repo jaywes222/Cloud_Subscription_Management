@@ -30,6 +30,7 @@ import {
 } from "../../components/ui/avatar";
 
 import { User, Hospital, KeyRound, LogOut } from "lucide-react";
+import {useAuthContext} from "../../context/auth-provider"
 
 
 
@@ -38,7 +39,7 @@ const Header = () => {
   const workspaceId = useWorkspaceId();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-
+  const {user, isLoading} = useAuthContext()
 
   const pathname = location.pathname;
 
@@ -47,17 +48,27 @@ const Header = () => {
     return null;
   };
 
+  const getInitials = (name) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+  
+
   const pageHeading = getPageLabel(pathname);
 
-
-  const user = {
-    userName: "Walter Nila",
-    companyName: "Nila Pharmacy",
-    initials: "WN",
-    avatarUrl: "", 
-  };
-
   const handleProfileClick = () => navigate(`/workspace/${workspaceId}/profile`);
+
+  const username = user?.fullname || "Unknown User";
+  const companyName = user?.companyName || "Unknown Company";
+  const email = user?.email || "N/A";
+  const phone = user?.phone || "N/A";
+  const password = "************";
+  const profilePicUrl = user?.profilePicUrl || "/images/default-avatar.png";
+  const cusCode = user?.psCusCode || "CUSXXX";
 
   return (
     <header className="flex sticky top-0 z-50 bg-white h-12 shrink-0 items-center border-b">
@@ -93,22 +104,18 @@ const Header = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
-              {user.avatarUrl ? (
-                <AvatarImage src={user.avatarUrl} alt={user.name} />
-              ) : (
-                <AvatarFallback>{user.initials}</AvatarFallback>
-              )}
+              <AvatarFallback>{getInitials(username)}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
             <DropdownMenuLabel className="flex items-center gap-2">
               <User className="w-4 h-4 text-muted-foreground" />
-              {user.userName}
+              {username}
             </DropdownMenuLabel>
             <DropdownMenuLabel className="flex items-center gap-2 text-muted-foreground text-xs">
               <Hospital className="w-3.5 h-3.5" />
-              {user.companyName}
+              {companyName}
             </DropdownMenuLabel>
 
             <DropdownMenuSeparator />
@@ -116,10 +123,6 @@ const Header = () => {
             <DropdownMenuItem onClick={handleProfileClick}>
               <User className="w-4 h-4" />
               View Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleProfileClick}>
-              <KeyRound className="w-4 h-4" />
-              Change Password
             </DropdownMenuItem>
 
             {/* Optional Logout */}
