@@ -47,3 +47,10 @@ export const getSubscriptionQueryFn = async (data) => {
   const response = await API.get("/payment/subscription", data);
   return response.data;
 };
+
+// Activation ************
+export const getFilesQueryFn = async () => {
+  const response = await API.get("active-client/uploaded-files");
+  console.log("Uploaded file(s): ", response.data.files.originalFileName);
+  return response.data;
+}
