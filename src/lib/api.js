@@ -54,3 +54,9 @@ export const getFilesQueryFn = async () => {
   console.log("Uploaded file(s): ", response.data.files.originalFileName);
   return response.data;
 }
+
+export const uploadFileMutationFn = async (data) => {
+  const response = await API.post("active-client/upload-file", data);
+  console.log("File(s) uploaded successfully: ", response.data.originalFileName);
+  return response.data;
+}
