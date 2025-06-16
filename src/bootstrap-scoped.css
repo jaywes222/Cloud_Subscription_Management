@@ -656,6 +656,17 @@
   align-items: flex-start;
 }
 
+.bs .upload-file-btn {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid gray;
+  border-radius: 5px;
+  border-color: #c58c4f;
+  margin-left: 25px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
 /* RE-ACTIVATION STYLES */
 
 .bs .live-title {
@@ -668,8 +679,6 @@
 .bs .item-label-col{
   color: #6b7280!important;
 }
-
-
 
 .bs .pay-wrapper {
   width: 100%;
