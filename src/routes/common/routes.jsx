@@ -5,9 +5,11 @@ import Profile from "../../page/workspace/Profile";
 
 import { AUTH_ROUTES, PROTECTED_ROUTES } from "./routePaths";
 import Activation from "../../components/bootstrap/Activation/Activation";
+import ChangePassword from "../../page/auth/Change-Password";
 
 export const authenticationRoutePaths = [
   { path: AUTH_ROUTES.SIGN_IN, element: <SignIn /> },
+  { path: AUTH_ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
 ];
 
 export const protectedRoutePaths = [
