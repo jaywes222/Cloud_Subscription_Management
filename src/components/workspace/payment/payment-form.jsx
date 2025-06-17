@@ -1,23 +1,17 @@
 import React, { useState } from "react";
-import { DialogDescription, DialogHeader, DialogTitle } from "../../ui/Dialog";
 
+import { DialogHeader, DialogDescription, DialogTitle } from "../../ui/Dialog";
 import MpesaInstructions from "../../bootstrap/Payment/text/MpesaInstructions";
 
 import BankInstructions from "../../bootstrap/Payment/pay/BankInstructions";
 const PaymentForm = () => {
-  const [selectedOption, setSelectedOption] = useState("mpesa");
+  const [selectedOption, setSelectedOption] = useState("");
 
   const handleRadioClick = (value) => {
     setSelectedOption((prev) => (prev === value ? "" : value));
   };
   return (
     <div className="bs ">
-      <div className="payment-container">
-        <DialogHeader>
-          <DialogTitle>Payment Information</DialogTitle>
-          <DialogDescription>Choose Payment method</DialogDescription>
-        </DialogHeader>
-
         <form>
           <div className="radio-group">
             <label className="custom-radio">
@@ -48,7 +42,6 @@ const PaymentForm = () => {
           </div>
         </form>
       </div>
-    </div>
   );
 };
 
