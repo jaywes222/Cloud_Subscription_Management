@@ -1,13 +1,4 @@
 import React from "react";
-<<<<<<< payment
-import {
-  Dialog,
-  DialogHeader,
-  DialogTitle,
-  DialogContent,
-} from "../../ui/dialog";
-=======
->>>>>>> main
 import Activation from "../../bootstrap/Activation/Activation";
 import useActivateNowDialog from "../../../hooks/use-activate-now-dialog";
 import { Dialog, DialogContent } from "../../ui/Dialog";
