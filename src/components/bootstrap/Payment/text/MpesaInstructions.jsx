@@ -19,28 +19,13 @@ const MpesaInstructions = () => {
                 Mpesa, click the complete button below.
               </Card.Title>
               <ListGroup as="ul" className="mpesa-steps-1 mb-4">
-                <ListGroup.Item as="li">
-                  Go to M-PESA on your phone
-                </ListGroup.Item>
-                <ListGroup.Item as="li">
-                  Select <strong>Pay Bill</strong> option
-                </ListGroup.Item>
-                <ListGroup.Item as="li">
-                  Enter Business Number: <strong>222222</strong>
-                </ListGroup.Item>
-                <ListGroup.Item as="li">
-                  Enter Account Number: <strong>CUST001</strong>
-                </ListGroup.Item>
-                <ListGroup.Item as="li">
-                  Enter the Amount: <strong>KES 250,000</strong>
-                </ListGroup.Item>
-                <ListGroup.Item as="li">
-                  Enter your M-PESA PIN and press <strong>Send</strong>
-                </ListGroup.Item>
-                <ListGroup.Item as="li">
-                  You will receive a confirmation SMS from{" "}
-                  <strong>MPESA</strong>
-                </ListGroup.Item>
+                <ListGroup.Item>Go to M-PESA on your phone</ListGroup.Item>
+                <ListGroup.Item>Select <strong>Pay Bill</strong> option</ListGroup.Item>
+                <ListGroup.Item>Enter Business Number: <strong>222222</strong></ListGroup.Item>
+                <ListGroup.Item>Enter Account Number: <strong>CUST001</strong></ListGroup.Item>
+                <ListGroup.Item>Enter the Amount: <strong>KES 250,000</strong></ListGroup.Item>
+                <ListGroup.Item>Enter your M-PESA PIN and press <strong>Send</strong></ListGroup.Item>
+                <ListGroup.Item>You will receive a confirmation SMS from <strong>MPESA</strong></ListGroup.Item>
               </ListGroup>
             </>
           ) : show === "STK" ? (
@@ -51,11 +36,10 @@ const MpesaInstructions = () => {
 
           <Row className="mpesa-steps-1-footer">
             {show !== "mpesa" && show !== "confirm" && (
-              <Col xs={12} md="auto" className="mb-1">
+              <Col xs="auto">
                 <Button
                   className="custom-complete-button"
                   onClick={() => {
-                    // Add payment logic here if needed
                     console.log("Initiate Payment");
                   }}
                 >
@@ -64,7 +48,7 @@ const MpesaInstructions = () => {
               </Col>
             )}
             {show !== "confirm" && (
-              <Col xs={12} md="auto" className="mb-1">
+              <Col xs="auto">
                 <Button
                   className="custom-complete-button"
                   onClick={() => navigate("/complete")}
@@ -74,7 +58,7 @@ const MpesaInstructions = () => {
               </Col>
             )}
             {show !== "mpesa" && show !== "STK" && (
-              <Col xs={12} md="auto" className="mb-1">
+              <Col xs="auto">
                 <Button
                   className="custom-complete-button"
                   onClick={() => navigate("/confirm")}
@@ -84,7 +68,7 @@ const MpesaInstructions = () => {
               </Col>
             )}
             {show !== "mpesa" && show !== "STK" && show !== "confirm" && (
-              <Col xs={12} md="auto" className="mb-1">
+              <Col xs="auto">
                 <Button
                   className="custom-complete-button"
                   onClick={() => {
@@ -97,7 +81,7 @@ const MpesaInstructions = () => {
               </Col>
             )}
             {show !== "mpesa" && (
-              <Col xs={12} md="auto" className="mb-1">
+              <Col xs="auto">
                 <span
                   className="link"
                   // onClick={() => navigate("/stk")}
@@ -109,7 +93,7 @@ const MpesaInstructions = () => {
               </Col>
             )}
             {show !== "STK" && show !== "confirm" && (
-              <Col xs={12} md="auto" className="mb-1">
+              <Col xs="auto">
                 <span
                   className="link"
                   // onClick={() => navigate("/stk")}
@@ -123,7 +107,7 @@ const MpesaInstructions = () => {
           </Row>
           {show !== "confirm" && (
             <Row className="mpesa-steps-1-footer">
-              <Col xs={12} className="text-center ">
+              <Col className="text-center ">
                 <span
                   className="link"
                   onClick={() => setShow("confirm")}
