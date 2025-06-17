@@ -25,12 +25,7 @@ const Activation = ({
 
             <TermsSection
               termsChecked={termsChecked}
-              setTermsChecked={(e) => setTermsChecked(e.target.value)}
-              onClick={() =>
-                formRef.current?.dispatchEvent(
-                  new Event("submit", { cancelable: true, bubbles: true })
-                )
-              }
+              onChange={(e) => setTermsChecked(e.target.checked)}
             />
 
             <div className="activate-btn">
@@ -40,6 +35,8 @@ const Activation = ({
                 disabled={!termsChecked}
                 style={{
                   backgroundColor: "#c58c4f",
+                  cursor: termsChecked ? "pointer" : "not-allowed",
+                  opacity: termsChecked ? 1 : 0.6,
                   borderRadius: "5px",
                   padding: "5px 10px",
                   fontSize: "14px",
