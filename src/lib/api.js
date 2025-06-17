@@ -52,7 +52,7 @@ export const getSubscriptionQueryFn = async (data) => {
 export const getFilesQueryFn = async () => {
   const response = await API.get("active-client/uploaded-files");
   console.log("Uploaded file(s): ", response.data.files.originalFileName);
-  return response.data;
+  return response.data.files;
 }
 
 export const uploadFileMutationFn = async (data) => {

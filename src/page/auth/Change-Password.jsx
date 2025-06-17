@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,69 +22,60 @@ import {
 import { Input } from "../../components/ui/input";
 import Logo from "../../components/logo";
 import { useMutation } from "@tanstack/react-query";
-import { loginMutationFn } from "../../lib/api";
 import { toast } from "../../hooks/use-toast";
 import { Loader } from "lucide-react";
+import { useAuthContext } from "../../context/auth-provider";
 
-const SignIn = () => {
+const ChangePassword = () => {
   const navigate = useNavigate();
+  const {isLoading, user} = useAuthContext()
 
   const { mutate, isPending } = useMutation({
-    mutationFn: loginMutationFn,
+    mutationFn: changePasswordMutationFn,
+    onSuccess: () => {
+      toast({
+        title: "Password changed successfully.",
+        description: "You have successfully changed your password.",
+        variant: "success",
+      });
+      console.log("Login Successful", data);
+      navigate(`/workspace/:${data.workspaceRedirectUrl}`);
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
   });
 
   const formSchema = z.object({
-    cuscode: z.string().trim().min(1, {
-      message: "Cuscode is required",
+    currentPassword: z.string().trim().min(6, {
+      message: "Current Password is required",
     }),
-    password: z.string().trim().min(6, {
-      message: "Password is required",
+    newPassword: z.string().trim().min(6, {
+      message: "New Password is required",
     }),
   });
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      cuscode: "",
-      password: "",
+      currentPassword: "",
+      newPassword: "",
     },
   });
 
   const onSubmit = (values) => {
-    if (isPending) return;
-
-    mutate(values, {
-      onSuccess: (data) => {
-        const token = data.token;
-        localStorage.setItem("token", token);
-
-        if (data.requirePasswordChange) {
-          toast({
-            title: "Password Change Required",
-            description: "Please change your password before proceeding.",
-            variant: "warning",
-          });
-          console.log("requirePasswordChange");
-          navigate(`/change-password?cuscode=${data.cusCode}`);
-        } else {
-          toast({
-            title: "Login Successful",
-            description: "You have successfully logged in.",
-            variant: "success",
-          });
-          console.log("Login Successful", data);
-          navigate(`/workspace/:${data.workspaceRedirectUrl}`);
-        }
-      },
-      onError: (error) => {
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive",
-        });
-      },
-    });
+    if (!user) return;
   };
+
+  mutate({
+    ...values,
+    cuscode: user.psCusCode,
+    email: user.email
+  });
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
@@ -100,7 +91,7 @@ const SignIn = () => {
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Welcome back</CardTitle>
-              <CardDescription>Login with your CusCode</CardDescription>
+              <CardDescription>Change my Password</CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -110,15 +101,17 @@ const SignIn = () => {
                       <div className="grid gap-2">
                         <FormField
                           control={form.control}
-                          name="cuscode"
+                          name="currentPassword"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                CusCode
-                              </FormLabel>
+                              <div className="flex items-center">
+                                <FormLabel className="dark:text-[#f1f7feb5] text-sm">
+                                  Current Password
+                                </FormLabel>
+                              </div>
                               <FormControl>
                                 <Input
-                                  placeholder="JR8XTV"
+                                  type="password"
                                   className="!h-[48px]"
                                   {...field}
                                 />
@@ -131,19 +124,13 @@ const SignIn = () => {
                       <div className="grid gap-2">
                         <FormField
                           control={form.control}
-                          name="password"
+                          name="newPassword"
                           render={({ field }) => (
                             <FormItem>
                               <div className="flex items-center">
                                 <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                  Password
+                                  New Password
                                 </FormLabel>
-                                <a
-                                  href="#"
-                                  className="ml-auto text-sm underline-offset-4 hover:underline"
-                                >
-                                  Forgot your password?
-                                </a>
                               </div>
                               <FormControl>
                                 <Input
@@ -163,7 +150,7 @@ const SignIn = () => {
                         disabled={isPending}
                       >
                         {isPending && <Loader className="animate-spin" />}
-                        Login
+                        Change Password
                       </Button>
                     </div>
                   </div>
@@ -172,7 +159,7 @@ const SignIn = () => {
             </CardContent>
           </Card>
           <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
-            By clicking login, you agree to our{" "}
+            By clicking change password, you agree to our{" "}
             <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </div>
         </div>
@@ -181,4 +168,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default ChangePassword;

@@ -21,13 +21,13 @@ import SubscriptionScheduleTable from "./accordion/subscription-schedule-table";
 import UploadsTable from "./accordion/uploads-table";
 import useWorkspaceId from "../../hooks/use-workspace-id";
 import usePayNowDialog from "../../hooks/use-pay-now-dialog";
-import { Link } from "react-router-dom";
 import { useAuthContext } from "../../context/auth-provider";
 import useActivateNowDialog from "../../hooks/use-activate-now-dialog";
 import { Plus } from "lucide-react";
 import { useMutation } from '@tanstack/react-query';
 import { uploadFileMutationFn } from "../../lib/api";
 import { toast } from "../../hooks/use-toast";
+import { getFileTypeEnum } from "../../utils/getFileType";
 
 
 
@@ -215,12 +215,24 @@ const subscriptionSchedule = [
 
     const handleFileChange = (e) => {
       const file = e.target.files?.[0];
-      if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        uploadFile(formData);
-        e.target.value = "";
+      if (!file) return;
+    
+      const fileType = getFileTypeEnum(file);
+      if (fileType === null) {
+        toast({
+          title: "Unsupported file type",
+          description: "Please upload a PDF, Excel, or Image file.",
+          variant: "destructive",
+        });
+        return;
       }
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileType", fileType)
+
+      uploadFile(formData);
+      e.target.value = "";
     }
 
   return (
@@ -322,7 +334,7 @@ const subscriptionSchedule = [
               {/* Uploads Section */}
               <CollapsibleRow
                 icon={<Upload className="w-4 h-4" />}
-                label="Uploads (3)"
+                label="Uploads"
                 isOpen={openIndex === 0}
                 onToggle={() => handleToggle(0)}
               >

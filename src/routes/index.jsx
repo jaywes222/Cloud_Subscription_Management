@@ -2,10 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./protected.route";
 import AuthRoute from "./auth.route";
-import {
-  authenticationRoutePaths,
-  protectedRoutePaths,
-} from "./common/routes";
+import { authenticationRoutePaths, protectedRoutePaths } from "./common/routes";
 import AppLayout from "../layout/app.layout";
 import BaseLayout from "../layout/base.layout";
 import NotFound from "../page/errors/NotFound";

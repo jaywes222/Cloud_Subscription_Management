@@ -8,6 +8,9 @@ import {
     TableCell,
 } from "../../../components/ui/table";
 import { cn } from "../../../lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { getFilesQueryFn } from "../../../lib/api";
+import { toast } from "../../../hooks/use-toast";
 
 const StatusIndicator = ({ status }) => {
     const normalized = (status || "pending").toLowerCase();
@@ -26,7 +29,35 @@ const StatusIndicator = ({ status }) => {
     );
 };
 
-const UploadsTable = ({ files = [], className }) => {
+const UploadsTable = ({className }) => {
+    const {
+        data: files = [],
+        isError
+    } = useQuery({
+        queryKey: ["uploaded-files"],
+        queryFn: getFilesQueryFn
+    });
+
+    if (isError) {
+        toast({
+            title: "Failed to fetch uploaded files.",
+            description: "Unable to load uploaded files.",
+            variant: "destructive",
+        })
+    }
+
+    const formattedFiles = files.map((file, index) => ({
+        id: index + 1,
+        name: file.originalFileName,
+        fileType: file.filetype,
+        category: file.isTrainingSheet
+            ? "Training Sheet"
+            : file.isMasterDoc
+                ? "Master Doc"
+                : "General",
+        status: "approved",
+    }));
+
     return (
         <Table
             className={cn("w-full", className)}
@@ -38,13 +69,12 @@ const UploadsTable = ({ files = [], className }) => {
                     <TableHead>File ID</TableHead>
                     <TableHead>File Name</TableHead>
                     <TableHead>File Type</TableHead>
-                    <TableHead>File Size</TableHead>
                     <TableHead>File Category</TableHead>
                     <TableHead>Status</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {files.slice(0,12).map((file) => (
+                {formattedFiles.slice(0,12).map((file) => (
                     <TableRow
                         key={file.id}
                         tabIndex={0}
@@ -53,11 +83,6 @@ const UploadsTable = ({ files = [], className }) => {
                         <TableCell>{file.id}</TableCell>
                         <TableCell>{file.name}</TableCell>
                         <TableCell>{file.fileType || "Unknown"}</TableCell>
-                        <TableCell>
-                            {file.size
-                                ? `${(file.size / (1024 * 1024)).toFixed(2)} MB`
-                                : "N/A"}
-                        </TableCell>
                         <TableCell>{file.category || "N/A"}</TableCell>
                         <TableCell>
                             <StatusIndicator status={file.status} />
