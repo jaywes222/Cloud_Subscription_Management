@@ -1,5 +1,6 @@
 export const AUTH_ROUTES = {
-  SIGN_IN: "/",
+	SIGN_IN: '/',
+	CHANGE_PASSWORD: '/change-password/:cusCode',
 };
 
 export const PROTECTED_ROUTES = {
@@ -9,12 +10,18 @@ export const PROTECTED_ROUTES = {
 };
 
 export const isAuthRoute = (pathname) => {
-  return Object.values(AUTH_ROUTES).includes(pathname);
+	return Object.values(AUTH_ROUTES).some((routePattern) => {
+		// route param pattern to a regex
+		const regex = new RegExp(
+			`^${routePattern.replace(/:[^/]+/g, '[^/]+')}$`
+		);
+		return regex.test(pathname);
+	});
 };
 
+
 export const resolveRoute = (template, params = {}) => {
-  return Object.entries(params).reduce(
-    (path, [key, val]) => path.replace(`:${key}`, val),
-    template
-  );
+	return template.replace(/:([a-zA-Z]+)/g, (_, key) =>
+		params[key] !== undefined ? params[key] : `:${key}`
+	);
 };
