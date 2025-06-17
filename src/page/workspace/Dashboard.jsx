@@ -62,16 +62,16 @@ const WorkspaceDashboard = () => {
     );
 
   return (
-    <main className="flex flex-1 flex-col py-4 md:pt-3">
-      <div className="flex items-center justify-between space-y-2 mb-6">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">
+    <main className="flex flex-1 flex-col py-4 md:pt-3 ">
+      <div className="flex items-center justify-between space-y-2  bg-red-900">
+        {/* <div>
+          <h2 className="text-xl font-bold tracking-tight">
             Subscription Overview
           </h2>
           <p className="text-muted-foreground">
             Here's an overview for this subscription.
           </p>
-        </div>
+        </div> */}
       </div>
       <WorkspaceAnalytics />
       <PayNowDialog />

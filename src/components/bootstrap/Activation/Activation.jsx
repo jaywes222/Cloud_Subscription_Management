@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Button, Card, Container } from "react-bootstrap";
 import TermsSection from "./TermsSection";
-import { DialogHeader, DialogTitle } from "../../ui/dialog";
+import { DialogHeader, DialogTitle } from "../../ui/Dialog";
 
 
 const Activation = ({
