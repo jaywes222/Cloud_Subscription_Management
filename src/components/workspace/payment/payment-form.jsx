@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { DialogTitle, DialogDescription } from "@radix-ui/react-dialog";
+import { DialogHeader } from "../../ui/Dialog";
+
 import MpesaInstructions from "../../bootstrap/Payment/text/MpesaInstructions";
-import Stk from "../../bootstrap/Payment/text/Stk";
+
 import BankInstructions from "../../bootstrap/Payment/pay/BankInstructions";
 const PaymentForm = () => {
   const [selectedOption, setSelectedOption] = useState("mpesa");
@@ -11,8 +14,11 @@ const PaymentForm = () => {
   return (
     <div className="bs ">
       <div className="payment-container">
-        <h6 className="form-title">Complete payment</h6>
-        <h5 className="form-title">Choose Payment method</h5>
+        <DialogHeader>
+          <DialogTitle>Payment Information</DialogTitle>
+          <DialogDescription>Choose Payment method</DialogDescription>
+        </DialogHeader>
+
         <form>
           <div className="radio-group">
             <label className="custom-radio">
