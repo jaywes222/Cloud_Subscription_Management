@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { DialogTitle, DialogDescription } from "@radix-ui/react-dialog";
+import { DialogHeader } from "../../ui/Dialog";
 
+<<<<<<< HEAD
 import { DialogHeader, DialogDescription, DialogTitle } from "../../ui/Dialog";
+=======
+>>>>>>> b95835457ad88394f2c5db8a3a4f58274a3b7d66
 import MpesaInstructions from "../../bootstrap/Payment/text/MpesaInstructions";
 
 import BankInstructions from "../../bootstrap/Payment/pay/BankInstructions";
@@ -12,6 +17,7 @@ const PaymentForm = () => {
   };
   return (
     <div className="bs ">
+<<<<<<< HEAD
       <div className="payment-container my-3">
         <DialogHeader className="form-title">
           <DialogTitle>
@@ -21,6 +27,14 @@ const PaymentForm = () => {
             <h6 className="h6.form-title">Choose Payment method</h6>
           </DialogDescription>
         </DialogHeader>
+=======
+      <div className="payment-container">
+        <DialogHeader>
+          <DialogTitle>Payment Information</DialogTitle>
+          <DialogDescription>Choose Payment method</DialogDescription>
+        </DialogHeader>
+
+>>>>>>> b95835457ad88394f2c5db8a3a4f58274a3b7d66
         <form>
           <div className="radio-group">
             <label className="custom-radio">
