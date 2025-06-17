@@ -1,12 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Container, Card, ListGroup, Button, Row, Col } from "react-bootstrap";
-import Stk from "../text/Stk";
+import { stkPushMutationFn } from "../../../../lib/api";
 import Confirmation from "../pay/confirmation";
+import Stk from "../text/Stk";
 
 const MpesaInstructions = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState("mpesa");
+  const [phone, setPhone] = useState("");
+
+  const { mutate: pushSTK, isPending } = useMutation({
+    mutationFn: stkPushMutationFn,
+    onSuccess: () => {
+      toast({
+        title: "STK Push Initiated.",
+        description: "Wait for MPESA Prompt and dial in your PIN.",
+        variant: "success",
+      });
+      console.log("STK Push Successful", data);
+    },
+    onError: (error) => {
+          toast({
+            title: "Error",
+            description: error.message,
+            variant: "destructive",
+          });
+        },
+  });
 
   return (
     <div className="bs ">
@@ -19,17 +42,17 @@ const MpesaInstructions = () => {
                 Mpesa, click the complete button below.
               </Card.Title>
               <ListGroup as="ul" className="mpesa-steps-1 mb-4">
-                <ListGroup.Item>Go to M-PESA on your phone</ListGroup.Item>
-                <ListGroup.Item>Select <strong>Pay Bill</strong> option</ListGroup.Item>
-                <ListGroup.Item>Enter Business Number: <strong>222222</strong></ListGroup.Item>
-                <ListGroup.Item>Enter Account Number: <strong>CUST001</strong></ListGroup.Item>
-                <ListGroup.Item>Enter the Amount: <strong>KES 250,000</strong></ListGroup.Item>
-                <ListGroup.Item>Enter your M-PESA PIN and press <strong>Send</strong></ListGroup.Item>
-                <ListGroup.Item>You will receive a confirmation SMS from <strong>MPESA</strong></ListGroup.Item>
+                <ListGroup.Item as="li">Go to M-PESA on your phone</ListGroup.Item>
+                <ListGroup.Item as="li">Select <strong>Pay Bill</strong> option</ListGroup.Item>
+                <ListGroup.Item as="li">Enter Business Number: <strong>222222</strong></ListGroup.Item>
+                <ListGroup.Item as="li">Enter Account Number: <strong>CUST001</strong></ListGroup.Item>
+                <ListGroup.Item as="li">Enter the Amount: <strong>KES 250,000</strong></ListGroup.Item>
+                <ListGroup.Item as="li">Enter your M-PESA PIN and press <strong>Send</strong></ListGroup.Item>
+                <ListGroup.Item as="li">You will receive a confirmation SMS from <strong>MPESA</strong></ListGroup.Item>
               </ListGroup>
             </>
           ) : show === "STK" ? (
-            <Stk />
+              <Stk phone={phone} setPhone={setPhone} />
           ) : (
             <Confirmation />
           )}
@@ -40,10 +63,19 @@ const MpesaInstructions = () => {
                 <Button
                   className="custom-complete-button"
                   onClick={() => {
-                    console.log("Initiate Payment");
+                    if (!phone) {
+                      toast({
+                        title: "Missing phone",
+                        description: "Enter a phone number.",
+                        variant: "destructive"
+                      });
+                      return;
+                    }
+
+                    pushSTK({ phone });
                   }}
                 >
-                  Pay
+                  {isPending ? "Processing..." : "Pay"}
                 </Button>
               </Col>
             )}
@@ -72,7 +104,6 @@ const MpesaInstructions = () => {
                 <Button
                   className="custom-complete-button"
                   onClick={() => {
-                    // Add payment logic here if needed
                     console.log("Initiate Payment");
                   }}
                 >
@@ -84,7 +115,6 @@ const MpesaInstructions = () => {
               <Col xs="auto">
                 <span
                   className="link"
-                  // onClick={() => navigate("/stk")}
                   onClick={() => setShow("mpesa")}
                   role="button"
                 >
@@ -96,7 +126,6 @@ const MpesaInstructions = () => {
               <Col xs="auto">
                 <span
                   className="link"
-                  // onClick={() => navigate("/stk")}
                   onClick={() => setShow("STK")}
                   role="button"
                 >

@@ -1,4 +1,5 @@
 import API from "./axios-client";
+import STK_API from "./axios-client-stk";
 
 // Auth ************
 
@@ -43,11 +44,10 @@ export const getUserProfileQueryFn = async () => {};
 export const updateUserProfileQueryFn = async () => {};
 
 // Payment ************
-export const getSubscriptionQueryFn = async (data) => {
-  const response = await API.get("/payment/subscription", data);
+export const stkPushMutationFn = async (data) => {
+  const response = await STK_API.post('/CashierCollection/MpesaStkpush', data);
   return response.data;
 };
-
 // Activation ************
 export const getFilesQueryFn = async () => {
   const response = await API.get("active-client/uploaded-files");

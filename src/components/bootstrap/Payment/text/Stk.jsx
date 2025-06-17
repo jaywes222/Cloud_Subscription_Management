@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Card, ListGroup, Form, InputGroup } from "react-bootstrap";
 
-const Stk = () => {
+const Stk = ({ phone, setPhone }) => {
   return (
     <div className="bs">
       <Container>
@@ -33,6 +33,8 @@ const Stk = () => {
                   type="tel"
                   placeholder="e.g. 254712345678"
                   aria-label="Phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   className="w-100 border border-dark p-2"
                 />
               </InputGroup>
