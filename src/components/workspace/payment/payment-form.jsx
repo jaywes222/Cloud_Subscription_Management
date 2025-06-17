@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import MpesaInstructions from "../bootstrap/Payment/text/MpesaInstructions";
-import Stk from "../bootstrap/Payment/text/Stk";
-import BankInstructions from "../bootstrap/Payment/pay/BankInstructions";
+import MpesaInstructions from "../../bootstrap/Payment/text/MpesaInstructions";
+import Stk from "../../bootstrap/Payment/text/Stk";
+import BankInstructions from "../../bootstrap/Payment/pay/BankInstructions";
 const PaymentForm = () => {
   const [selectedOption, setSelectedOption] = useState("mpesa");
 
