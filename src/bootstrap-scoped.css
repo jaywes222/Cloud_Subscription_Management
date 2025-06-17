@@ -15,14 +15,73 @@
 }
 .bs .mpesa-card {
   margin: 0;
-  padding: 15px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
 
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
 }
+
+
+/* Visible state */
+.bs .mpesa-card.active {
+  max-height: none; /* or a large enough value like 1000px */
+  opacity: 1;
+}
+
+
+
+.bs .mpesa-card-title {
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: #dac0a4;
+  display: inline-block; /* shrink to content width */
+  margin: 0 auto 10px auto; /* center horizontally */
+}
+
+.bs .mpesa-steps-1 {
+  list-style: decimal inside;
+  background-color: #f8f9fa; /* light gray */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #dee2e6; /* subtle border */
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+ 
+  font-size: 14px;
+  line-height: 1.5;
+  color: #343a40;
+}
+
+.bs .mpesa-steps-1 li {
+  margin-bottom: 5px;
+}
+
+.bs .mpesa-steps-1 strong {
+  color: #000000; /* Bootstrap primary blue */
+  font-weight: 600;
+}
+.bs .mpesa-steps-1-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.bs .custom-complete-button {
+  background-color: white !important;
+  color: #000 !important;
+  border: 1px solid #a6a6a6 !important;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 
 /* Visible state */
 .bs .mpesa-card.active {
@@ -88,7 +147,7 @@
 }
 
 .bs .link {
-  color: #d69e2e; /* mustard yellow */
+  color: #C58C4F; /* mustard yellow */
   text-decoration: underline;
   cursor: pointer;
   font-size: 14px;
@@ -118,16 +177,30 @@
   margin-bottom: 1rem;
 }
 
-.bs .payment-container h6.form-title {
-  font-size: 20px;
- font-weight: 600;
+.bs .form-title {
+
+  margin-top: 0;
 }
 
-.bs .payment-container h5.form-title {
-  font-size: 16px;
+.bs .h5.form-title {
+  font-size: 20px; /* Bootstrap h5 size */
+  font-weight: 500;
   margin-top: 1rem;
- font-weight: 500;
+  text-align: left;
+
+  display: flex;              /* Ensure flexbox is applied */
+  justify-content: flex-start; /* Align content to the left */
 }
+
+
+/* H6 Subtitle */
+.bs .h6.form-title {
+  font-size: 18px; /* Bootstrap h6 size */
+  font-weight: 500;
+  margin-top: 0.5rem;
+  /* Bootstrap's secondary text color */
+}
+
 .bs .radio-group .radio-label {
   color: #1f2937 !important; /* dark gray */
 
