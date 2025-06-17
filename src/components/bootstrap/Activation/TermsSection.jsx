@@ -37,17 +37,17 @@ export default function TermsSection({ termsChecked, onChange }) {
                 name="terms"
                 checked={termsChecked}
                 onChange={onChange}
-                style={{ fontSize: 14 }}
+                style={{ fontSize: 12 }}
               />
             </div>
-            <label className="form-check-label" htmlFor="terms">
+            <label className="d-flex align-items-center" htmlFor="terms">
               <span style={{ fontSize: 12 }}>
                 By clicking Activate My Account, I agree to the
                 <a
                   href="#"
                   onClick={(e) => e.preventDefault()}
                   className="text-decoration-underline ms-1"
-                  style={{ color: "#c69867" }}
+                  // style={{ color: "#c69867" }}
                 >
                   Terms & Conditions
                 </a>{" "}
@@ -56,7 +56,7 @@ export default function TermsSection({ termsChecked, onChange }) {
                   href="#"
                   onClick={(e) => e.preventDefault()}
                   className="text-decoration-underline ms-1"
-                  style={{ color: "#c69867" }}
+                  // style={{ color: "#c69867" }}
                 >
                   Privacy Policy
                 </a>
