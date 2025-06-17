@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Card, ListGroup, Button, Row, Col } from "react-bootstrap";
-import Stk from "./Stk";
-import Confirmation from "../pay/confirmation";
+import Stk from "../text/Stk";
+import Confirmation from "../pay/Confirmation";
 
 const MpesaInstructions = () => {
   const navigate = useNavigate();

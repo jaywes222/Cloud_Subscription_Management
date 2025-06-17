@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Card, ListGroup, Button, Row, Col } from "react-bootstrap";
-import Cheque from "./cheque";
-import BankConfirmation from "./bankConfirmation";
+import Cheque from "../pay/cheque";
+import BankConfirmation from "../pay/BankConfirmation";
 const bankInstructions = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState("bank");

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import PaymentForm from "../../../workspace/payment-form.jsx";
+import PaymentForm from "../../../workspace/payment/payment-form";
 
 const CardLayout = () => {
   return (
