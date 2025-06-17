@@ -302,30 +302,7 @@ const subscriptionSchedule = [
                   Pay Now
               </Button>
             </div>
-          </CardHeader>
-
-          {/* Upload File Button */}
-          <div className="bs flex justify-start">
-            <Button
-              variant="secondary"
-              onClick={handleUploadClick}
-              className="upload-file-btn"
-              style={{ maxWidth: "200px" }}
-            >
-              <span className="d-flex align-items-center justify-content-start">
-                <Plus className="me-1" size={14} style={{ color: "orange" }} />
-                {isPending? "Uploading..." :"Upload File"}
-              </span>
-            </Button>
-
-            <input 
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              className="hidden"
-              accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png"
-            />
-          </div>
+          </CardHeader>    
 
           {/* Scrollable Collapsible Section */}
             <CardContent className="flex-1 min-h-0 overflow-hidden px-0 pb-6">
@@ -337,6 +314,28 @@ const subscriptionSchedule = [
                 isOpen={openIndex === 0}
                 onToggle={() => handleToggle(0)}
               >
+                {/* Upload File Button */}
+                <div className="bs flex justify-start">
+                  <Button
+                    variant="secondary"
+                    onClick={handleUploadClick}
+                    className="upload-file-btn"
+                    style={{ maxWidth: "200px" }}
+                  >
+                    <span className="d-flex align-items-center justify-content-start">
+                      <Plus className="me-1" size={14} style={{ color: "orange" }} />
+                      {isPending? "Uploading..." :"Upload File"}
+                    </span>
+                  </Button>
+
+                  <input 
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    className="hidden"
+                    accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png"
+                  />
+                </div>
                 <UploadsTable files={uploadedFiles} />
               </CollapsibleRow>
 
