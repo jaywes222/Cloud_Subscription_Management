@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useEffect } from "react";
-import useWorkspaceId from "../hooks/use-workspace-id";
+import React, { createContext, useContext } from "react";
 import useAuth from './../hooks/api/use-auth';
 
 const AuthContext = createContext();
