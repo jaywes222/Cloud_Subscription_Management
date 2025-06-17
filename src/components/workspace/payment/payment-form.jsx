@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { DialogTitle, DialogDescription } from "@radix-ui/react-dialog";
-import { DialogHeader } from "../../ui/Dialog";
+import { DialogDescription, DialogHeader, DialogTitle } from "../../ui/Dialog";
 
 import MpesaInstructions from "../../bootstrap/Payment/text/MpesaInstructions";
 

@@ -236,7 +236,6 @@ const subscriptionSchedule = [
     }
 
   return (
-    <div className="bs">
       <div className="min-h-screen flex flex-col px-6 py-4">
         <Card className="flex flex-col flex-1 overflow-hidden rounded-2xl">
           {/* Top Summary Section */}
@@ -306,7 +305,7 @@ const subscriptionSchedule = [
           </CardHeader>
 
           {/* Upload File Button */}
-          <div className="flex justify-start">
+          <div className="bs flex justify-start">
             <Button
               variant="secondary"
               onClick={handleUploadClick}
@@ -363,7 +362,6 @@ const subscriptionSchedule = [
           </CardContent>
         </Card>
       </div>
-    </div>
   );
 };
 
