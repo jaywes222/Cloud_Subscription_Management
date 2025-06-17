@@ -7,10 +7,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllWorkspacesUserIsMemberQueryFn } from "../../lib/api";
 import PayNowDialog from "../../components/workspace/payment/pay-now-dialog";
 import ActivateNowDialog from "../../components/workspace/activation/activate-now-dialog";
+import { useAuthContext } from "../../context/auth-provider";
 
 const WorkspaceDashboard = () => {
   const workspaceId = useWorkspaceId();
   const [loading, setLoading] = useState(true);
+  const { user, isLoading } = useAuthContext();
   const [activeWorkspaceName, setActiveWorkspaceName] = useState(null);
   const navigate = useNavigate();
 
@@ -60,10 +62,14 @@ const WorkspaceDashboard = () => {
         workspaceName={activeWorkspaceName || "Loading..."}
       />
     );
+  
+  const companyName = user?.companyName || "Unknown Company";
+  const cusCode = user?.psCusCode || "CUSXXX";
+  const packageName = user?.packageName || "Unknown Client Package"
 
   return (
-    <main className="flex flex-1 flex-col py-4 md:pt-3 ">
-      <div className="flex items-center justify-between space-y-2  bg-red-900">
+    <main className="flex flex-col py-3 md:pt-2 space-y-4">
+      <div className="flex items-center justify-between space-y-2">
         {/* <div>
           <h2 className="text-xl font-bold tracking-tight">
             Subscription Overview
@@ -72,6 +78,12 @@ const WorkspaceDashboard = () => {
             Here's an overview for this subscription.
           </p>
         </div> */}
+        <div>
+          <p className="text-2xl font-semibold">{cusCode} - {companyName}</p>
+          <p className="text-sm text-caramel font-medium mt-1">
+            {packageName}
+          </p>
+        </div>
       </div>
       <WorkspaceAnalytics />
       <PayNowDialog />

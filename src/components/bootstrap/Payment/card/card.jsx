@@ -9,7 +9,6 @@ const CardLayout = () => {
         <div className="center-content">
           <div className="payment-box">
             <PaymentForm />
-            {/* <Pay /> */}
           </div>
         </div>
       </div>

@@ -19,15 +19,6 @@ const PaymentForm = () => {
 
   return (
     <div className="bs ">
-      <div className="payment-container my-3">
-        <DialogHeader className="form-title">
-          <DialogTitle>
-            <h4 className="text-start form-title">Payment Information</h4>
-          </DialogTitle>
-          <DialogDescription>
-            <h5 className="form-title">Choose Payment method</h5>
-          </DialogDescription>
-        </DialogHeader>
         <form>
           <div className="radio-group">
             <label className="custom-radio">
@@ -58,7 +49,6 @@ const PaymentForm = () => {
           </div>
         </form>
       </div>
-    </div>
   );
 };
 
