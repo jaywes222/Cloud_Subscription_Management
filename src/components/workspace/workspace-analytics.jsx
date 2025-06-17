@@ -180,9 +180,6 @@ const subscriptionSchedule = [
     };
 
     const username = user?.fullname || "Unknown User";
-    const packageName = user?.packageName || "Unknown Client Package"
-    const companyName = user?.companyName || "Unknown Company";
-    const cusCode = user?.psCusCode || "CUSXXX";
     const billingCycle = user?.billingCycle || "Unknown Cycle";
     const branchCount = user?.branchCount || "Unknown Branches";
     const userCount = user?.userCount || "Unknown Users";
@@ -236,15 +233,11 @@ const subscriptionSchedule = [
     }
 
   return (
-      <div className="min-h-screen flex flex-col px-6 py-4">
+      <div className="flex flex-col px-4 py-3">
         <Card className="flex flex-col flex-1 overflow-hidden rounded-2xl">
           {/* Top Summary Section */}
-          <CardHeader className="flex flex-col md:flex-row justify-between items-start gap-12 md:gap-6">
+          <CardHeader className="flex flex-col md:flex-row justify-between items-start gap-6 pb-2">
             <div className="flex-1 min-w-[140px]">
-              <CardTitle className="text-xl">{cusCode} - {companyName}</CardTitle>
-              <p className="text-sm text-caramel font-medium mt-1">
-                {packageName}
-              </p>
               <div className="text-muted-foreground mt-2 text-sm leading-6">
                 <div>{billingCycle} <br /></div>
 
@@ -305,7 +298,7 @@ const subscriptionSchedule = [
           </CardHeader>    
 
           {/* Scrollable Collapsible Section */}
-            <CardContent className="flex-1 min-h-0 overflow-hidden px-0 pb-6">
+        <CardContent className="px-4 pb-4">
               <div className="flex flex-col space-y-4 h-full">
               {/* Uploads Section */}
               <CollapsibleRow
@@ -319,8 +312,8 @@ const subscriptionSchedule = [
                   <Button
                     variant="secondary"
                     onClick={handleUploadClick}
-                    className="upload-file-btn"
-                    style={{ maxWidth: "200px" }}
+                    className="upload-file-btn mt-2"
+                  style={{ maxWidth: "180px", fontSize: "14px" }}
                   >
                     <span className="d-flex align-items-center justify-content-start">
                       <Plus className="me-1" size={14} style={{ color: "orange" }} />
