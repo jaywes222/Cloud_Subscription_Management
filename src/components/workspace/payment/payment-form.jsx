@@ -5,11 +5,18 @@ import MpesaInstructions from "../../bootstrap/Payment/text/MpesaInstructions";
 
 import BankInstructions from "../../bootstrap/Payment/pay/BankInstructions";
 const PaymentForm = () => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("mpesa");
+  const [showInstructions, setShowInstructions] = useState("mpesa");
 
   const handleRadioClick = (value) => {
-    setSelectedOption((prev) => (prev === value ? "" : value));
+    if (selectedOption === value) {
+      setShowInstructions(showInstructions === value ? null : value);
+    } else {
+      setSelectedOption(value);
+      setShowInstructions(value);
+    }
   };
+
   return (
     <div className="bs ">
         <form>
@@ -17,6 +24,7 @@ const PaymentForm = () => {
             <label className="custom-radio">
               <input
                 type="radio"
+                name="paymentMethod"
                 value="mpesa"
                 checked={selectedOption === "mpesa"}
                 onClick={() => handleRadioClick("mpesa")}
@@ -24,21 +32,20 @@ const PaymentForm = () => {
               />
               <span className="radio-label">MPESA</span>
             </label>
-            {selectedOption === "mpesa" && <MpesaInstructions />}
-            {/* {selectedOption === "stk" && (
-              <Stk setSelectedOption={setSelectedOption} />
-            )} */}
+            {showInstructions === "mpesa" && <MpesaInstructions />}
+
             <label className="custom-radio">
               <input
                 type="radio"
                 name="paymentMethod"
                 value="bank"
                 checked={selectedOption === "bank"}
-                onChange={(e) => setSelectedOption(e.target.value)}
+                onClick={() => handleRadioClick("bank")}
+                readOnly
               />
               <span className="radio-label">BANK</span>
             </label>
-            {selectedOption === "bank" && <BankInstructions />}
+            {showInstructions === "bank" && <BankInstructions />}
           </div>
         </form>
       </div>

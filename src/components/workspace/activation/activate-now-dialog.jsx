@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Activation from "../../bootstrap/Activation/Activation";
 import useActivateNowDialog from "../../../hooks/use-activate-now-dialog";
 import Activation from "../../bootstrap/Activation/Activation";
 import { Dialog, DialogContent } from "../../ui/Dialog";

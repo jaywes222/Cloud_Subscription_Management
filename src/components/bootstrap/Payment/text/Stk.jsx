@@ -25,7 +25,7 @@ const Stk = ({ phone, setPhone }) => {
             </ListGroup.Item>
           </ListGroup>
 
-          <Form className="mb-4 w-100">
+          <Form className="  payment-form">
             <Form.Group controlId="formPhoneNumber" className="w-100">
               <Form.Label>Phone number</Form.Label>
               <InputGroup className="w-100">

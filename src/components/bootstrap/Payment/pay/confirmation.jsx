@@ -31,7 +31,7 @@ const Confirmation = () => {
           </ListGroup.Item>
         </ListGroup>
 
-        <Form className="mb-4 w-100">
+        <Form className="payment-form">
           <Form.Group controlId="formTransactionId" className="w-100">
             <Form.Label>Transaction ID</Form.Label>
             <InputGroup className="w-100">
@@ -39,7 +39,7 @@ const Confirmation = () => {
                 type="text"
                 placeholder="e.g. RAT2G4W9QU"
                 aria-label="MPESA Transaction ID"
-                className="w-100 border border-dark p-2"
+                className="w-100"
               />
             </InputGroup>
           </Form.Group>
