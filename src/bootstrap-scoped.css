@@ -15,7 +15,7 @@
 }
 .bs .mpesa-card {
   margin: 0;
-<<<<<<< HEAD
+
   padding: 10px;
   border: 1px solid #ccc;
   background-color: #fff;
@@ -81,15 +81,7 @@
   font-size: 14px;
   cursor: pointer;
 }
-=======
-  padding: 15px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
 
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-}
 
 /* Visible state */
 .bs .mpesa-card.active {
@@ -148,7 +140,6 @@
   font-size: 14px;
   cursor: pointer;
 }
->>>>>>> b95835457ad88394f2c5db8a3a4f58274a3b7d66
 
 .bs .custom-complete-button:hover {
   background-color: #f0fdf4 !important;
@@ -156,11 +147,7 @@
 }
 
 .bs .link {
-<<<<<<< HEAD
   color: #C58C4F; /* mustard yellow */
-=======
-  color: #d69e2e; /* mustard yellow */
->>>>>>> b95835457ad88394f2c5db8a3a4f58274a3b7d66
   text-decoration: underline;
   cursor: pointer;
   font-size: 14px;
@@ -190,21 +177,9 @@
   margin-bottom: 1rem;
 }
 
-<<<<<<< HEAD
 .bs .form-title {
 
   margin-top: 0;
-=======
-.bs .payment-container h6.form-title {
-  font-size: 20px;
- font-weight: 600;
-}
-
-.bs .payment-container h5.form-title {
-  font-size: 16px;
-  margin-top: 1rem;
- font-weight: 500;
->>>>>>> b95835457ad88394f2c5db8a3a4f58274a3b7d66
 }
 
 .bs .h5.form-title {
