@@ -60,3 +60,8 @@ export const uploadFileMutationFn = async (data) => {
   console.log("File(s) uploaded successfully: ", response.data.originalFileName);
   return response.data;
 }
+
+export const activateAccountMutationFn = async (data) => {
+  const response = await API.post("active-client/activate-client", data);
+  console.log("Account successfully activated!", response.data);
+}
