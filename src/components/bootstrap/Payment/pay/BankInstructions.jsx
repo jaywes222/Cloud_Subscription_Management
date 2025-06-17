@@ -103,10 +103,10 @@ const bankInstructions = () => {
         </Row>
 
         {show !== "BankConfirmation" && (
-          <Row className="mpesa-steps-1-footer">
+          <Row className="mpesa-steps-2-footer">
             <Col xs={12} className="text-center ">
               <span
-                className="link"
+                className="link link-confirm"
                 onClick={() => setShow("BankConfirmation")}
                 role="button"
               >
