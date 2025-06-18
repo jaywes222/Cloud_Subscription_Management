@@ -7,6 +7,7 @@ import {
     TableHead,
     TableCell,
 } from "../../../components/ui/table";
+import { format } from "date-fns";
 import { Button } from "../../../components/ui/button";
 import { cn } from "../../../lib/utils";
 
@@ -17,124 +18,151 @@ const formatKES = (amount) =>
         minimumFractionDigits: 2,
     }).format(amount);
 
-const getNextDueDate = (latestDate, billingCycle) => {
-    const date = new Date(latestDate);
-    if (billingCycle === "monthly") date.setMonth(date.getMonth() + 1);
-    else if (billingCycle === "quarterly") date.setMonth(date.getMonth() + 3);
-    else if (billingCycle === "annually") date.setFullYear(date.getFullYear() + 1);
-    return date.toISOString().split("T")[0];
-};
+const sampleMonthlyTransactions = [
+    {
+        id: 1,
+        date: '2024-07-01',
+        month: 'July',
+        amountDue: 250000,
+        amountPaid: 250000,
+    },
+    {
+        id: 2,
+        date: '2024-08-01',
+        month: 'August',
+        amountDue: 250000,
+        amountPaid: 250000,
+    },
+    {
+        id: 3,
+        date: '2024-09-01',
+        month: 'September',
+        amountDue: 250000,
+        amountPaid: 300000,
+    },
+    {
+        id: 4,
+        date: '2024-10-01',
+        month: 'October',
+        amountDue: 250000,
+        amountPaid: 250000,
+    },
+    {
+        id: 5,
+        date: '2024-11-01',
+        month: 'November',
+        amountDue: 250000,
+        amountPaid: 250000,
+    },
+    {
+        id: 6,
+        date: '2024-12-01',
+        month: 'December',
+        amountDue: 250000,
+        amountPaid: 250000,
+    },
+    {
+        id: 7,
+        date: '2025-01-01',
+        month: 'January',
+        amountDue: 250000,
+        amountPaid: 300000,
+    },
+    {
+        id: 8,
+        date: '2025-02-01',
+        month: 'February',
+        amountDue: 250000,
+        amountPaid: 250000,
+    },
+];
 
 const SubscriptionScheduleTable = ({
-    transactions = [],
+    transactions = sampleMonthlyTransactions,
+    startDate = "2024-07-01",
     billingCycle = "monthly",
+    monthlyDue = 250000,
+    months = 12,
 }) => {
-    const sortedTx = [...transactions].sort((a, b) => new Date(a.date) - new Date(b.date));
-    let runningBalance = 0;
-    let totalCredit = 0;
-    let totalDebit = 0;
+    const sortedTransactions = [...transactions].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
 
-    const rows = sortedTx.map((tx) => {
-        runningBalance += tx.debit - tx.credit;
-        totalDebit += tx.debit;
-        totalCredit += tx.credit;
-        return {
-            ...tx,
-            runningBalance,
-        };
-    });
+    const schedule = [];
+    let currentDate = new Date(startDate);
+    let carryOver = 0;
+    let txIndex = 0;
 
-    const latestTx = sortedTx[sortedTx.length - 1];
-    const dueDate = getNextDueDate(latestTx?.date || new Date(), billingCycle);
-    const dueAmount = 250000;
+    for (let i = 0; i < months; i++) {
+        const tx = sortedTransactions[i];
+        const amountPaid = tx ? tx.amountPaid : 0;
+        const netPaid = amountPaid + carryOver;
+        const remainingDue = Math.max(monthlyDue - netPaid, 0);
+        carryOver = netPaid - monthlyDue;
 
-    const handleExport = () => {
-        const csvContent = [
-            ["Date", "Description", "Debit", "Credit", "Balance"],
-            ...rows.map((r) => [
-                r.date,
-                r.description,
-                r.debit ? r.debit : "-",
-                r.credit ? r.credit : "-",
-                r.runningBalance,
-            ]),
-        ]
-            .map((e) => e.join(","))
-            .join("\n");
+        const status =
+            netPaid >= monthlyDue ? "paid" : netPaid > 0 ? "partial" : "unpaid";
 
-        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `subscription-transactions.csv`;
-        link.click();
-    };
+        schedule.push({
+            id: i + 1,
+            dueDate: format(currentDate, "yyyy-MM-dd"),
+            month: format(currentDate, "MMMM yyyy"),
+            amountDue: monthlyDue,
+            amountPaid,
+            remainingDue,
+            carryOver,
+            status,
+        });
+
+        currentDate.setMonth(currentDate.getMonth() + 1);
+    }
 
     return (
         <div className="space-y-6 w-full">
-            <div className="flex justify-between items-center">
-                <div>
-                    <p className="text-sm">
-                        <span className="font-semibold">Next Due Date:</span> {dueDate}
-                    </p>
-                    <p className="text-sm">
-                        <span className="font-semibold">Due Amount:</span>{" "}
-                        {formatKES(dueAmount)}
-                    </p>
-                </div>
-                <Button variant="outline" onClick={handleExport}>
-                    Export CSV
-                </Button>
-            </div>
-
             <div className="w-full border rounded-md overflow-x-auto">
-                <Table className="w-full">
+                <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Posting Date</TableHead>
-                            <TableHead>Description</TableHead>
-                            <TableHead className="text-right">Debit</TableHead>
-                            <TableHead className="text-right">Credit</TableHead>
-                            <TableHead className="text-right">Balance</TableHead>
+                            <TableHead>Due Date</TableHead>
+                            <TableHead>Month</TableHead>
+                            <TableHead className="text-right">Amount Due</TableHead>
+                            <TableHead className="text-right">Amount Paid</TableHead>
+                            <TableHead className="text-right">Remaining Due</TableHead>
+                            <TableHead className="text-right">Status</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {rows.map((tx) => (
-                            <TableRow key={tx.id}>
-                                <TableCell>{tx.date}</TableCell>
-                                <TableCell>{tx.description}</TableCell>
-                                <TableCell className="text-right text-red-600">
-                                    {tx.debit ? formatKES(tx.debit) : "-"}
+                        {schedule.map((r) => (
+                            <TableRow key={r.id}>
+                                <TableCell>{r.dueDate}</TableCell>
+                                <TableCell>{r.month}</TableCell>
+                                <TableCell className="text-right text-red-700">
+                                    {formatKES(r.amountDue)}
                                 </TableCell>
-                                <TableCell className="text-right text-green-600">
-                                    {tx.credit ? formatKES(tx.credit) : "-"}
+                                <TableCell className="text-right text-green-700">
+                                    {formatKES(r.amountPaid)}
+                                </TableCell>
+                                <TableCell className="text-right text-orange-700">
+                                    {r.remainingDue > 0 ? formatKES(r.remainingDue) : "-"}
                                 </TableCell>
                                 <TableCell
                                     className={cn(
-                                        "text-right font-medium",
-                                        tx.runningBalance < 0 ? "text-red-600" : "text-green-700"
+                                        "text-right font-semibold",
+                                        r.status === "paid"
+                                            ? "text-green-700"
+                                            : r.status === "partial"
+                                                ? "text-orange-600"
+                                                : "text-red-600"
                                     )}
                                 >
-                                    {formatKES(tx.runningBalance)}
+                                    {r.status === "paid"
+                                        ? "Paid"
+                                        : r.status === "partial"
+                                            ? "Partially Paid"
+                                            : "Unpaid"}
                                 </TableCell>
                             </TableRow>
                         ))}
-                        <TableRow className="bg-muted font-semibold">
-                            <TableCell colSpan={2}>Total</TableCell>
-                            <TableCell className="text-right text-red-700">
-                                {formatKES(totalDebit)}
-                            </TableCell>
-                            <TableCell className="text-right text-green-700">
-                                {formatKES(totalCredit)}
-                            </TableCell>
-                            <TableCell
-                                className={cn(
-                                    "text-right",
-                                    runningBalance < 0 ? "text-red-700" : "text-green-700"
-                                )}
-                            >
-                                {formatKES(runningBalance)}
-                            </TableCell>
-                        </TableRow>
                     </TableBody>
                 </Table>
             </div>
