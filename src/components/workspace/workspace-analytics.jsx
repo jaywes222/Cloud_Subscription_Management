@@ -15,6 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
+import { sampleMonthlyTransactions } from '../../constant/sample-data';
 import { useAuthContext } from "../../context/auth-provider";
 import useActivateNowDialog from "../../hooks/use-activate-now-dialog";
 import usePayNowDialog from "../../hooks/use-pay-now-dialog";
@@ -281,7 +282,10 @@ const WorkspaceAnalytics = () => {
               label="Subscription Schedule"
               isOpen={openIndex === 2}
               onToggle={() => handleToggle(2)}>
-              <SubscriptionScheduleTable />
+              <SubscriptionScheduleTable
+                transactions={sampleMonthlyTransactions}
+                billingCycle='monthly'
+              />
             </CollapsibleRow>
 
           </div>
