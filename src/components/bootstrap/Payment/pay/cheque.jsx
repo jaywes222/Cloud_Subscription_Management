@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, ListGroup } from "react-bootstrap"; // Make sure you import these components
+/*import React from "react";
+import { Card, ListGroup } from "react-bootstrap";
 
 const Cheque = () => {
   return (
@@ -50,3 +50,4 @@ const Cheque = () => {
 };
 
 export default Cheque;
+*/}

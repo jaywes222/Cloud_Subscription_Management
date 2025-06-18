@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+{
+  /*import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Card, ListGroup, Button, Row, Col } from "react-bootstrap";
 import Cheque from "../pay/cheque";
@@ -121,3 +122,5 @@ const bankInstructions = () => {
 };
 
 export default bankInstructions;
+*/
+}
