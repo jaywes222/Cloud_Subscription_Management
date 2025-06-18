@@ -79,7 +79,7 @@ const WorkspaceDashboard = () => {
           </p>
         </div> */}
         <div>
-          <p className="text-2xl font-semibold">{cusCode} - {companyName}</p>
+          <p className="text-xl font-semibold">{cusCode} - {companyName}</p>
           <p className="text-sm text-caramel font-medium mt-1">
             {packageName}
           </p>
