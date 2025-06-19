@@ -4,9 +4,8 @@ import useActivateNowDialog from "../../../hooks/use-activate-now-dialog";
 import { Dialog, DialogContent } from "../../ui/Dialog";
 
 const ActivateNowDialog = () => {
-    const { open, onClose } = useActivateNowDialog();
-    const [termsChecked, setTermsChecked] = useState(false);
-
+  const { open, onClose } = useActivateNowDialog();
+  const [termsChecked, setTermsChecked] = useState(false);
     useEffect(() => {
         if (!open) {
             setTermsChecked(false);
@@ -19,7 +18,10 @@ const ActivateNowDialog = () => {
         className="w-full max-w-2xl border-0 !p-0 overflow-hidden"
         style={{ height: "auto", maxHeight: "90vh" }}
       >
-        <Activation termsChecked={termsChecked} setTermsChecked={setTermsChecked}/>
+        <Activation
+          termsChecked={termsChecked}
+          setTermsChecked={setTermsChecked}
+        />
       </DialogContent>
     </Dialog>
   );

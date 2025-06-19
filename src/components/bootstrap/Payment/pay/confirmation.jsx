@@ -14,11 +14,12 @@ const Confirmation = () => {
   return (
     <div className="bs">
       <Card className="mpesa-card p-4">
-        <Card.Title className="mb-4 mpesa-card-title">
-          Follow the steps below to confirm your MPESA payment.
+        <Card.Title className=" mpesa-card-title">
+          Follow the Steps Below. Once you receive a successful reply from
+          Mpesa, click the complete button below.
         </Card.Title>
 
-        <ListGroup as="ul" className="mpesa-steps-1 mb-4">
+        <ListGroup as="ul" className="mpesa-steps-1 mb-1">
           <ListGroup.Item as="li">
             Open the text message you received from <strong>MPESA</strong>
           </ListGroup.Item>
