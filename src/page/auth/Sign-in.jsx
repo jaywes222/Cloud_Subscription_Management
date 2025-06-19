@@ -175,6 +175,24 @@ const SignIn = () => {
             By clicking login, you agree to our{" "}
             <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </div>
+
+          <div className="mt-12 flex flex-col items-center justify-center text-xs text-muted-foreground gap-1">
+            <a
+              href="https://corebase.co.ke/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <span>Powered by</span>
+              <img
+                src="/images/corebaseLogo.png"
+                alt="Company Logo"
+                className="h-4 w-auto object-contain"
+              />
+            </a>
+            <div>&copy; {new Date().getFullYear()} CoreBase Solutions. All rights reserved.</div>
+          </div>
+
         </div>
       </div>
     </div>

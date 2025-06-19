@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Activation from "../../bootstrap/Activation/Activation";
 import useActivateNowDialog from "../../../hooks/use-activate-now-dialog";
-
 import { Dialog, DialogContent } from "../../ui/Dialog";
 
 const ActivateNowDialog = () => {
   const { open, onClose } = useActivateNowDialog();
   const [termsChecked, setTermsChecked] = useState(false);
-
-  useEffect(() => {
-    if (!open) {
-      setTermsChecked(false); // Clear checkbox when dialog is closed
-    }
-  }, [open]);
+    useEffect(() => {
+        if (!open) {
+            setTermsChecked(false);
+        }
+    }, [open]);
 
   return (
     <Dialog modal={true} open={open} onOpenChange={onClose}>
