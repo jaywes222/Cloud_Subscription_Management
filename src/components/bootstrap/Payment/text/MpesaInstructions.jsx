@@ -30,6 +30,7 @@ const MpesaInstructions = () => {
       });
     },
   });
+  const [hasPaid, setHasPaid] = useState(false);
 
   return (
     <div className="bs ">
@@ -99,22 +100,21 @@ const MpesaInstructions = () => {
                     }
 
                     pushSTK({ phone });
+                    setHasPaid(true);
                   }}
                 >
                   {isPending ? "Processing..." : "Pay"}
                 </Button>
               </Col>
             )}
-
-            {show !== "mpesa" && show !== "STK" && show !== "confirm" && (
+            {show !== "mpesa" && show !== "confirm" && (
               <Col xs="auto">
                 <Button
                   className="custom-complete-button"
-                  onClick={() => {
-                    console.log("Initiate Payment");
-                  }}
+                  onClick={() => navigate("/confirm")}
+                  disabled={!hasPaid}
                 >
-                  Pay
+                  Confirm
                 </Button>
               </Col>
             )}
