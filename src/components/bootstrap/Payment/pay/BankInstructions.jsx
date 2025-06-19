@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+
+  import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Card, ListGroup, Button, Row, Col } from "react-bootstrap";
 import Cheque from "../pay/cheque";
 import BankConfirmation from "../pay/BankConfirmation";
-const bankInstructions = () => {
+const BankInstructions = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState("bank");
   return (
-    <Container className="bs ">
+    /*<Container className="bs ">
       <Card className="mpesa-card p-4">
         {show === "bank" ? (
           <>
@@ -116,8 +117,8 @@ const bankInstructions = () => {
           </Row>
         )}
       </Card>
-    </Container>
+    </Container>*/
   );
 };
 
-export default bankInstructions;
+export default BankInstructions;

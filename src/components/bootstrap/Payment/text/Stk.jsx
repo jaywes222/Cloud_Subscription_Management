@@ -1,17 +1,26 @@
 import React from "react";
-import { Container, Card, ListGroup, Form, InputGroup } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  ListGroup,
+  Form,
+  InputGroup,
+  Row,
+  Col,
+  Button,
+} from "react-bootstrap";
 
 const Stk = ({ phone, setPhone }) => {
   return (
     <div className="bs">
       <Container>
         <Card className="mpesa-card p-4">
-          <Card.Title className="mb-4 mpesa-card-title">
+          <Card.Title className=" mpesa-card-title">
             Follow the Steps Below. Once you receive a successful reply from
-            MPESA, click the button.
+            Mpesa, click the complete button below.
           </Card.Title>
 
-          <ListGroup as="ul" className="mpesa-steps-1 mb-4">
+          <ListGroup as="ul" className="mpesa-steps-1 mb-1">
             <ListGroup.Item as="li">
               Enter your Safaricom mobile phone number below and click{" "}
               <strong>Pay</strong>
@@ -25,7 +34,7 @@ const Stk = ({ phone, setPhone }) => {
             </ListGroup.Item>
           </ListGroup>
 
-          <Form className="  payment-form">
+          <Form className="  payment-form ">
             <Form.Group controlId="formPhoneNumber" className="w-100">
               <Form.Label>Phone number</Form.Label>
               <InputGroup className="w-100">

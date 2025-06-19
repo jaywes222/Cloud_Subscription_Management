@@ -23,13 +23,14 @@ const MpesaInstructions = () => {
       console.log("STK Push Successful", data);
     },
     onError: (error) => {
-          toast({
-            title: "Error",
-            description: error.message,
-            variant: "destructive",
-          });
-        },
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
   });
+  const [hasPaid, setHasPaid] = useState(false);
 
   return (
     <div className="bs ">
@@ -37,26 +38,52 @@ const MpesaInstructions = () => {
         <Card className="mpesa-card p-4">
           {show === "mpesa" ? (
             <>
-              <Card.Title className="mb-4 mpesa-card-title">
+              <Card.Title className=" mpesa-card-title">
                 Follow the Steps Below. Once you receive a successful reply from
                 Mpesa, click the complete button below.
               </Card.Title>
-              <ListGroup as="ul" className="mpesa-steps-1 mb-4">
-                <ListGroup.Item as="li">Go to M-PESA on your phone</ListGroup.Item>
-                <ListGroup.Item as="li">Select <strong>Pay Bill</strong> option</ListGroup.Item>
-                <ListGroup.Item as="li">Enter Business Number: <strong>222222</strong></ListGroup.Item>
-                <ListGroup.Item as="li">Enter Account Number: <strong>CUST001</strong></ListGroup.Item>
-                <ListGroup.Item as="li">Enter the Amount: <strong>KES 250,000</strong></ListGroup.Item>
-                <ListGroup.Item as="li">Enter your M-PESA PIN and press <strong>Send</strong></ListGroup.Item>
-                <ListGroup.Item as="li">You will receive a confirmation SMS from <strong>MPESA</strong></ListGroup.Item>
+              <ListGroup as="ul" className="mpesa-steps-1 ">
+                <ListGroup.Item as="li">
+                  Go to M-PESA on your phone
+                </ListGroup.Item>
+                <ListGroup.Item as="li">
+                  Select <strong>Pay Bill</strong> option
+                </ListGroup.Item>
+                <ListGroup.Item as="li">
+                  Enter Business Number: <strong>222222</strong>
+                </ListGroup.Item>
+                <ListGroup.Item as="li">
+                  Enter Account Number: <strong>CUST001</strong>
+                </ListGroup.Item>
+                <ListGroup.Item as="li">
+                  Enter the Amount: <strong>KES 250,000</strong>
+                </ListGroup.Item>
+                <ListGroup.Item as="li">
+                  Enter your M-PESA PIN and press <strong>Send</strong>
+                </ListGroup.Item>
+                <ListGroup.Item as="li">
+                  You will receive a confirmation SMS from{" "}
+                  <strong>MPESA</strong>
+                </ListGroup.Item>
               </ListGroup>
             </>
           ) : show === "STK" ? (
-              <Stk phone={phone} setPhone={setPhone} />
+            <Stk phone={phone} setPhone={setPhone} />
           ) : (
             <Confirmation />
           )}
-
+          <Row className="mpesa-steps-3-footer">
+            {show !== "confirm" && show !== "STK" && (
+              <Col xs="auto">
+                <Button
+                  className="custom-complete-button"
+                  onClick={() => navigate("/complete")}
+                >
+                  Complete
+                </Button>
+              </Col>
+            )}
+          </Row>
           <Row className="mpesa-steps-1-footer">
             {show !== "mpesa" && show !== "confirm" && (
               <Col xs="auto">
@@ -67,28 +94,33 @@ const MpesaInstructions = () => {
                       toast({
                         title: "Missing phone",
                         description: "Enter a phone number.",
-                        variant: "destructive"
+                        variant: "destructive",
                       });
                       return;
                     }
 
                     pushSTK({ phone });
+                    setHasPaid(true);
                   }}
                 >
                   {isPending ? "Processing..." : "Pay"}
                 </Button>
               </Col>
             )}
-            {show !== "confirm" && (
+            {show !== "mpesa" && show !== "confirm" && (
               <Col xs="auto">
                 <Button
                   className="custom-complete-button"
-                  onClick={() => navigate("/complete")}
+                  onClick={() => navigate("/confirm")}
+                  disabled={!hasPaid}
                 >
-                  Complete
+                  Confirm
                 </Button>
               </Col>
             )}
+          </Row>
+
+          <Row className="mpesa-steps-2-footer">
             {show !== "mpesa" && show !== "STK" && (
               <Col xs="auto">
                 <Button
@@ -97,29 +129,6 @@ const MpesaInstructions = () => {
                 >
                   Confirm
                 </Button>
-              </Col>
-            )}
-            {show !== "mpesa" && show !== "STK" && show !== "confirm" && (
-              <Col xs="auto">
-                <Button
-                  className="custom-complete-button"
-                  onClick={() => {
-                    console.log("Initiate Payment");
-                  }}
-                >
-                  Pay
-                </Button>
-              </Col>
-            )}
-            {show !== "mpesa" && (
-              <Col xs="auto">
-                <span
-                  className="link"
-                  onClick={() => setShow("mpesa")}
-                  role="button"
-                >
-                  Pay via Paybill
-                </span>
               </Col>
             )}
             {show !== "STK" && show !== "confirm" && (
@@ -132,17 +141,48 @@ const MpesaInstructions = () => {
                   Pay via MPESA Express (STK Push)
                 </span>
               </Col>
-            )}
-          </Row>
-          {show !== "confirm" && (
-            <Row className="mpesa-steps-2-footer">
-              <Col xs={12} className="text-center ">
+            )}{" "}
+            {show !== "mpesa" && show !== "confirm" && (
+              <Col xs="auto">
                 <span
-                  className="link link-confirm"
+                  className="link"
+                  onClick={() => setShow("mpesa")}
+                  role="button"
+                >
+                  Pay via Paybill
+                </span>
+              </Col>
+            )}
+            {show !== "confirm" && (
+              <Col xs="auto">
+                <span
+                  className="link "
                   onClick={() => setShow("confirm")}
                   role="button"
                 >
                   Confirm My Payment
+                </span>
+              </Col>
+            )}
+          </Row>
+          {show === "confirm" && (
+            <Row className="mpesa-steps-2-footer">
+              <Col xs="auto">
+                <span
+                  className="link"
+                  onClick={() => setShow("mpesa")}
+                  role="button"
+                >
+                  Pay via Paybill
+                </span>
+              </Col>
+              <Col xs="auto">
+                <span
+                  className="link"
+                  onClick={() => setShow("STK")}
+                  role="button"
+                >
+                  Pay via MPESA Express (STK Push)
                 </span>
               </Col>
             </Row>

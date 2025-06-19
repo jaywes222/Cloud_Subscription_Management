@@ -1,9 +1,9 @@
 import React from "react";
-import { Card, ListGroup } from "react-bootstrap"; // Make sure you import these components
+import { Card, ListGroup } from "react-bootstrap";
 
 const Cheque = () => {
   return (
-    <div className="bs">
+   /* <div className="bs">
       <Card className="mpesa-card p-4">
         <Card.Title className="mb-4 mpesa-card-title">
           Follow the steps below . Once you have submitted the cheque, click the
@@ -45,7 +45,7 @@ const Cheque = () => {
           </ListGroup.Item>
         </ListGroup>
       </Card>
-    </div>
+    </div>*/
   );
 };
 
