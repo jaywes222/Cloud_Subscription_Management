@@ -33,16 +33,7 @@ const Stk = ({ phone, setPhone }) => {
               MPESA confirmation
             </ListGroup.Item>
           </ListGroup>
-          <Row className="mpesa-steps-3-footer py-1">
-            <Col xs="auto">
-              <Button
-                className="custom-complete-button"
-                onClick={() => navigate("/complete")}
-              >
-                Complete
-              </Button>
-            </Col>
-          </Row>
+
           <Form className="  payment-form ">
             <Form.Group controlId="formPhoneNumber" className="w-100">
               <Form.Label>Phone number</Form.Label>
