@@ -246,15 +246,12 @@ const WorkspaceAnalytics = () => {
             >
               {/* Upload File Button */}
               <div className="bs flex justify-start">
-                <Button
-                  variant="secondary"
+                <a 
                   onClick={handleUploadClick}
-                  className="upload-file-btn mt-2"
-                  style={{ maxWidth: "180px", fontSize: "14px" }}
-                >
-                  <Plus className="mr-2" size={14} style={{ color: "orange" }} />
+                  className='mt-2 inline-flex items-center text-sm font-medium mb-3 ml-4 text-orange-600 hover:underline cursor-pointer'
+                  >
                   {isPending ? "Uploading..." : "Upload File"}
-                </Button>
+                </a>
 
                 <input
                   type="file"

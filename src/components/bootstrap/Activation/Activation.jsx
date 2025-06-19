@@ -71,6 +71,7 @@ const Activation = ({
             <TermsSection
               termsChecked={termsChecked}
               onChange={(e) => setTermsChecked(e.target.checked)}
+              uploadCount={uploadedFiles.length}
             />
 
             <div className="activate-btn">

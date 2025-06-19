@@ -1,7 +1,9 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-export default function TermsSection({ termsChecked, onChange }) {
+export default function TermsSection({ termsChecked, onChange, uploadCount }) {
+  const isComplete = uploadCount >=3;
+
   return (
     <>
       <div className="bs">
@@ -64,6 +66,13 @@ export default function TermsSection({ termsChecked, onChange }) {
               </span>
             </label>
           </div>
+        </div>
+        {/* File Upload Status */}
+        <div
+          className="d-flex align-items-center justify-content-start mt-2"
+          style={{ fontSize: "14px", marginLeft: "1.5rem "}}
+        >
+          Uploaded Files:<strong style={{ color: isComplete ? "green": "red" }}>{uploadCount}</strong> /3 required
         </div>
       </div>
     </>
