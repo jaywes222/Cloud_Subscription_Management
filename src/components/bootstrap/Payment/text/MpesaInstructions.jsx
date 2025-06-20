@@ -4,12 +4,13 @@ import { useState } from "react";
 import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { stkPushMutationFn } from "../../../../lib/api";
-import Confirmation from "../pay/confirmation";
+import Confirmation from "../text/confirmation";
 import Stk from "../text/Stk";
 
 const MpesaInstructions = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState("mpesa");
+  const [hasPaid, setHasPaid] = useState(false);
   const [phone, setPhone] = useState("");
 
   const { mutate: pushSTK, isPending } = useMutation({
@@ -30,7 +31,6 @@ const MpesaInstructions = () => {
       });
     },
   });
-  const [hasPaid, setHasPaid] = useState(false);
 
   return (
     <div className="bs ">
@@ -111,10 +111,10 @@ const MpesaInstructions = () => {
               <Col xs="auto">
                 <Button
                   className="custom-complete-button"
-                  onClick={() => navigate("/confirm")}
+                  onClick={() => navigate("/complete")}
                   disabled={!hasPaid}
                 >
-                  Confirm
+                  Complete
                 </Button>
               </Col>
             )}
