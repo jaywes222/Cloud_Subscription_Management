@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Card,
@@ -10,7 +10,10 @@ import {
   Button,
 } from "react-bootstrap";
 
-const Stk = ({ phone, setPhone }) => {
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+const Stk = () => {
+  const [phone, setPhone] = useState("");
   return (
     <div className="bs">
       <Container>
@@ -33,20 +36,33 @@ const Stk = ({ phone, setPhone }) => {
               MPESA confirmation
             </ListGroup.Item>
           </ListGroup>
+          <Form className="payment-form">
+            {" "}
+            <Form.Group
+              controlId="formPhoneNumber"
+              style={{
+                display: "inline-block",
+                marginRight: "1rem",
+                minWidth: "350px",
+              }}
+            >
+              <Form.Label>Phone Number</Form.Label>
 
-          <Form className="  payment-form ">
-            <Form.Group controlId="formPhoneNumber" className="w-100">
-              <Form.Label>Phone number</Form.Label>
-              <InputGroup className="w-100">
-                <Form.Control
-                  type="tel"
-                  placeholder="e.g. 254712345678"
-                  aria-label="Phone number"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-100 border border-dark p-2"
-                />
-              </InputGroup>
+              <PhoneInput
+                country={"ke"}
+                value={phone}
+                onChange={setPhone}
+                containerClass="phone-input"
+                inputProps={{
+                  name: "phone",
+                }}
+                inputStyle={{
+                  width: "100%",
+                  paddingLeft: "52px",
+                  fontSize: "14px",
+                  height: "38px",
+                }}
+              />
             </Form.Group>
           </Form>
         </Card>
