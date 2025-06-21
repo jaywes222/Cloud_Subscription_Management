@@ -248,7 +248,7 @@ const WorkspaceAnalytics = () => {
               <div className="bs flex justify-start">
                 <a 
                   onClick={handleUploadClick}
-                  className='mt-2 inline-flex items-center text-sm font-medium mb-3 ml-4 text-orange-600 hover:underline cursor-pointer'
+                  className='mt-2 inline-flex items-center text-sm font-medium mb-3 ml-4 text-caramel hover:underline cursor-pointer'
                   >
                   {isPending ? "Uploading..." : "Upload File"}
                 </a>
