@@ -33,14 +33,20 @@ const Confirmation = () => {
         </ListGroup>
 
         <Form className="payment-form">
-          <Form.Group controlId="formTransactionId" className="w-100">
+          <Form.Group
+            controlId="formTransactionId"
+            style={{
+              display: "inline-block",
+              marginRight: "1rem",
+              minWidth: "350px",
+            }}
+          >
             <Form.Label>Transaction ID</Form.Label>
-            <InputGroup className="w-100">
+            <InputGroup>
               <Form.Control
                 type="text"
-                placeholder="e.g. RAT2G4W9QU"
+                placeholder="Enter Mpesa Transaction ID"
                 aria-label="MPESA Transaction ID"
-                className="w-100"
               />
             </InputGroup>
           </Form.Group>
