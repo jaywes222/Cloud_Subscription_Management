@@ -20,32 +20,34 @@ const PaymentForm = () => {
   return (
     <div className="bs ">
       <form>
-        <div className="radio-group">
-          <label className="custom-radio">
-            <input
-              type="radio"
-              name="paymentMethod"
-              value="mpesa"
-              checked={selectedOption === "mpesa"}
-              onClick={() => handleRadioClick("mpesa")}
-              readOnly
-            />
-            <span className="radio-label">MPESA</span>
-          </label>
-          {showInstructions === "mpesa" && <MpesaInstructions />}
+        <div className="payment-container">
+          <div className="radio-group">
+            <label className="custom-radio">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="mpesa"
+                checked={selectedOption === "mpesa"}
+                onClick={() => handleRadioClick("mpesa")}
+                readOnly
+              />
+              <span className="radio-label">MPESA</span>
+            </label>
+            {showInstructions === "mpesa" && <MpesaInstructions />}
 
-          <label className="custom-radio">
-            <input
-              type="radio"
-              name="paymentMethod"
-              value="bank"
-              checked={selectedOption === "bank"}
-              onClick={() => handleRadioClick("bank")}
-              readOnly
-            />
-            <span className="radio-label">BANK</span>
-          </label>
-          {showInstructions === "bank" && <BankConfirmation />}
+            <label className="custom-radio">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="bank"
+                checked={selectedOption === "bank"}
+                onClick={() => handleRadioClick("bank")}
+                readOnly
+              />
+              <span className="radio-label">BANK</span>
+            </label>
+            {showInstructions === "bank" && <BankConfirmation />}
+          </div>
         </div>
       </form>
     </div>
