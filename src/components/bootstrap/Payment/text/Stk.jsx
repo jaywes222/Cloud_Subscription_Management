@@ -4,14 +4,8 @@ import {
   Card,
   ListGroup,
   Form,
-  InputGroup,
-  Row,
-  Col,
-  Button,
 } from "react-bootstrap";
-
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 const Stk = () => {
   const [phone, setPhone] = useState("");
   return (
@@ -43,8 +37,6 @@ const Stk = () => {
               className="mb-3"
               style={{ width: "350px" }}
             >
-              <Form.Label htmlFor="phone">Phone Number</Form.Label>
-
               <PhoneInput
                 country={"ke"}
                 value={phone}
