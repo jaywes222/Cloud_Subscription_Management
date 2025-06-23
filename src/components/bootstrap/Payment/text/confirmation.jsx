@@ -36,7 +36,6 @@ const Confirmation = () => {
           <Form.Group
             controlId="formTransactionId"
             style={{
-              display: "inline-block",
               marginRight: "1rem",
               minWidth: "350px",
             }}
