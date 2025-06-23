@@ -56,12 +56,12 @@ const BankConfirmation = () => {
                 fontWeight: 500,
 
                 fontSize: "14px",
-                padding: "10px",
+                padding: "8px",
                 color: " #000000",
                 borderRadius: "10px",
                 margin: "20px 0",
                 minWidth: "100px",
-                width: "180px",
+                width: "170px",
                 backgroundColor: "#dcb489",
                 display: "block",
               }}
@@ -87,57 +87,56 @@ const BankConfirmation = () => {
               </Form.Select>
             </div>
           </Form.Group>
-
-          {selectedMode === "Cash" && (
-            <Form.Group
-              controlId="formTransactionRef"
-              style={{
-                display: "inline-block",
-
-                minWidth: "500px",
-              }}
-            >
-              <InputGroup>
-                {" "}
+          <div className="d-flex flex-wrap gap-3 mb-2 align-items-end">
+            {selectedMode === "Cash" && (
+              <Form.Group
+                controlId="formTransactionRef"
+                style={{
+                  minWidth: "410px",
+                }}
+              >
                 <Form.Label>Reference Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter  Reference Number"
-                />
-              </InputGroup>
-            </Form.Group>
-          )}
-          {selectedMode === "Cheque" && (
-            <Form.Group
-              controlId="formChequeNumber"
-              style={{
-                display: "inline-block",
+                <InputGroup>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Reference Number"
+                  />
+                </InputGroup>
+              </Form.Group>
+            )}
 
-                minWidth: "500px",
-              }}
-            >
-              <InputGroup>
+            {selectedMode === "Cheque" && (
+              <Form.Group
+                controlId="formChequeNumber"
+                style={{
+                  minWidth: "410px",
+                }}
+              >
                 <Form.Label>Cheque Number</Form.Label>
-                <Form.Control type="text" placeholder="Enter  Cheque Number" />
-              </InputGroup>
-            </Form.Group>
-          )}
+                <InputGroup>
+                  <Form.Control type="text" placeholder="Enter Cheque Number" />
+                </InputGroup>
+              </Form.Group>
+            )}
 
-          {selectedMode === "Bank Transfer" && (
-            <Form.Group
-              controlId="formTransactionRef"
-              style={{
-                display: "inline-block",
-
-                minWidth: "420px",
-              }}
-            >
-              <InputGroup>
+            {selectedMode === "Bank Transfer" && (
+              <Form.Group
+                controlId="formTransactionRef"
+                style={{
+                  minWidth: "410px",
+                }}
+              >
                 <Form.Label>Transaction ID</Form.Label>
-                <Form.Control type="text" placeholder="Enter  Transaction ID" />
-              </InputGroup>
-            </Form.Group>
-          )}
+                <InputGroup>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Transaction ID"
+                  />
+                </InputGroup>
+              </Form.Group>
+            )}
+          </div>
+
           <div className="mb-3">
             <Form.Group
               controlId="formAmount"

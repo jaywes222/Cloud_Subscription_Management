@@ -127,55 +127,7 @@ padding: 10px;
 }
 
 
-
-
-
-
-
-
-
-
-
-.bs .form-title {
-  margin-top: 0;
-}
-
-
-
-.bs .radio-group .radio-label {
-  color: #1f2937 !important; 
-
-  margin-right: 0.5rem;
-}
-
-
-
-.bs.payment-method-form.custom-dropdown-button {
-   cursor: pointer;
-
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  font-weight: 500;
-  width: auto;
-  min-width: 220px; 
-  
-
-}
-
-.bs.payment-method-form.custom-dropdown-button:focus {
-  border-color: #663300; 
-  
-  outline: none;
-  background-color: #fffefc;
-}
-.bs.payment-method-form.custom-dropdown.option-placeholder {
-  font-size: 16px !important;
-  font-weight: 600 !important;
-}
 .bs .centered-list li {
- 
-  
   padding-left:20px;
 }
 
@@ -243,18 +195,6 @@ padding: 10px;
   padding: 20px;
   box-sizing: border-box;
 }
-
-.bs .payment-header {
-  margin-bottom: 20px;
-}
-
-.bs .payment-title {
-  font-size: 20px;
-  font-weight: 500;
-  padding: 5px 0;
-  margin: 0;
-}
-
 
 .bs .justify-content-center {
   justify-content: center !important;

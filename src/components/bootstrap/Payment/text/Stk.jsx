@@ -40,13 +40,10 @@ const Stk = () => {
             {" "}
             <Form.Group
               controlId="formPhoneNumber"
-              style={{
-                display: "inline-block",
-                marginRight: "1rem",
-                minWidth: "350px",
-              }}
+              className="mb-3"
+              style={{ width: "350px" }}
             >
-              <Form.Label>Phone Number</Form.Label>
+              <Form.Label htmlFor="phone">Phone Number</Form.Label>
 
               <PhoneInput
                 country={"ke"}
@@ -55,6 +52,8 @@ const Stk = () => {
                 containerClass="phone-input"
                 inputProps={{
                   name: "phone",
+                  id: "phone",
+                  required: true,
                 }}
                 inputStyle={{
                   width: "100%",
