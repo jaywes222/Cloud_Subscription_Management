@@ -10,19 +10,22 @@ import Stk from "../text/Stk";
 const MpesaInstructions = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState("mpesa");
+
   const [hasPaid, setHasPaid] = useState(false);
   const [phone, setPhone] = useState("");
 
   const { mutate: pushSTK, isPending } = useMutation({
     mutationFn: stkPushMutationFn,
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast({
         title: "STK Push Initiated.",
         description: "Wait for MPESA Prompt and dial in your PIN.",
         variant: "success",
       });
       console.log("STK Push Successful", data);
+      setHasPaid(true);
     },
+
     onError: (error) => {
       toast({
         title: "Error",
@@ -89,6 +92,7 @@ const MpesaInstructions = () => {
               <Col xs="auto">
                 <Button
                   className="custom-complete-button"
+                  disabled={isPending || hasPaid}
                   onClick={() => {
                     if (!phone) {
                       toast({
@@ -100,7 +104,6 @@ const MpesaInstructions = () => {
                     }
 
                     pushSTK({ phone });
-                    setHasPaid(true);
                   }}
                 >
                   {isPending ? "Processing..." : "Pay"}
