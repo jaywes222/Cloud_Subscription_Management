@@ -4,14 +4,8 @@ import {
   Card,
   ListGroup,
   Form,
-  InputGroup,
-  Row,
-  Col,
-  Button,
 } from "react-bootstrap";
-
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 const Stk = () => {
   const [phone, setPhone] = useState("");
   return (
@@ -40,14 +34,9 @@ const Stk = () => {
             {" "}
             <Form.Group
               controlId="formPhoneNumber"
-              style={{
-                display: "inline-block",
-                marginRight: "1rem",
-                minWidth: "350px",
-              }}
+              className="mb-3"
+              style={{ width: "350px" }}
             >
-              <Form.Label>Phone Number</Form.Label>
-
               <PhoneInput
                 country={"ke"}
                 value={phone}
@@ -55,6 +44,8 @@ const Stk = () => {
                 containerClass="phone-input"
                 inputProps={{
                   name: "phone",
+                  id: "phone",
+                  required: true,
                 }}
                 inputStyle={{
                   width: "100%",
