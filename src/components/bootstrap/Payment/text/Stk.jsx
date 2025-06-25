@@ -35,7 +35,7 @@ const Stk = () => {
             <Form.Group
               controlId="formPhoneNumber"
               className="mb-3"
-              style={{ width: "350px" }}
+              style={{ width: "300px" }}
             >
               <PhoneInput
                 country={"ke"}
@@ -54,6 +54,28 @@ const Stk = () => {
                   height: "38px",
                 }}
               />
+            </Form.Group>
+            <Form.Group
+              controlId="formAmount"
+              style={{
+                display: "inline-block",
+                marginRight: "1rem",
+                minWidth: "230px",
+              }}
+            >
+              <Form.Label>Amount</Form.Label>
+              <Form.Control type="number" />
+            </Form.Group>
+            <Form.Group
+              controlId="formAccountNumber"
+              style={{
+                display: "inline-block",
+                marginRight: "0.5rem",
+                minWidth: "230px",
+              }}
+            >
+              <Form.Label>Account Number</Form.Label>
+              <Form.Control type="text" />
             </Form.Group>
           </Form>
         </Card>
