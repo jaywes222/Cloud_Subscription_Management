@@ -121,9 +121,12 @@ padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.bs .payment-form input.form-control:focus ,.bs .payment-form .phone-input input:focus{
+.bs .payment-form .form-control:focus,
+.bs .payment-form .input-group input:focus,
+.bs .payment-form .phone-input input:focus {
   border: 1px solid #C58C4F !important;
-  box-shadow: none !important; 
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 
