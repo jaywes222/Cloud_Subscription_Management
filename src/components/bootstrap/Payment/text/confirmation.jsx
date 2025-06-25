@@ -36,8 +36,7 @@ const Confirmation = () => {
           <Form.Group
             controlId="formTransactionId"
             style={{
-              marginRight: "1rem",
-              minWidth: "350px",
+              width: "250px",
             }}
           >
             <Form.Label>Transaction ID</Form.Label>
