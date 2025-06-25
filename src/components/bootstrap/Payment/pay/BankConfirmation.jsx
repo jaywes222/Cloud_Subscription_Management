@@ -20,12 +20,12 @@ const BankConfirmation = () => {
   return (
     <div className="bs">
       <Card className="mpesa-card p-4">
-        <Card.Title className="mb-4 mpesa-card-title ">
+        <Card.Title className=" mpesa-card-title ">
           Once you have successfully made the payment,follow the steps below.
           Then click the Confirm button .
         </Card.Title>
 
-        <ListGroup as="ul" className="mpesa-steps-1 mb-1 mt-3">
+        <ListGroup as="ul" className="mpesa-steps-1 mb-1 ">
           <ListGroup.Item as="li">
             Select your preferred <strong>Mode of Payment.</strong>
           </ListGroup.Item>
@@ -50,20 +50,15 @@ const BankConfirmation = () => {
         </ListGroup>
 
         <Form className="payment-form">
-          <Form.Group controlId="payment-method" className="mb-3">
+          <Form.Group controlId="payment-method" className="mb-1">
             <Form.Label
               style={{
                 fontWeight: 500,
 
-                fontSize: "14px",
+                fontSize: "16px",
                 padding: "8px",
                 color: " #000000",
-                borderRadius: "10px",
-                margin: "20px 0",
-                minWidth: "100px",
-                width: "170px",
-                backgroundColor: "#dcb489",
-                display: "block",
+                margin: "10px 0",
               }}
             >
               Select Payment Mode
