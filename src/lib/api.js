@@ -45,9 +45,21 @@ export const updateUserProfileQueryFn = async () => {};
 
 // Payment ************
 export const stkPushMutationFn = async (data) => {
-  const response = await STK_API.post('/CashierCollection/MpesaStkpush', data);
+  const response = await API.post('active-client/stk-push', data);
   return response.data;
 };
+
+export const confirmPaymentQueryFn = async () => {
+  const response = await API.get('active-client/confirm-payment');
+  return response.data;
+}
+
+// Subscription ********
+export const getSubscriptionScheduleQueryFn = async () => {
+  const response = await API.get('active-client/schedule');
+  return response.data;
+}
+
 // Activation ************
 export const getFilesQueryFn = async () => {
   const response = await API.get("active-client/uploaded-files");
