@@ -199,29 +199,16 @@ const WorkspaceAnalytics = () => {
                 <span>{billingCycle}</span>
               </div>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <div className="flex items-center gap-2 cursor-pointer w-fit">
-                    <Building2 className="w-4 h-4 text-muted-foreground" />
-                    <span>{branchCount} Branches</span>
-                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="min-w-48 rounded-md py-1">
-                  {branches.map((branch, id) => (
-                    <DropdownMenuItem
-                      key={id}
-                      className="pointer-events-none text-muted-foreground"
-                    >
-                      {branch}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <div className="flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-muted-foreground" />
+                <span>{branchCount} {branchCount === 1 ? 'Branch' : 'Branches'}</span>
+              </div>
+
+
 
               <div className="flex items-center gap-2">
                 <User2 className="w-4 h-4 text-muted-foreground" />
-                <span>{userCount} Users</span>
+                <span>{userCount} {userCount === 1 ? 'User' : 'Users'}</span>
               </div>
             </div>
           </div>
