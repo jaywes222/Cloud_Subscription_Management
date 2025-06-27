@@ -1,8 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-export default function TermsSection({ termsChecked, onChange, uploadCount }) {
-  const isComplete = uploadCount >=3;
+export default function TermsSection({ termsChecked, onChange, hasTrainingSheet }) {
 
   return (
     <>
@@ -72,7 +71,10 @@ export default function TermsSection({ termsChecked, onChange, uploadCount }) {
           className="d-flex align-items-center justify-content-start mt-2"
           style={{ fontSize: "14px", marginLeft: "1.5rem "}}
         >
-          Uploaded Files:<strong style={{ color: isComplete ? "green": "red" }}>{uploadCount}</strong> /3 required
+          Training Sheet Uploaded:
+        <strong style={{ color: hasTrainingSheet ? "green" : "red", marginLeft: "0.5rem" }}>
+          {hasTrainingSheet ? "Yes ✅" : "No ❌"}
+        </strong>
         </div>
       </div>
     </>
