@@ -18,9 +18,9 @@ const MpesaInstructions = () => {
   const [pollingEnabled, setPollingEnabled] = useState(false);
   const [paymentStarted, setPaymentStarted] = useState(false);
 
-  const [phone, setPhone] = useState(user?.phone || "");
-  const amount = user?.amount || 250000;
-  const accountNumber = user?.accountNumber || "CUST001";
+  const [phone, setPhone] = useState(user?.phone);
+  const amount = user?.amountDue;
+  const accountNumber = user?.psCusCode;
 
   useEffect(() => {
     if (user?.phone) setPhone(normalizePhone(user.phone));
