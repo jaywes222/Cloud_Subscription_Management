@@ -41,14 +41,16 @@ const Activation = ({
     }
   });
 
+  const hasTrainingSheet = uploadedFiles.some(file => file.isTrainingSheet);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (uploadedFiles.length < 3) {
+    if (!hasTrainingSheet) {
       toast({
-        title: "Uploads Incomplete",
-        description: "Please upload at least 3 files to activate your account.",
-        variant: "desctructive",
+        title: "Missing Training Sheet",
+        description: "Please upload your signed training sheet to activate your account!",
+        variant: "destructive",
       });
       return;
     }
@@ -71,7 +73,7 @@ const Activation = ({
             <TermsSection
               termsChecked={termsChecked}
               onChange={(e) => setTermsChecked(e.target.checked)}
-              uploadCount={uploadedFiles.length}
+              hasTrainingSheet={hasTrainingSheet}
             />
 
             <div className="activate-btn">
@@ -80,9 +82,9 @@ const Activation = ({
                 variant="secondary"
                 disabled={!termsChecked || isPending || filesLoading}
                 style={{
-                  backgroundColor: "#c58c4f",
-                  cursor: termsChecked ? "pointer" : "not-allowed",
-                  opacity: termsChecked && uploadedFiles.length >= 3 ? 1 : 0.6,
+                  backgroundColor: termsChecked && hasTrainingSheet ? "#c58c4f" : "#d6d6d6",
+                  cursor: termsChecked && hasTrainingSheet ? "pointer" : "not-allowed",
+                  opacity: termsChecked && hasTrainingSheet >= 3 ? 1 : 0.6,
                   borderRadius: "5px",
                   padding: "5px 10px",
                   fontSize: "14px",
