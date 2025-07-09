@@ -4,11 +4,14 @@ import STK_API from "./axios-client-stk";
 // Auth ************
 
 export const loginMutationFn = async (data) => {
-  const response = await API.post("/auth/login", data);
+  const response = await API.post("/auth/login-client", data);
   return response.data;
 };
 
-export const registerMutationFn = async () => {};
+export const changePasswordMutationFn = async (data) => {
+  const response = await API.post("/auth/change-password", data);
+  return response.data;
+}
 
 export const logoutMutationFn = async () => {
   return await API.post("/auth/logout");
