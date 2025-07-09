@@ -64,7 +64,7 @@ const SignIn = () => {
             variant: "warning",
           });
           localStorage.setItem("token", token);
-          navigate(`/change-password/:${data.cusCode}`);
+          navigate(`/change-password/${data.cusCode}`);
         } else {
           localStorage.setItem("token", token);
           toast({
@@ -73,7 +73,7 @@ const SignIn = () => {
             variant: "success",
           });
           console.log("Login Successful", data);
-          navigate(`/workspace/:${data.workspaceRedirectUrl}`);
+          navigate(`/workspace/${data.workspaceRedirectUrl}`);
         }
       },
       onError: (error) => {
