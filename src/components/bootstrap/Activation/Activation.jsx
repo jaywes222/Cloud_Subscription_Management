@@ -84,7 +84,7 @@ const Activation = ({
                 style={{
                   backgroundColor: termsChecked && hasTrainingSheet ? "#c58c4f" : "#d6d6d6",
                   cursor: termsChecked && hasTrainingSheet ? "pointer" : "not-allowed",
-                  opacity: termsChecked && hasTrainingSheet >= 3 ? 1 : 0.6,
+                  // opacity: termsChecked && hasTrainingSheet >= 3 ? 1 : 0.6,
                   borderRadius: "5px",
                   padding: "5px 10px",
                   fontSize: "14px",
