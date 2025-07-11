@@ -18,7 +18,7 @@ export const logoutMutationFn = async () => {
 };
 
 export const getCurrentUserQueryFn = async () => {
-  const response = await API.get("/auth/current-user");
+  const response = await API.get("/auth/current-client");
   return response.data;
 };
 

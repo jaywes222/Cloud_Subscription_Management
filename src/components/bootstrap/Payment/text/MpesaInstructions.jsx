@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, ListGroup, Row, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { stkPushMutationFn, confirmPaymentQueryFn } from "../../../../lib/api";
 import Confirmation from "../text/confirmation";
@@ -18,12 +18,13 @@ const MpesaInstructions = () => {
   const [pollingEnabled, setPollingEnabled] = useState(false);
   const [paymentStarted, setPaymentStarted] = useState(false);
 
-  const [phone, setPhone] = useState(user?.phone);
-  const amount = user?.amountDue;
+  const [phone, setPhone] = useState("");
+  const [amount, setAmount] = useState("");
   const accountNumber = user?.psCusCode;
 
   useEffect(() => {
     if (user?.phone) setPhone(normalizePhone(user.phone));
+    if (user?.amountDue) setAmount(user.amountDue.toString());
   }, [user]);
 
   const { mutate: pushSTK, isPending } = useMutation({
@@ -75,6 +76,8 @@ const MpesaInstructions = () => {
 
   const handlePushSTK = () => {
     const formattedPhone = normalizePhone(phone);
+    const parsedAmount = Number(amount);
+
     if (!formattedPhone || !isValidPhoneNumber(formattedPhone)) {
       toast({
         title: "Invalid Phone Number",
@@ -83,8 +86,18 @@ const MpesaInstructions = () => {
       });
       return;
     }
+
+    if (!parsedAmount || isNaN(parsedAmount) || parsedAmount <= 0) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please enter a valid amount greater than zero.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setPhone(formattedPhone);
-    pushSTK({ phone: formattedPhone, accountNumber, amount });
+    pushSTK({ phone: formattedPhone, accountNumber, amount: parsedAmount });
   };
 
   const handleStopPolling = () => {
@@ -98,7 +111,7 @@ const MpesaInstructions = () => {
   };
 
   return (
-    <div className="bs ">
+    <div className="bs">
       <Container>
         <Card className="mpesa-card p-4">
           {show === "mpesa" ? (
@@ -112,7 +125,15 @@ const MpesaInstructions = () => {
                 <ListGroup.Item>Select <strong>Pay Bill</strong> option</ListGroup.Item>
                 <ListGroup.Item>Enter Business Number: <strong>222222</strong></ListGroup.Item>
                 <ListGroup.Item>Enter Account Number: <strong>{accountNumber}</strong></ListGroup.Item>
-                <ListGroup.Item>Enter the Amount: <strong>{amount.toLocaleString()}</strong></ListGroup.Item>
+                <ListGroup.Item>
+                  Enter the Amount:{" "}
+                  <Form.Control
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    style={{ width: "200px", display: "inline-block" }}
+                  />
+                </ListGroup.Item>
                 <ListGroup.Item>Enter your M-PESA PIN and press <strong>Send</strong></ListGroup.Item>
                 <ListGroup.Item>You will receive a confirmation SMS from <strong>MPESA</strong></ListGroup.Item>
               </ListGroup>
@@ -139,6 +160,7 @@ const MpesaInstructions = () => {
                 phone={phone}
                 setPhone={setPhone}
                 amount={amount}
+                setAmount={setAmount}
                 accountNumber={accountNumber}
               />
               <Row className="mpesa-steps-1-footer mt-3">
