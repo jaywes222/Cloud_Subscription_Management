@@ -57,7 +57,6 @@ const Profile = () => {
               value={username}
               loading={isLoading}
               fullWidth
-              readOnly
             />
             <EditableField
               label="Company Name"
@@ -73,7 +72,6 @@ const Profile = () => {
               value={email}
               loading={isLoading}
               fullWidth
-              readOnly
             />
             <EditableField
               label="Phone"
@@ -81,7 +79,6 @@ const Profile = () => {
               value={phone}
               loading={isLoading}
               fullWidth
-              readOnly
             />
             <EditableField
               label="Password"

@@ -52,10 +52,10 @@ export const stkPushMutationFn = async (data) => {
   return response.data;
 };
 
-export const confirmPaymentQueryFn = async () => {
-  const response = await API.get('active-client/confirm-payment');
-  return response.data;
-}
+export const confirmPaymentMutationFn = async (data) => {
+	const response = await API.post('active-client/confirm-payment', data);
+	return response.data;
+};
 
 // Subscription ********
 export const getSubscriptionScheduleQueryFn = async () => {
