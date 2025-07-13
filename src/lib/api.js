@@ -1,5 +1,5 @@
 import API from "./axios-client";
-import STK_API from "./axios-client-stk";
+
 
 // Auth ************
 
@@ -62,6 +62,11 @@ export const confirmPaymentMutationFn = async (data) => {
 // Subscription ********
 export const getSubscriptionScheduleQueryFn = async () => {
   const response = await API.get('active-client/schedule');
+  return response.data;
+}
+
+export const getInvoicesQueryFn = async () => {
+  const response = await API.get('active-client/invoice-receipt');
   return response.data;
 }
 

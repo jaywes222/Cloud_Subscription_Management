@@ -15,13 +15,21 @@ const Profile = () => {
     onOpen(fieldName, fieldValue);
   };
 
-  const username = user?.fullname || "Unknown User";
+  const fullname = user?.fullname || "Unknown User";
   const companyName = user?.companyName || "Unknown Company";
   const email = user?.email || "N/A";
   const phone = user?.phone || "N/A";
   const password = "************";
-  const profilePicUrl = user?.profilePicUrl || "/images/default-avatar.png";
   const cusCode = user?.psCusCode || "CUSXXX";
+
+  const getInitials = (name) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
 
   return (
     <div className="w-full h-auto py-2">
@@ -31,14 +39,10 @@ const Profile = () => {
         <div className="flex items-center space-x-4">
           <div className="relative w-16 h-16">
             <Avatar className="w-16 h-16">
-              <AvatarImage src={profilePicUrl} alt="Profile Picture" />
               <AvatarFallback>
-                {username[0]?.toUpperCase() ?? "U"}
+                {getInitials(fullname)}
               </AvatarFallback>
             </Avatar>
-            <div className="absolute bottom-0 right-0 bg-secondary rounded-full p-0.5 shadow cursor-pointer">
-              <PenBoxIcon className="w-5 h-5 text-muted-foreground" />
-            </div>
           </div>
           <div>
             <h2 className="text-lg text-caramel font-semibold">{cusCode} - {companyName}</h2>
@@ -54,7 +58,7 @@ const Profile = () => {
             <EditableField
               label="Full Name"
               field="fullname"
-              value={username}
+              value={fullname}
               onEdit={handleEditClick}
               loading={isLoading}
               fullWidth
