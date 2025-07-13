@@ -42,9 +42,11 @@ export const changeWorkspaceMemberRoleMutationFn = async () => {};
 export const deleteWorkspaceMutationFn = async () => {};
 
 // Profile ************
-
-export const getUserProfileQueryFn = async () => {};
-export const updateUserProfileQueryFn = async () => {};
+export const updateUserProfileFieldMutationFn = async (data) => {
+	console.log('Sending update request with data:', data);
+	const response = await API.post('/auth/update-profile-field', data);
+	return response.data;
+};
 
 // Payment ************
 export const stkPushMutationFn = async (data) => {

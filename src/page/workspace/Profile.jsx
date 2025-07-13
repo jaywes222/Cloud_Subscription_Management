@@ -52,9 +52,10 @@ const Profile = () => {
         <div className="w-full max-w-2xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
           <div className="mt-2 grid grid-cols-1 gap-y-4">
             <EditableField
-              label="Username"
-              field="username"
+              label="Full Name"
+              field="fullname"
               value={username}
+              onEdit={handleEditClick}
               loading={isLoading}
               fullWidth
             />
@@ -70,6 +71,7 @@ const Profile = () => {
               label="Email"
               field="email"
               value={email}
+              onEdit={handleEditClick}
               loading={isLoading}
               fullWidth
             />
@@ -77,6 +79,7 @@ const Profile = () => {
               label="Phone"
               field="phone"
               value={phone}
+              onEdit={handleEditClick}
               loading={isLoading}
               fullWidth
             />
@@ -93,7 +96,6 @@ const Profile = () => {
         </div>
       </main>
 
-      {/* Safely render dialog only when field is available */}
       {field && (
         <EditProfileFieldDialog
           open={open}
