@@ -64,11 +64,6 @@ const Header = () => {
 
   const username = user?.fullname || "Unknown User";
   const companyName = user?.companyName || "Unknown Company";
-  const email = user?.email || "N/A";
-  const phone = user?.phone || "N/A";
-  const password = "************";
-  const profilePicUrl = user?.profilePicUrl || "/images/default-avatar.png";
-  const cusCode = user?.psCusCode || "CUSXXX";
 
   return (
     <header className="flex sticky top-0 z-50 bg-white h-12 shrink-0 items-center border-b">

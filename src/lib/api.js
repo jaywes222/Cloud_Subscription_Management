@@ -1,5 +1,5 @@
 import API from "./axios-client";
-import STK_API from "./axios-client-stk";
+
 
 // Auth ************
 
@@ -42,9 +42,11 @@ export const changeWorkspaceMemberRoleMutationFn = async () => {};
 export const deleteWorkspaceMutationFn = async () => {};
 
 // Profile ************
-
-export const getUserProfileQueryFn = async () => {};
-export const updateUserProfileQueryFn = async () => {};
+export const updateUserProfileFieldMutationFn = async (data) => {
+	console.log('Sending update request with data:', data);
+	const response = await API.post('/auth/update-profile-field', data);
+	return response.data;
+};
 
 // Payment ************
 export const stkPushMutationFn = async (data) => {
@@ -52,14 +54,19 @@ export const stkPushMutationFn = async (data) => {
   return response.data;
 };
 
-export const confirmPaymentQueryFn = async () => {
-  const response = await API.get('active-client/confirm-payment');
-  return response.data;
-}
+export const confirmPaymentMutationFn = async (data) => {
+	const response = await API.post('active-client/confirm-payment', data);
+	return response.data;
+};
 
 // Subscription ********
 export const getSubscriptionScheduleQueryFn = async () => {
   const response = await API.get('active-client/schedule');
+  return response.data;
+}
+
+export const getInvoicesQueryFn = async () => {
+  const response = await API.get('active-client/invoice-receipt');
   return response.data;
 }
 
