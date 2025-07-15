@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Card,
-  ListGroup,
-  Form,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Container, Card, ListGroup, Form, Row, Col } from "react-bootstrap";
 import PhoneInput from "react-phone-input-2";
 import { normalizePhone } from "../../../../utils/phone-utils";
 
@@ -16,13 +9,22 @@ const Stk = ({ phone, setPhone, amount, setAmount, accountNumber }) => {
       <Container>
         <Card className="mpesa-card p-4">
           <Card.Title className="mpesa-card-title">
-            Follow the Steps Below. Once you receive a successful reply from Mpesa, click the complete button below.
+            Follow the Steps Below.Once you have made payment successfully,
+            click complete button .
           </Card.Title>
 
-          <ListGroup as="ul" className="mpesa-steps-1 mb-1">
-            <ListGroup.Item>Enter your Safaricom mobile phone number below and click <strong>Pay</strong></ListGroup.Item>
-            <ListGroup.Item>When prompted, enter your <strong>MPESA PIN</strong></ListGroup.Item>
-            <ListGroup.Item>Click the <strong>'Complete'</strong> button once you receive the MPESA confirmation</ListGroup.Item>
+          <ListGroup as="ul" className="mpesa-steps-1 ">
+            <ListGroup.Item>
+              Enter your Safaricom mobile phone number below and click{" "}
+              <strong>Pay</strong>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              When prompted, enter your <strong>MPESA PIN</strong>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Click the <strong>'Complete'</strong> button once you receive the
+              MPESA confirmation
+            </ListGroup.Item>
           </ListGroup>
 
           <Form className="payment-form">
@@ -68,11 +70,7 @@ const Stk = ({ phone, setPhone, amount, setAmount, accountNumber }) => {
               <Col xs={12} md={6} lg={4}>
                 <Form.Group controlId="formAccountNumber">
                   <Form.Label>Account Number</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={accountNumber}
-                    readOnly
-                  />
+                  <Form.Control type="text" value={accountNumber} readOnly />
                 </Form.Group>
               </Col>
             </Row>
