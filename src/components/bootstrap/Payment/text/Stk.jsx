@@ -10,7 +10,7 @@ import {
 import PhoneInput from "react-phone-input-2";
 import { normalizePhone } from "../../../../utils/phone-utils";
 
-const Stk = ({ phone, setPhone, amount, accountNumber }) => {
+const Stk = ({ phone, setPhone, amount, setAmount, accountNumber }) => {
   return (
     <div className="bs">
       <Container>
@@ -29,6 +29,7 @@ const Stk = ({ phone, setPhone, amount, accountNumber }) => {
             <Row className="gy-3">
               <Col xs={12} md={6} lg={4}>
                 <Form.Group controlId="formPhoneNumber">
+                  <Form.Label>Phone Number</Form.Label>
                   <PhoneInput
                     country={"ke"}
                     value={phone}
@@ -54,11 +55,12 @@ const Stk = ({ phone, setPhone, amount, accountNumber }) => {
 
               <Col xs={12} md={6} lg={4}>
                 <Form.Group controlId="formAmount">
-                  <Form.Label>Amount</Form.Label>
+                  <Form.Label>Amount (KES)</Form.Label>
                   <Form.Control
                     type="number"
                     value={amount}
-                    readOnly
+                    onChange={(e) => setAmount(e.target.value)}
+                    min={1}
                   />
                 </Form.Group>
               </Col>

@@ -56,7 +56,6 @@ const SignIn = () => {
     mutate(values, {
       onSuccess: (data) => {
         const token = data.token;
-        localStorage.setItem("token", token);
 
         if (data.requirePasswordChange) {
           toast({
@@ -64,16 +63,17 @@ const SignIn = () => {
             description: "Please change your password before proceeding.",
             variant: "warning",
           });
-          console.log("requirePasswordChange");
-          navigate(`/change-password?cuscode=${data.cusCode}`);
+          localStorage.setItem("token", token);
+          navigate(`/change-password/${data.cusCode}`);
         } else {
+          localStorage.setItem("token", token);
           toast({
             title: "Login Successful",
             description: "You have successfully logged in.",
             variant: "success",
           });
           console.log("Login Successful", data);
-          navigate(`/workspace/:${data.workspaceRedirectUrl}`);
+          navigate(`/workspace/${data.workspaceRedirectUrl}`);
         }
       },
       onError: (error) => {

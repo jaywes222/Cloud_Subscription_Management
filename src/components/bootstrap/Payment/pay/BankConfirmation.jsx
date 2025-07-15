@@ -5,39 +5,93 @@ import {
   Form,
   InputGroup,
   Button,
-  Dropdown,
   Row,
   Col,
 } from "react-bootstrap";
+import { useMutation } from "@tanstack/react-query";
+import { confirmPaymentMutationFn } from "../../../../lib/api";
+import { toast } from "../../../../hooks/use-toast";
+import { useAuthContext } from "../../../../context/auth-provider";
 
 const BankConfirmation = () => {
   const [selectedMode, setSelectedMode] = useState("Cash");
+  const [reference, setReference] = useState("");
+  const [amount, setAmount] = useState("");
+  const [paymentDate, setPaymentDate] = useState("");
 
-  const handleChange = (e) => {
-    setSelectedMode(e.target.value);
+  const { user } = useAuthContext();
+  const cusCode = user?.psCusCode;
+
+  const { mutate: confirmPayment, isPending: isConfirming } = useMutation({
+    mutationFn: confirmPaymentMutationFn,
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast({
+          title: "Payment Confirmed 🎉",
+          description: data.message,
+          variant: "success",
+        });
+        setReference("");
+        setAmount("");
+        setPaymentDate("");
+      } else {
+        toast({
+          title: "Payment Not Found",
+          description: data.message || "Could not confirm payment.",
+          variant: "destructive",
+        });
+      }
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Something went wrong.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleConfirmBank = () => {
+    if (!reference || !amount || !paymentDate) {
+      toast({
+        title: "Missing Fields",
+        description: "Please fill all fields before confirming.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const payload = {
+      bnkCode: selectedMode === "Bank Transfer" ? "MPESA" : selectedMode,
+      reference: reference.trim(),
+      amount: parseFloat(amount),
+      theDate: new Date(paymentDate).toISOString(),
+      cusCode,
+    };
+
+    confirmPayment(payload);
   };
 
   return (
     <div className="bs">
       <Card className="mpesa-card p-4">
-        <Card.Title className=" mpesa-card-title ">
-          Once you have successfully made the payment,follow the steps below.
-          Then click the Confirm button .
+        <Card.Title className="mpesa-card-title">
+          Once you have successfully made the payment, follow the steps below.
+          Then click the Confirm button.
         </Card.Title>
 
-        <ListGroup as="ul" className="mpesa-steps-1 mb-1 ">
+        <ListGroup as="ul" className="mpesa-steps-1 mb-1">
           <ListGroup.Item as="li">
             Select your preferred <strong>Mode of Payment.</strong>
           </ListGroup.Item>
-
           <ListGroup.Item as="li">
             Enter the following details in the fields below:
             <ul className="centered-list">
               <li>
-                <strong>Transaction ID/ Reference Number/ Cheque Number</strong>
+                <strong>Reference / Cheque Number</strong>
               </li>
               <li>
-                <strong>Payment Amount</strong>
+                <strong>Amount Paid</strong>
               </li>
               <li>
                 <strong>Payment Date</strong>
@@ -50,109 +104,48 @@ const BankConfirmation = () => {
         </ListGroup>
 
         <Form className="payment-form">
-          <Form.Group controlId="payment-method" className="mb-1">
-            <Form.Label
-              style={{
-                fontWeight: 500,
-
-                fontSize: "16px",
-                padding: "8px",
-                color: " #000000",
-                margin: "10px 0",
-              }}
+          <Form.Group controlId="payment-method" className="mb-3">
+            <Form.Label>Select Payment Mode</Form.Label>
+            <Form.Select
+              value={selectedMode}
+              onChange={(e) => setSelectedMode(e.target.value)}
             >
-              Select Payment Mode
-            </Form.Label>
-            <div className=" w-100 mb-3">
-              <Form.Select
-                className="custom-dropdown-button"
-                value={selectedMode}
-                onChange={handleChange}
-                style={{
-                  fontWeight: 500,
-                  fontSize: "14px",
-                  border: "1px solid #a6a6a6 ",
-
-                  padding: "8px",
-                }}
-              >
-                <option value="Cash">Cash Deposit</option>
-                <option value="Cheque">Cheque Payment</option>
-                <option value="Bank Transfer">Mpesa Paybill</option>
-              </Form.Select>
-            </div>
+              <option value="Cash">Cash Deposit</option>
+              <option value="Cheque">Cheque Payment</option>
+              <option value="Bank Transfer">Mpesa Paybill</option>
+            </Form.Select>
           </Form.Group>
-          <div className="d-flex flex-wrap gap-3 mb-2 align-items-end">
-            {selectedMode === "Cash" && (
-              <Form.Group
-                controlId="formTransactionRef"
-                style={{
-                  minWidth: "410px",
-                }}
-              >
-                <Form.Label>Reference Number</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Reference Number"
-                  />
-                </InputGroup>
-              </Form.Group>
-            )}
 
-            {selectedMode === "Cheque" && (
-              <Form.Group
-                controlId="formChequeNumber"
-                style={{
-                  minWidth: "410px",
-                }}
-              >
-                <Form.Label>Cheque Number</Form.Label>
-                <InputGroup>
-                  <Form.Control type="text" placeholder="Enter Cheque Number" />
-                </InputGroup>
-              </Form.Group>
-            )}
-
-            {selectedMode === "Bank Transfer" && (
-              <Form.Group
-                controlId="formTransactionRef"
-                style={{
-                  minWidth: "410px",
-                }}
-              >
-                <Form.Label>Transaction ID</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Transaction ID"
-                  />
-                </InputGroup>
-              </Form.Group>
-            )}
+          <div className="d-flex flex-wrap gap-3 mb-3 align-items-end">
+            <Form.Group controlId="formReference" style={{ minWidth: "410px" }}>
+              <Form.Label>
+                {selectedMode === "Cheque"
+                  ? "Cheque Number"
+                  : "Reference Number"}
+              </Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Reference"
+                  value={reference}
+                  onChange={(e) => setReference(e.target.value)}
+                />
+              </InputGroup>
+            </Form.Group>
           </div>
 
-          <div className="mb-3">
-            <Form.Group
-              controlId="formAmount"
-              style={{
-                display: "inline-block",
-                marginRight: "1rem",
-                minWidth: "200px",
-              }}
-            >
+          <div className="mb-3 d-flex gap-4">
+            <Form.Group controlId="formAmount" style={{ minWidth: "200px" }}>
               <Form.Label>Amount</Form.Label>
-              <Form.Control type="number" placeholder="Enter Payment Amount" />
+              <Form.Control
+                type="number"
+                placeholder="Enter Amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
             </Form.Group>
 
-            <Form.Group
-              controlId="formTransactionDate"
-              style={{
-                display: "inline-block",
-
-                minWidth: "200px",
-              }}
-            >
+            <Form.Group controlId="formDate" style={{ minWidth: "200px" }}>
               <Form.Label>Payment Date</Form.Label>
               <Form.Control
                 type="date"
@@ -167,9 +160,10 @@ const BankConfirmation = () => {
             <Col xs={12} md="auto" className="mb-1">
               <Button
                 className="custom-complete-button"
-                onClick={() => navigate("/confirm")}
+                onClick={handleConfirmBank}
+                disabled={isConfirming}
               >
-                Confirm
+                {isConfirming ? "Confirming..." : "Confirm"}
               </Button>
             </Col>
           </Row>

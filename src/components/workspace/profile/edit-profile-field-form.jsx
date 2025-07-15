@@ -1,3 +1,4 @@
+// components/workspace/profile/edit-profile-field-form.js
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,11 +7,13 @@ import { z } from "zod";
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
 import { useToast } from "../../../hooks/use-toast";
-import { updateUserProfileQueryFn as updateUserProfile } from "../../../lib/api";
+import { updateUserProfileFieldMutationFn } from "../../../lib/api";
 import { PenBoxIcon } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { useAuthContext } from "../../../context/auth-provider";
 
 const schemas = {
-    username: z.string().min(2, "Username must be at least 2 characters"),
+    fullname: z.string().min(2, "Full Name must be at least 2 characters"),
     companyName: z.string().min(2, "Company name must be at least 2 characters"),
     email: z.string().email("Please enter a valid email address"),
     phone: z.string().min(5, "Phone number must be at least 5 characters"),
@@ -18,7 +21,7 @@ const schemas = {
 };
 
 const fieldLabels = {
-    username: "Username",
+    fullname: "Full Name",
     companyName: "Company Name",
     email: "Email",
     phone: "Phone",
@@ -27,28 +30,47 @@ const fieldLabels = {
 
 export default function EditProfileFieldForm({ field, initialValue, onClose }) {
     const { toast } = useToast();
+    const { refetchAuth } = useAuthContext();
 
     const schema = React.useMemo(() => {
         return schemas[field] || z.string().min(2, "Too short");
     }, [field]);
 
-    const form = useForm({
-        resolver: zodResolver(schema),
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        resolver: zodResolver(z.object({ value: schema })),
         defaultValues: { value: initialValue },
     });
 
-    const onSubmit = async (data) => {
-        try {
-            await updateUserProfile({ [field]: data.value });
-            toast({ title: `${fieldLabels[field] || field} updated`, variant: "success" });
+    const { mutate: updateField } = useMutation({
+        mutationFn: updateUserProfileFieldMutationFn,
+        onSuccess: async () => {
+            await refetchAuth();
+            toast({
+                title: `${fieldLabels[field] || field} updated successfully 🎉`,
+                variant: "success",
+            });
             onClose();
-        } catch (err) {
-            toast({ title: "Failed to update", variant: "destructive" });
-        }
+        },
+        onError: (err) => {
+            toast({
+                title: "Failed to update",
+                description: err?.response?.data?.message || err.message || "An error occurred while updating the field.",
+                variant: "destructive",
+            });
+        },
+    });
+
+    const onSubmit = ({ value }) => {
+        console.log("Submitting form with:", { field, value });
+        updateField({ field, value });
     };
 
     return (
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex items-center space-x-3">
                 <div className="p-1.5 rounded-md bg-gray-100 text-gray-500">
                     <PenBoxIcon className="w-5 h-5" />
@@ -58,7 +80,7 @@ export default function EditProfileFieldForm({ field, initialValue, onClose }) {
                         Edit {fieldLabels[field] || field}
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                        Make valid changes and click save to update.
+                        Enter your updated {fieldLabels[field] || field.toLowerCase()} below and save changes.
                     </p>
                 </div>
             </div>
@@ -66,13 +88,13 @@ export default function EditProfileFieldForm({ field, initialValue, onClose }) {
             <div>
                 <Input
                     id="value"
-                    {...form.register("value")}
+                    {...register("value")}
                     type={field === "password" ? "password" : "text"}
                     placeholder={fieldLabels[field]}
                 />
-                {form.formState.errors.value && (
+                {errors.value && (
                     <p className="text-sm text-red-500 mt-1">
-                        {form.formState.errors.value.message}
+                        {errors.value.message}
                     </p>
                 )}
             </div>
@@ -81,8 +103,8 @@ export default function EditProfileFieldForm({ field, initialValue, onClose }) {
                 <Button type="button" variant="ghost" onClick={onClose}>
                     Cancel
                 </Button>
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                    Save
+                <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Saving..." : "Save"}
                 </Button>
             </div>
         </form>

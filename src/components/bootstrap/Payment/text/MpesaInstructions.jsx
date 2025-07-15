@@ -1,57 +1,54 @@
 import React, { useState, useEffect } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { stkPushMutationFn, confirmPaymentQueryFn } from "../../../../lib/api";
+import { useMutation } from "@tanstack/react-query";
+import { Button, Card, Col, Container, ListGroup, Row, Form } from "react-bootstrap";
+import { stkPushMutationFn, confirmPaymentMutationFn } from "../../../../lib/api";
 import Confirmation from "../text/confirmation";
 import Stk from "../text/Stk";
 import { toast } from "../../../../hooks/use-toast";
 import { useAuthContext } from "../../../../context/auth-provider";
-import { isValidPhoneNumber, normalizePhone } from "../../../../utils/phone-utils";
+import { isValidLocalPhoneNumber, normalizePhone, denormalizePhone } from "../../../../utils/phone-utils";
 
 const MpesaInstructions = () => {
-  const navigate = useNavigate();
-  const [show, setShow] = useState("mpesa");
   const { user } = useAuthContext();
 
+  const [mode, setMode] = useState("mpesa");
+  const [phone, setPhone] = useState("");
+  const [amount, setAmount] = useState("");
   const [hasPaid, setHasPaid] = useState(false);
-  const [pollingEnabled, setPollingEnabled] = useState(false);
   const [paymentStarted, setPaymentStarted] = useState(false);
+  const [isPushSuccessful, setIsPushSuccessful] = useState(false);
 
-  const [phone, setPhone] = useState(user?.phone);
-  const amount = user?.amountDue;
   const accountNumber = user?.psCusCode;
 
   useEffect(() => {
     if (user?.phone) setPhone(normalizePhone(user.phone));
+    if (user?.amountDue) setAmount(user.amountDue.toString());
   }, [user]);
 
-  const { mutate: pushSTK, isPending } = useMutation({
+  const { mutate: pushSTK, isPending: isPushing } = useMutation({
     mutationFn: stkPushMutationFn,
     onSuccess: () => {
       toast({
-        title: "STK Push Initiated.",
+        title: "STK Push Initiated",
         description: "Wait for MPESA prompt and enter your PIN.",
         variant: "success",
       });
-      setPaymentStarted(true);
-      setPollingEnabled(true);
+      setIsPushSuccessful(true);
       setHasPaid(false);
+      setPaymentStarted(true);
     },
-    onError: (error) => {
+    onError: (err) => {
       toast({
-        title: "Error",
-        description: error.message || "STK push failed.",
+        title: "STK Push Failed",
+        description: err.message || "Try again.",
         variant: "destructive",
       });
+      setIsPushSuccessful(false);
     },
   });
 
-  useQuery({
-    queryKey: ["confirm-payment"],
-    queryFn: confirmPaymentQueryFn,
-    enabled: show === "STK" && pollingEnabled && paymentStarted,
-    refetchInterval: 5000,
+  const { mutate: confirmPayment, isPending: isConfirming } = useMutation({
+    mutationFn: confirmPaymentMutationFn,
     onSuccess: (data) => {
       if (data?.success) {
         toast({
@@ -60,48 +57,53 @@ const MpesaInstructions = () => {
           variant: "success",
         });
         setHasPaid(true);
-        setPollingEnabled(false);
+        setPaymentStarted(false);
+        setIsPushSuccessful(false);
       }
     },
-    onError: (error) => {
+    onError: (err) => {
       toast({
-        title: "Confirmation Error",
-        description: error.message || "Could not confirm payment.",
+        title: "Confirmation Failed",
+        description: err.message || "Transaction not found.",
         variant: "destructive",
       });
-      setPollingEnabled(false);
     },
   });
 
   const handlePushSTK = () => {
-    const formattedPhone = normalizePhone(phone);
-    if (!formattedPhone || !isValidPhoneNumber(formattedPhone)) {
+    const formattedPhone = denormalizePhone(phone);
+    const parsedAmount = Number(amount);
+
+    if (!formattedPhone || !isValidLocalPhoneNumber(formattedPhone)) {
       toast({
-        title: "Invalid Phone Number",
-        description: "Please enter a valid Safaricom phone number.",
+        title: "Invalid Phone",
+        description: "Please enter a valid Safaricom number.",
         variant: "destructive",
       });
       return;
     }
-    setPhone(formattedPhone);
-    pushSTK({ phone: formattedPhone, accountNumber, amount });
+
+    if (!parsedAmount || parsedAmount <= 0) {
+      toast({
+        title: "Invalid Amount",
+        description: "Enter amount greater than zero.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    pushSTK({ phoneOverride: formattedPhone, accountNumber, amountOverride: parsedAmount });
   };
 
-  const handleStopPolling = () => {
-    setPollingEnabled(false);
-    setPaymentStarted(false);
-    toast({
-      title: "Polling Stopped",
-      description: "You have stopped checking payment status.",
-      variant: "default",
-    });
+  const handleConfirm = () => {
+    confirmPayment({ accountNumber });
   };
 
   return (
-    <div className="bs ">
+    <div className="bs">
       <Container>
         <Card className="mpesa-card p-4">
-          {show === "mpesa" ? (
+          {mode === "mpesa" && (
             <>
               <Card.Title className="mpesa-card-title">
                 Follow the Steps Below. Once you receive a successful reply from
@@ -112,125 +114,85 @@ const MpesaInstructions = () => {
                 <ListGroup.Item>Select <strong>Pay Bill</strong> option</ListGroup.Item>
                 <ListGroup.Item>Enter Business Number: <strong>222222</strong></ListGroup.Item>
                 <ListGroup.Item>Enter Account Number: <strong>{accountNumber}</strong></ListGroup.Item>
-                <ListGroup.Item>Enter the Amount: <strong>{amount.toLocaleString()}</strong></ListGroup.Item>
+                <ListGroup.Item>
+                  Enter the Amount:{" "}
+                  <Form.Control
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    style={{ width: "200px", display: "inline-block" }}
+                  />
+                </ListGroup.Item>
                 <ListGroup.Item>Enter your M-PESA PIN and press <strong>Send</strong></ListGroup.Item>
                 <ListGroup.Item>You will receive a confirmation SMS from <strong>MPESA</strong></ListGroup.Item>
               </ListGroup>
               <Row className="mpesa-steps-3-footer mt-3">
                 <Col xs="auto">
-                  <Button
-                    className="custom-complete-button"
-                    onClick={() =>
-                      toast({
-                        title: "Thank you!",
-                        description: "Your payment has been recorded.",
-                        variant: "success",
-                      })
-                    }
-                  >
+                  <Button className="custom-complete-button" onClick={handleConfirm}>
                     Complete
                   </Button>
                 </Col>
               </Row>
             </>
-          ) : show === "STK" ? (
+          )}
+
+          {mode === "STK" && (
             <>
               <Stk
                 phone={phone}
                 setPhone={setPhone}
                 amount={amount}
+                setAmount={setAmount}
                 accountNumber={accountNumber}
               />
               <Row className="mpesa-steps-1-footer mt-3">
                 <Col xs="auto">
                   <Button
                     className="custom-complete-button"
-                    disabled={isPending || hasPaid}
+                    disabled={isPushing || hasPaid}
                     onClick={handlePushSTK}
                   >
-                    {isPending ? "Processing..." : "Pay"}
+                    {isPushing ? "Processing..." : "Pay"}
                   </Button>
                 </Col>
                 <Col xs="auto">
                   <Button
                     className="custom-complete-button"
-                    onClick={() =>
-                      toast({
-                        title: "Thank you!",
-                        description: "Your payment has been recorded.",
-                        variant: "success",
-                      })
-                    }
-                    disabled={!hasPaid}
+                    disabled={!isPushSuccessful || isConfirming}
+                    onClick={handleConfirm}
                   >
-                    Complete
+                    {isConfirming ? "Confirming..." : "Complete"}
                   </Button>
                 </Col>
-                {pollingEnabled && (
-                  <Col xs="auto">
-                    <Button variant="outline-secondary" onClick={handleStopPolling}>
-                      Stop Checking
-                    </Button>
-                  </Col>
-                )}
               </Row>
             </>
-          ) : (
-            <Confirmation />
           )}
 
+          {mode === "confirm" && <Confirmation />}
+
           <Row className="mpesa-steps-2-footer mt-4">
-            {show !== "mpesa" && show !== "STK" && (
+            {mode !== "mpesa" && (
               <Col xs="auto">
-                <Button
-                  className="custom-complete-button"
-                  onClick={() => navigate("/confirm")}
-                >
-                  Confirm
-                </Button>
-              </Col>
-            )}
-            {show !== "STK" && show !== "confirm" && (
-              <Col xs="auto">
-                <span className="link" onClick={() => setShow("STK")} role="button">
-                  Pay via MPESA Express (STK Push)
-                </span>
-              </Col>
-            )}
-            {show !== "mpesa" && show !== "confirm" && (
-              <Col xs="auto">
-                <span className="link" onClick={() => setShow("mpesa")} role="button">
+                <span className="link" onClick={() => setMode("mpesa")} role="button">
                   Pay via Paybill
                 </span>
               </Col>
             )}
-            {show !== "confirm" && (
+            {mode !== "STK" && (
               <Col xs="auto">
-                <span
-                  className="link"
-                  onClick={() => setShow("confirm")}
-                  role="button"
-                >
-                  Confirm My Payment
+                <span className="link" onClick={() => setMode("STK")} role="button">
+                  Pay via MPESA Express (STK Push)
+                </span>
+              </Col>
+            )}
+            {mode !== "confirm" && (
+              <Col xs="auto">
+                <span className="link" onClick={() => setMode("confirm")} role="button">
+                  Confirm
                 </span>
               </Col>
             )}
           </Row>
-
-          {show === "confirm" && (
-            <Row className="mpesa-steps-2-footer mt-3">
-              <Col xs="auto">
-                <span className="link" onClick={() => setShow("mpesa")} role="button">
-                  Pay via Paybill
-                </span>
-              </Col>
-              <Col xs="auto">
-                <span className="link" onClick={() => setShow("STK")} role="button">
-                  Pay via MPESA Express (STK Push)
-                </span>
-              </Col>
-            </Row>
-          )}
         </Card>
       </Container>
     </div>
