@@ -22,18 +22,35 @@ padding: 10px;
   background-color:  #dcb489;
 }
 .bs .mpesa-steps-1 {
-  list-style: decimal inside;
+  counter-reset: step-counter;
+  list-style: none; /* Bootstrap removes bullets/numbers */
+  padding-left: 1rem;
   background-color: #f8f9fa;
   padding: 10px;
   max-height: 200px;
   border-radius: 0.5rem;
- font-size: 14px;
+  font-size: 14px;
   line-height: 1.5;
   color: #343a40;
 }
 
-.bs .mpesa-steps-1 li {
+.bs .mpesa-steps-1 .list-group-item {
+  counter-increment: step-counter;
+  position: relative;
+  padding-left: 2rem; /* space for the number */
   margin-bottom: 5px;
+  background-color: transparent;
+  border: none;
+}
+
+.bs .mpesa-steps-1 .list-group-item::before {
+  content: counter(step-counter) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 14px;
+  line-height: 1.5;
+    color: #343a40;
 }
 
 .bs .mpesa-steps-1 strong {
@@ -64,6 +81,36 @@ padding: 10px;
   align-items: center;
   margin-top: 10px;
 }
+.bs .tab-header {
+  display: flex;
+  justify-content: flex-start; /* or 'left' → valid value is 'flex-start' */
+  gap: 1rem;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+.bs .tab-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #343a40;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.bs .tab-btn.active {
+  border: 2px solid #ddd;
+  border-bottom: none !important;
+  border-radius: 4px 4px 0 0;
+  background-color: #fff;
+  z-index: 2;
+}
+
 .bs .link {
   color: #C58C4F; 
   text-decoration: underline;
@@ -113,7 +160,7 @@ padding: 10px;
 }
 
 
-.bs .payment-form .form-control,.bs .payment-form .phone-input input {
+.bs .payment-form .form-control,.bs .payment-form .phone-input input,.bs .payment-form .form-select {
   width: 100%;
   padding: 10px 12px;
   
@@ -123,7 +170,8 @@ padding: 10px;
 }
 .bs .payment-form .form-control:focus,
 .bs .payment-form .input-group input:focus,
-.bs .payment-form .phone-input input:focus {
+.bs .payment-form .phone-input input:focus,.form-control:focus,
+.bs .payment-form .form-select:focus {
   border: 1px solid #C58C4F !important;
   box-shadow: none !important;
   outline: none !important;
