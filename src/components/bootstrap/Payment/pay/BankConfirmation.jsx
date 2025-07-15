@@ -156,7 +156,7 @@ const BankConfirmation = () => {
               <Form.Label>Payment Date</Form.Label>
               <Form.Control
                 type="date"
-                placeholder="MM/DD/YYYY"
+                placeholder="DD/MM/YYYY"
                 onFocus={(e) => (e.target.type = "date")}
                 onBlur={(e) => (e.target.type = "text")}
               />
