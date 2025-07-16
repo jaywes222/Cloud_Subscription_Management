@@ -262,14 +262,16 @@ const WorkspaceAnalytics = () => {
               isOpen={openIndex === 0}
               onToggle={() => handleToggle(0)}
             >
-              <div className="bs flex justify-start">
+              <div className="bs flex justify-between items-center">
                 <a
                   onClick={handleUploadClick}
                   className="mt-2 inline-flex items-center text-sm font-medium mb-3 ml-4 text-caramel hover:underline cursor-pointer"
                 >
                   {isPending ? 'Uploading...' : 'Upload File'}
                 </a>
-
+                <h5 className='mt-2 inline-flex items-center text-caramel font-bold mb-3 mr-4'>
+                  Max File Size: 5MB
+                </h5>
                 <input
                   type="file"
                   ref={fileInputRef}
