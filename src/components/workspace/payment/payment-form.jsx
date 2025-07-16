@@ -43,7 +43,7 @@ const PaymentForm = () => {
               onClick={() => handleRadioClick("bank")}
               readOnly
             />
-            <span className="radio-label">BANK</span>
+            <span className="radio-label">Confirmation</span>
           </label>
           {showInstructions === "bank" && <BankConfirmation />}
         </div>

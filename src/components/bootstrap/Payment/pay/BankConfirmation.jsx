@@ -76,8 +76,8 @@ const BankConfirmation = () => {
     <div className="bs">
       <Card className="mpesa-card p-4">
         <Card.Title className="mpesa-card-title">
-          Once you have successfully made the payment, follow the steps below.
-          Then click the Confirm button.
+          Once you have successfully made the payment, follow the steps . Then
+          click the Confirm button.
         </Card.Title>
 
         <ListGroup as="ul" className="mpesa-steps-1 mb-1">
@@ -87,9 +87,15 @@ const BankConfirmation = () => {
           <ListGroup.Item as="li">
             Enter the following details in the fields below:
             <ul className="centered-list">
-              <li><strong>Reference / Cheque Number</strong></li>
-              <li><strong>Amount Paid</strong></li>
-              <li><strong>Payment Date</strong></li>
+              <li>
+                <strong>Reference / Cheque Number/ Transaction ID</strong>
+              </li>
+              <li>
+                <strong>Amount Paid</strong>
+              </li>
+              <li>
+                <strong>Payment Date</strong>
+              </li>
             </ul>
           </ListGroup.Item>
           <ListGroup.Item as="li">
@@ -99,26 +105,47 @@ const BankConfirmation = () => {
 
         <Form className="payment-form">
           <Form.Group controlId="payment-method" className="mb-3">
-            <Form.Label>Select Payment Mode</Form.Label>
+            <Form.Label
+              style={{
+                fontWeight: "500",
+                fontSize: "18px",
+                paddingBottom: "10px",
+              }}
+            >
+              Select Payment Mode
+            </Form.Label>
             <Form.Select
               value={selectedMode}
               onChange={(e) => setSelectedMode(e.target.value)}
+              style={{
+                width: "40%",
+                fontSize: "16px",
+              }}
             >
               <option value="Cash">Cash Deposit</option>
               <option value="Cheque">Cheque Payment</option>
               <option value="Bank Transfer">Mpesa Paybill</option>
+              <option value="Mpesa STK">STK Push</option>
             </Form.Select>
           </Form.Group>
 
           <div className="d-flex flex-wrap gap-3 mb-3 align-items-end">
             <Form.Group controlId="formReference" style={{ minWidth: "410px" }}>
               <Form.Label>
-                {selectedMode === "Cheque" ? "Cheque Number" : "Reference Number"}
+                {selectedMode === "Cheque"
+                  ? "Cheque Number"
+                  : selectedMode === "Mpesa STK"
+                  ? "MPESA Transaction ID"
+                  : "Reference Number"}
               </Form.Label>
               <InputGroup>
                 <Form.Control
                   type="text"
-                  placeholder="Enter Reference"
+                  placeholder={
+                    selectedMode === "Mpesa STK"
+                      ? "Enter MPESA Transaction ID"
+                      : "Enter Reference"
+                  }
                   value={reference}
                   onChange={(e) => setReference(e.target.value)}
                 />
@@ -141,8 +168,9 @@ const BankConfirmation = () => {
               <Form.Label>Payment Date</Form.Label>
               <Form.Control
                 type="date"
-                value={paymentDate}
-                onChange={(e) => setPaymentDate(e.target.value)}
+                placeholder="DD/MM/YYYY"
+                onFocus={(e) => (e.target.type = "date")}
+                onBlur={(e) => (e.target.type = "text")}
               />
             </Form.Group>
           </div>
