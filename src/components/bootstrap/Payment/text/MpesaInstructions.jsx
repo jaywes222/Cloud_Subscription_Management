@@ -13,7 +13,7 @@ import {
   stkPushMutationFn,
   confirmPaymentMutationFn,
 } from "../../../../lib/api";
-import Confirmation from "../text/confirmation";
+import Confirmation from "./confirmation";
 import Stk from "../text/Stk";
 import { toast } from "../../../../hooks/use-toast";
 import { useAuthContext } from "../../../../context/auth-provider";
@@ -123,29 +123,21 @@ const MpesaInstructions = () => {
     <div className="bs">
       <Container>
         <Card className="mpesa-card p-4">
-          <div className="tab-header">
-            <button
-              type="button"
-              className={`tab-btn ${mode === "mpesa" ? "active" : ""}`}
-              onClick={() => setMode("mpesa")}
-            >
-              MPESA (Paybill)
-            </button>
-            <button
-              type="button"
-              className={`tab-btn ${mode === "STK" ? "active" : ""}`}
-              onClick={() => setMode("STK")}
-            >
-              STK Push
-            </button>
-          </div>
+          <Card.Title className="mpesa-card-title mb-4 text-center">
+            Follow the Steps Below. Once you receive a reply from Mpesa, click
+            the complete button .
+          </Card.Title>
 
-          {mode === "mpesa" && (
-            <>
-              <Card.Title className="mpesa-card-title">
-                Follow the Steps Below.Once you have made payment successfully,
-                click complete button below.
-              </Card.Title>
+          <Row
+            // className="w-100"
+            className="d-flex align-items-start"
+            // style={{ minHeight: "100%" }}
+          >
+            <Col
+              md={6}
+              style={{ borderRight: "1px solid #ccc" }}
+              className="justify-between"
+            >
               <ListGroup as="ul" className="mpesa-steps-1">
                 <ListGroup.Item>Go to M-PESA on your phone</ListGroup.Item>
                 <ListGroup.Item>
@@ -159,17 +151,17 @@ const MpesaInstructions = () => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   Enter the Amount:{" "}
-                  <Form.Control
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    style={{
-                      width: "60%",
-                      display: "inline-block",
-                      padding: "0.375rem 0.75rem",
-                      border: "1px solid #ccc",
-                    }}
-                  />
+                  <Form className="payment-form">
+                    <Form.Group controlId="formAmount">
+                      <Form.Label>Amount (KES)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                        min={1}
+                      />
+                    </Form.Group>
+                  </Form>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   Enter your M-PESA PIN and press <strong>Send</strong>
@@ -179,21 +171,20 @@ const MpesaInstructions = () => {
                   <strong>MPESA</strong>
                 </ListGroup.Item>
               </ListGroup>
-              <Row className="mpesa-steps-3-footer mb-3">
-                <Col xs="auto">
-                  <Button
-                    className="custom-complete-button"
-                    onClick={handleConfirm}
-                  >
-                    Complete
-                  </Button>
-                </Col>
-              </Row>
-            </>
-          )}
+              <div
+                className="mt-5 d-flex justify-content-center"
+                style={{ paddingTop: "25px" }}
+              >
+                <Button
+                  className="custom-complete-button"
+                  onClick={handleConfirm}
+                >
+                  Complete
+                </Button>
+              </div>
+            </Col>
 
-          {mode === "STK" && (
-            <>
+            <Col md={6}>
               <Stk
                 phone={phone}
                 setPhone={setPhone}
@@ -201,19 +192,19 @@ const MpesaInstructions = () => {
                 setAmount={setAmount}
                 accountNumber={accountNumber}
               />
-              <Row className="mpesa-steps-1-footer mt-3">
-                <Col xs="auto">
+              <Row className="mt-1 d-flex flex-column d-flex justify-content-center">
+                <Col className="mb-5 pe-2 ps-4">
                   <Button
-                    className="custom-complete-button"
+                    className="custom-complete-button w-80  ps-2"
                     disabled={isPushing || hasPaid}
                     onClick={handlePushSTK}
                   >
                     {isPushing ? "Processing..." : "Pay"}
                   </Button>
                 </Col>
-                <Col xs="auto">
+                <Col className="pe-2">
                   <Button
-                    className="custom-complete-button"
+                    className="custom-complete-button w-80"
                     disabled={!isPushSuccessful || isConfirming}
                     onClick={handleConfirm}
                   >
@@ -221,8 +212,8 @@ const MpesaInstructions = () => {
                   </Button>
                 </Col>
               </Row>
-            </>
-          )}
+            </Col>
+          </Row>
 
           {mode === "confirm" && <Confirmation />}
         </Card>
