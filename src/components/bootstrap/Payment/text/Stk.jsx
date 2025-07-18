@@ -7,12 +7,7 @@ const Stk = ({ phone, setPhone, amount, setAmount, accountNumber }) => {
   return (
     <div className="bs">
       <Container>
-        <Card className="mpesa-card p-4">
-          <Card.Title className="mpesa-card-title">
-            Follow the Steps Below.Once you have made payment successfully,
-            click complete button .
-          </Card.Title>
-
+        <Card className="mpesa-card ">
           <ListGroup as="ul" className="mpesa-steps-1 ">
             <ListGroup.Item>
               Enter your Safaricom mobile phone number below and click{" "}
@@ -28,7 +23,7 @@ const Stk = ({ phone, setPhone, amount, setAmount, accountNumber }) => {
           </ListGroup>
 
           <Form className="payment-form">
-            <Row className="gy-3">
+            <Row className="gy-1 ps-5">
               <Col xs={12} md={6} lg={4}>
                 <Form.Group controlId="formPhoneNumber">
                   <Form.Label>Phone Number</Form.Label>
