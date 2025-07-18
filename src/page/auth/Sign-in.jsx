@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -24,10 +24,11 @@ import Logo from "../../components/logo";
 import { useMutation } from "@tanstack/react-query";
 import { loginMutationFn } from "../../lib/api";
 import { toast } from "../../hooks/use-toast";
-import { Loader } from "lucide-react";
+import { Loader, Eye, EyeOff  } from "lucide-react";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const { mutate, isPending } = useMutation({
     mutationFn: loginMutationFn,
@@ -104,69 +105,64 @@ const SignIn = () => {
             </CardHeader>
             <CardContent>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                  <div className="grid gap-6">
-                    <div className="grid gap-3">
-                      <div className="grid gap-2">
-                        <FormField
-                          control={form.control}
-                          name="cuscode"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                CusCode
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="JR8XTV"
-                                  className="!h-[48px]"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="grid gap-2">
-                        <FormField
-                          control={form.control}
-                          name="password"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="flex items-center">
-                                <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                  Password
-                                </FormLabel>
-                                <a
-                                  href="#"
-                                  className="ml-auto text-sm underline-offset-4 hover:underline"
-                                >
-                                  Forgot your password?
-                                </a>
-                              </div>
-                              <FormControl>
-                                <Input
-                                  type="password"
-                                  className="!h-[48px]"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <Button
-                        type="submit"
-                        className="w-full"
-                        disabled={isPending}
-                      >
-                        {isPending && <Loader className="animate-spin" />}
-                        Login
-                      </Button>
-                    </div>
-                  </div>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
+                  <FormField
+                    control={form.control}
+                    name="cuscode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="dark:text-[#f1f7feb5] text-sm">CusCode</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="JR8XTV"
+                            className="!h-[48px]"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center">
+                          <FormLabel className="dark:text-[#f1f7feb5] text-sm">Password</FormLabel>
+                          <a
+                            href="#"
+                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                          >
+                            Forgot your password?
+                          </a>
+                        </div>
+                        <FormControl>
+                          <div className="relative">
+                            <Input
+                              type={showPassword ? "text" : "password"}
+                              className="!h-[48px] pr-10"
+                              {...field}
+                            />
+                            <button
+                              type="button"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                            >
+                              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button type="submit" className="w-full" disabled={isPending}>
+                    {isPending ? <Loader className="animate-spin mr-2 h-4 w-4" /> : null}
+                    Login
+                  </Button>
                 </form>
               </Form>
             </CardContent>
