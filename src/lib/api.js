@@ -13,6 +13,16 @@ export const changePasswordMutationFn = async (data) => {
   return response.data;
 }
 
+export const forgotPasswordMutationFn = async (data) => {
+  const response = await API.post("/auth/reset-password-request", data);
+  return response.data;
+}
+
+export const resetPasswordMutationFn = async (data) => {
+	const response = await API.patch('/auth/reset-password', data);
+	return response.data;
+};
+
 export const logoutMutationFn = async () => {
   return await API.post("/auth/logout");
 };

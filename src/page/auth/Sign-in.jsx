@@ -57,6 +57,8 @@ const SignIn = () => {
     mutate(values, {
       onSuccess: (data) => {
         const token = data.token;
+        const email = data.email;
+        const cusCode = data.cusCode;
 
         if (data.requirePasswordChange) {
           toast({
@@ -65,6 +67,8 @@ const SignIn = () => {
             variant: "warning",
           });
           localStorage.setItem("token", token);
+          localStorage.setItem("email", email);
+          localStorage.setItem("cusCode", cusCode);
           navigate(`/change-password/${data.cusCode}`);
         } else {
           localStorage.setItem("token", token);
@@ -131,12 +135,12 @@ const SignIn = () => {
                       <FormItem>
                         <div className="flex items-center">
                           <FormLabel className="dark:text-[#f1f7feb5] text-sm">Password</FormLabel>
-                          <a
-                            href="#"
+                          <Link
+                            to="/forgot-password"
                             className="ml-auto text-sm underline-offset-4 hover:underline"
                           >
                             Forgot your password?
-                          </a>
+                          </Link>
                         </div>
                         <FormControl>
                           <div className="relative">

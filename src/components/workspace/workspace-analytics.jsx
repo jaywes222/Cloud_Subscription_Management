@@ -4,11 +4,10 @@ import {
   Building2,
   Calendar,
   CalendarDays,
-  ChevronDown,
-  Plus,
   ReceiptText,
   Upload,
-  User2
+  User2,
+  ListTodo
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import {
@@ -17,12 +16,6 @@ import {
   CardHeader
 } from '../../components/ui/card';
 import CollapsibleRow from '../../components/ui/collapsiblerow';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '../../components/ui/dropdown-menu';
 import { useAuthContext } from '../../context/auth-provider';
 import useActivateNowDialog from '../../hooks/use-activate-now-dialog';
 import usePayNowDialog from '../../hooks/use-pay-now-dialog';
@@ -149,7 +142,7 @@ const WorkspaceAnalytics = () => {
             currency: 'KES'
           }).format(scheduleData.nextAmount)
           : 'KES 0.00',
-      isDestructive: true
+      isHighlight: true
     }
   ];
 
@@ -299,6 +292,16 @@ const WorkspaceAnalytics = () => {
               label="Subscription Schedule"
               isOpen={openIndex === 2}
               onToggle={() => handleToggle(2)}
+            >
+              <SubscriptionScheduleTable />
+            </CollapsibleRow>
+
+            {/* Pending Approvals */}
+            <CollapsibleRow
+              icon={<ListTodo className="w-4 h-4" />}
+              label="Pending Approvals"
+              isOpen={openIndex === 3}
+              onToggle={() => handleToggle(3)}
             >
               <SubscriptionScheduleTable />
             </CollapsibleRow>
