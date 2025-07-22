@@ -1,6 +1,8 @@
 export const AUTH_ROUTES = {
 	SIGN_IN: '/',
 	CHANGE_PASSWORD: '/change-password/:cusCode',
+	FORGOT_PASSWORD: '/forgot-password',
+	RESET_PASSWORD: '/reset-password/:token',
 };
 
 export const PROTECTED_ROUTES = {
