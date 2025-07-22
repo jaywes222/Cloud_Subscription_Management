@@ -80,6 +80,11 @@ export const getInvoicesQueryFn = async () => {
   return response.data;
 }
 
+export const getPendingApprovalsQueryFn = async () => {
+  const response = await API.get('active-client/pending-approval');
+  return response.data;
+}
+
 // Activation ************
 export const getFilesQueryFn = async () => {
   const response = await API.get("active-client/uploaded-files");

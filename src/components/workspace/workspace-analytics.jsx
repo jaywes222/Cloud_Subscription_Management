@@ -25,6 +25,7 @@ import { getFileTypeEnum } from '../../utils/getFileType';
 import { InvoiceTable } from './accordion/invoice-table';
 import SubscriptionScheduleTable from './accordion/subscription-schedule-table';
 import UploadsTable from './accordion/uploads-table';
+import PendingApprovalTable from './accordion/pending-approvals-table';
 
 const branches = ['Nairobi West', 'Kitengela', 'CBD'];
 
@@ -303,7 +304,7 @@ const WorkspaceAnalytics = () => {
               isOpen={openIndex === 3}
               onToggle={() => handleToggle(3)}
             >
-              <SubscriptionScheduleTable />
+              <PendingApprovalTable />
             </CollapsibleRow>
           </div>
         </CardContent>
