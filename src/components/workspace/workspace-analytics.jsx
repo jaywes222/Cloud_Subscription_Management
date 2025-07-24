@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Building2,
@@ -10,11 +10,7 @@ import {
   ListTodo
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardHeader
-} from '../../components/ui/card';
+import { Card, CardContent, CardHeader } from '../../components/ui/card';
 import CollapsibleRow from '../../components/ui/collapsiblerow';
 import { useAuthContext } from '../../context/auth-provider';
 import useActivateNowDialog from '../../hooks/use-activate-now-dialog';
@@ -26,51 +22,6 @@ import { InvoiceTable } from './accordion/invoice-table';
 import SubscriptionScheduleTable from './accordion/subscription-schedule-table';
 import UploadsTable from './accordion/uploads-table';
 import PendingApprovalTable from './accordion/pending-approvals-table';
-
-const branches = ['Nairobi West', 'Kitengela', 'CBD'];
-
-const invoices = [
-  {
-    id: 'INV-202501',
-    dateIssued: '2025-05-21',
-    description: 'Monthly subscription - Premium Plan',
-    amount: 4999.0,
-    paymentMethod: 'MPesa',
-    status: 'paid'
-  },
-  {
-    id: 'INV-202502',
-    dateIssued: '2025-05-19',
-    description: 'Event booth registration - Expo 2025',
-    amount: 12000.0,
-    paymentMethod: 'Credit Card',
-    status: 'unpaid'
-  },
-  {
-    id: 'INV-202503',
-    dateIssued: '2025-05-15',
-    description: 'Ticket sales commission',
-    amount: 8550.75,
-    paymentMethod: 'Bank Transfer',
-    status: 'failed'
-  },
-  {
-    id: 'INV-202504',
-    dateIssued: '2025-05-10',
-    description: 'Merchandise sales - Conference bundle',
-    amount: 17500.0,
-    paymentMethod: 'PayPal',
-    status: 'paid'
-  },
-  {
-    id: 'INV-202505',
-    dateIssued: '2025-05-08',
-    description: 'Custom analytics dashboard setup',
-    amount: 27500.0,
-    paymentMethod: 'Mobile Money',
-    status: 'unpaid'
-  }
-];
 
 const WorkspaceAnalytics = () => {
   const { onOpen: onPayNowOpen } = usePayNowDialog();
@@ -105,57 +56,68 @@ const WorkspaceAnalytics = () => {
     }
   });
 
-  const { data: scheduleData, isLoading: loadingSubDetails, isError: scheduleError } = useQuery({
+  const {
+    data: scheduleData,
+    isLoading: loadingSubDetails,
+    isError: scheduleError
+  } = useQuery({
     queryKey: ['sub-schedule'],
     queryFn: getSubscriptionScheduleQueryFn
   });
 
-  const subDetails = [
-    {
-      id: 'last-payment-on',
-      label: 'Last Payment On',
-      value: scheduleData?.lastPaymentDate
-        ? new Date(scheduleData.lastPaymentDate).toLocaleDateString('en-KE', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric'
-        })
-        : 'N/A'
-    },
-    {
-      id: 'next-payment-on',
-      label: 'Next Payment On',
-      value: scheduleData?.nextPaymentDate
-        ? new Date(scheduleData.nextPaymentDate).toLocaleDateString('en-KE', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric'
-        })
-        : 'N/A'
-    },
-    {
-      id: 'next-payment-amt',
-      label: 'Next Payment Amount',
-      value:
-        scheduleData?.nextAmount != null
-          ? new Intl.NumberFormat('en-KE', {
-            style: 'currency',
-            currency: 'KES'
-          }).format(scheduleData.nextAmount)
-          : 'KES 0.00',
-      isHighlight: true
-    }
-  ];
+  const formatDate = (dateStr) => {
+    return dateStr
+      ? new Date(dateStr).toLocaleDateString('en-KE', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      })
+      : 'N/A';
+  };
+
+  const subDetails = useMemo(() => {
+    if (!scheduleData) return null;
+
+    return [
+      {
+        id: 'last-payment-on',
+        label: 'Last Payment On',
+        value: formatDate(scheduleData.lastPaymentDate)
+      },
+      {
+        id: 'next-payment-on',
+        label: 'Next Payment On',
+        value: formatDate(scheduleData.nextPaymentDate)
+      },
+      {
+        id: 'expiry-date',
+        label: 'Subscription Expires',
+        value: formatDate(scheduleData.expiryDate)
+      },
+      {
+        id: 'next-payment-amt',
+        label: 'Next Payment Amount',
+        value:
+          scheduleData.nextAmount != null
+            ? new Intl.NumberFormat('en-KE', {
+              style: 'currency',
+              currency: 'KES'
+            }).format(scheduleData.nextAmount)
+            : 'KES 0.00',
+        isHighlight: true
+      }
+    ];
+  }, [scheduleData]);
 
   const handleToggle = (index) => {
-    if (index === 0 && !isUploadsVisible) {
-      setUploadsVisible(true);
-    }
+    if (index === 0 && !isUploadsVisible) setUploadsVisible(true);
     setOpenIndex((prev) => (prev === index ? null : index));
   };
 
   const handleUploadClick = () => {
-    fileInputRef.current.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   const handleFileChange = (e) => {
@@ -183,44 +145,34 @@ const WorkspaceAnalytics = () => {
   return (
     <div className="flex flex-col px-4 py-3">
       <Card className="flex flex-col flex-1 overflow-hidden rounded-2xl">
-        {/* Top Summary Section */}
-        <CardHeader className="flex flex-col md:flex-row justify-between items-start gap-6 pb-2">
-          {/* Left: Cycle & Branches */}
-          <div className="flex-1 min-w-[140px]">
-            <div className="text-muted-foreground mt-2 text-sm leading-6 space-y-2">
-              <div className="flex items-center gap-2">
-                <CalendarDays className="w-4 h-4 text-muted-foreground" />
-                <span>{billingCycle}</span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-muted-foreground" />
-                <span>{branchCount} {branchCount === 1 ? 'Branch' : 'Branches'}</span>
-              </div>
-
-
-
-              <div className="flex items-center gap-2">
-                <User2 className="w-4 h-4 text-muted-foreground" />
-                <span>{userCount} {userCount === 1 ? 'User' : 'Users'}</span>
-              </div>
+        <CardHeader className="flex flex-col md:flex-row gap-6 items-stretch pb-2">
+          {/* Left Info */}
+          <div className="flex-1 min-w-[140px] space-y-2 text-sm text-muted-foreground self-stretch">
+            <div className="flex items-center gap-2">
+              <CalendarDays className="w-4 h-4" />
+              <span>{billingCycle}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Building2 className="w-4 h-4" />
+              <span>{branchCount} {+branchCount === 1 ? 'Branch' : 'Branches'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <User2 className="w-4 h-4" />
+              <span>{userCount} {+userCount === 1 ? 'User' : 'Users'}</span>
             </div>
           </div>
 
-          {/* Center: Sub Details */}
-          <div className="flex-1 min-w-[200px] space-y-2 text-sm">
+          {/* Center Sub Info */}
+          <div className="flex-1 min-w-[200px] space-y-2 text-sm self-stretch">
             {loadingSubDetails ? (
               <div>Loading subscription details...</div>
-            ) : scheduleError ? (
-              <div className="text-red-600">Failed to load subscription info.</div>
+            ) : scheduleError || !subDetails ? (
+              <div className="text-red-600">No subscription added.</div>
             ) : (
               subDetails.map((detail) => (
                 <div key={detail.id} className="flex justify-between">
                   <span className="text-muted-foreground">{detail.label}:</span>
-                  <span
-                    className={`font-medium ${detail.isDestructive ? 'text-red-600' : 'text-gray-800'
-                      }`}
-                  >
+                  <span className={`font-medium ${detail.isHighlight ? 'text-green-700' : 'text-gray-800'}`}>
                     {detail.value}
                   </span>
                 </div>
@@ -228,11 +180,8 @@ const WorkspaceAnalytics = () => {
             )}
           </div>
 
-          {/* Right: Actions */}
-          <div className="flex flex-col gap-2 min-w-[140px]">
-            <Button onClick={onPayNowOpen} className="!text-[15px]" variant="outline">
-              Pay Now
-            </Button>
+          {/* Right CTA */}
+          <div className="flex flex-col gap-2 min-w-[140px] self-stretch justify-start">
             <Button
               onClick={onActivateNowOpen}
               className="!text-[15px]"
@@ -242,14 +191,15 @@ const WorkspaceAnalytics = () => {
             >
               {user?.isAccountActive ? 'Active' : 'Activate Now'}
             </Button>
-
+            <Button onClick={onPayNowOpen} className="!text-[15px]" variant="outline">
+              Pay Now
+            </Button>
           </div>
         </CardHeader>
 
-        {/* Scrollable Collapsible Section */}
+        {/* Collapsible Section */}
         <CardContent className="px-4 pb-4">
           <div className="flex flex-col space-y-4 h-full">
-            {/* Uploads */}
             <CollapsibleRow
               icon={<Upload className="w-4 h-4" />}
               label="Uploads"
@@ -263,7 +213,7 @@ const WorkspaceAnalytics = () => {
                 >
                   {isPending ? 'Uploading...' : 'Upload File'}
                 </a>
-                <h5 className='mt-2 inline-flex items-center text-caramel font-bold mb-3 mr-4'>
+                <h5 className="mt-2 inline-flex items-center text-caramel font-bold mb-3 mr-4">
                   Max File Size: 5MB
                 </h5>
                 <input
@@ -277,17 +227,15 @@ const WorkspaceAnalytics = () => {
               {isUploadsVisible && <UploadsTable />}
             </CollapsibleRow>
 
-            {/* Invoices */}
             <CollapsibleRow
               icon={<ReceiptText className="w-4 h-4" />}
               label="Invoices / Receipts"
               isOpen={openIndex === 1}
               onToggle={() => handleToggle(1)}
             >
-              <InvoiceTable invoices={invoices} />
+              <InvoiceTable />
             </CollapsibleRow>
 
-            {/* Subscription Schedule */}
             <CollapsibleRow
               icon={<Calendar className="w-4 h-4" />}
               label="Subscription Schedule"
@@ -297,7 +245,6 @@ const WorkspaceAnalytics = () => {
               <SubscriptionScheduleTable />
             </CollapsibleRow>
 
-            {/* Pending Approvals */}
             <CollapsibleRow
               icon={<ListTodo className="w-4 h-4" />}
               label="Pending Approvals"

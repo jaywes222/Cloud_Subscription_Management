@@ -24,7 +24,7 @@ import Logo from "../../components/logo";
 import { useMutation } from "@tanstack/react-query";
 import { loginMutationFn } from "../../lib/api";
 import { toast } from "../../hooks/use-toast";
-import { Loader, Eye, EyeOff  } from "lucide-react";
+import { Loader, Eye, EyeOff } from "lucide-react";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -56,28 +56,25 @@ const SignIn = () => {
 
     mutate(values, {
       onSuccess: (data) => {
-        const token = data.token;
-        const email = data.email;
-        const cusCode = data.cusCode;
+        const { token, email, cusCode, requirePasswordChange } = data;
 
-        if (data.requirePasswordChange) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("email", email);
+        localStorage.setItem("cusCode", cusCode);
+
+        if (requirePasswordChange) {
           toast({
             title: "Password Change Required",
             description: "Please change your password before proceeding.",
             variant: "warning",
           });
-          localStorage.setItem("token", token);
-          localStorage.setItem("email", email);
-          localStorage.setItem("cusCode", cusCode);
-          navigate(`/change-password/${data.cusCode}`);
+          navigate(`/change-password/${cusCode}`);
         } else {
-          localStorage.setItem("token", token);
           toast({
             title: "Login Successful",
             description: "You have successfully logged in.",
             variant: "success",
           });
-          console.log("Login Successful", data);
           navigate(`/workspace/${data.workspaceRedirectUrl}`);
         }
       },
@@ -92,107 +89,127 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col gap-6">
-        <Link
-          to="/"
-          className="flex items-center gap-2 self-center font-medium"
-        >
-          <Logo />
-          phAMAcore Cloud.
-        </Link>
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-xl">Welcome back</CardTitle>
-              <CardDescription>Login with your CusCode</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
-                  <FormField
-                    control={form.control}
-                    name="cuscode"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="dark:text-[#f1f7feb5] text-sm">CusCode</FormLabel>
-                        <FormControl>
+    <div className="flex min-h-svh items-center justify-center bg-muted px-6 py-12">
+      <div className="w-full max-w-md space-y-6">
+        <Card className="shadow-md">
+          <CardHeader className="text-center pb-2">
+            <Link
+              to="/"
+              className="flex items-center gap-2 justify-center font-medium text-base"
+            >
+              <Logo />
+            </Link>
+            <CardTitle className="text-xl">Welcome back</CardTitle>
+            <CardDescription>Login with your CusCode</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="cuscode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="dark:text-[#f1f7feb5] text-sm">
+                        CusCode
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="JR8XTV"
+                          className="!h-[48px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center">
+                        <FormLabel className="dark:text-[#f1f7feb5] text-sm">
+                          Password
+                        </FormLabel>
+                        <Link
+                          to="/forgot-password"
+                          className="ml-auto text-sm underline-offset-4 hover:underline"
+                        >
+                          Forgot your password?
+                        </Link>
+                      </div>
+                      <FormControl>
+                        <div className="relative">
                           <Input
-                            placeholder="JR8XTV"
-                            className="!h-[48px]"
+                            type={showPassword ? "text" : "password"}
+                            className="!h-[48px] pr-10"
                             {...field}
                           />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center">
-                          <FormLabel className="dark:text-[#f1f7feb5] text-sm">Password</FormLabel>
-                          <Link
-                            to="/forgot-password"
-                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                          <button
+                            type="button"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            onClick={() => setShowPassword((prev) => !prev)}
                           >
-                            Forgot your password?
-                          </Link>
+                            {showPassword ? (
+                              <EyeOff size={18} />
+                            ) : (
+                              <Eye size={18} />
+                            )}
+                          </button>
                         </div>
-                        <FormControl>
-                          <div className="relative">
-                            <Input
-                              type={showPassword ? "text" : "password"}
-                              className="!h-[48px] pr-10"
-                              {...field}
-                            />
-                            <button
-                              type="button"
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                              onClick={() => setShowPassword((prev) => !prev)}
-                            >
-                              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                  <Button type="submit" className="w-full" disabled={isPending}>
-                    {isPending ? <Loader className="animate-spin mr-2 h-4 w-4" /> : null}
-                    Login
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-          <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
-            By clicking login, you agree to our{" "}
-            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                <Button type="submit" className="w-full" disabled={isPending}>
+                  {isPending ? (
+                    <Loader className="animate-spin mr-2 h-4 w-4" />
+                  ) : null}
+                  Login
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+
+        <div className="text-center text-xs text-muted-foreground">
+          By clicking login, you agree to our{" "}
+          <a href="#" className="underline underline-offset-4 hover:text-primary">
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a href="#" className="underline underline-offset-4 hover:text-primary">
+            Privacy Policy
+          </a>
+          .
+        </div>
+
+        <div className="flex flex-col items-center justify-center text-xs text-muted-foreground gap-1">
+          <a
+            href="https://corebase.co.ke/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:text-primary transition-colors"
+          >
+            <span>Powered by</span>
+            <img
+              src="/images/corebaseLogo.png"
+              alt="Company Logo"
+              className="h-4 w-auto object-contain"
+            />
+          </a>
+          <div>
+            &copy; {new Date().getFullYear()} CoreBase Solutions. All rights
+            reserved.
           </div>
-
-          <div className="mt-12 flex flex-col items-center justify-center text-xs text-muted-foreground gap-1">
-            <a
-              href="https://corebase.co.ke/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 hover:text-primary transition-colors"
-            >
-              <span>Powered by</span>
-              <img
-                src="/images/corebaseLogo.png"
-                alt="Company Logo"
-                className="h-4 w-auto object-contain"
-              />
-            </a>
-            <div>&copy; {new Date().getFullYear()} CoreBase Solutions. All rights reserved.</div>
-          </div>
-
         </div>
       </div>
     </div>
