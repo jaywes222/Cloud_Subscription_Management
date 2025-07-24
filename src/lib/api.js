@@ -75,6 +75,11 @@ export const getSubscriptionScheduleQueryFn = async () => {
   return response.data;
 }
 
+export const getSubscriptionDatesQueryFn = async () => {
+	const response = await API.get('active-client/sub-dates');
+	return response.data;
+};
+
 export const getInvoicesQueryFn = async () => {
   const response = await API.get('active-client/invoice-receipt');
   return response.data;

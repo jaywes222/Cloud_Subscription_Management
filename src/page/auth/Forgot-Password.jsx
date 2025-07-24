@@ -91,7 +91,7 @@ const ForgotPassword = () => {
                                             <FormLabel>Customer Code</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="e.g. CX00123"
+                                                    placeholder="CX00123"
                                                     {...field}
                                                     disabled={isPending}
                                                 />

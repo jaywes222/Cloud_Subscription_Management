@@ -100,7 +100,7 @@ const SignIn = () => {
               <Logo />
             </Link>
             <CardTitle className="text-xl">Welcome back</CardTitle>
-            <CardDescription>Login with your CusCode</CardDescription>
+            <CardDescription>Login with your Customer Code</CardDescription>
           </CardHeader>
           <CardContent className="pt-0">
             <Form {...form}>
@@ -114,11 +114,11 @@ const SignIn = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                        CusCode
+                        Customer Code
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="JR8XTV"
+                          placeholder="CX00123"
                           className="!h-[48px]"
                           {...field}
                         />
