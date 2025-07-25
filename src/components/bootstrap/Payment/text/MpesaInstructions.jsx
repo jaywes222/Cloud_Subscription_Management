@@ -9,11 +9,7 @@ import {
   Row,
   Form,
 } from "react-bootstrap";
-import {
-  stkPushMutationFn,
-  confirmPaymentMutationFn,
-} from "../../../../lib/api";
-import Confirmation from "./confirmation";
+import { stkPushMutationFn } from "../../../../lib/api";
 import Stk from "../text/Stk";
 import { toast } from "../../../../hooks/use-toast";
 import { useAuthContext } from "../../../../context/auth-provider";
@@ -23,16 +19,12 @@ import {
   denormalizePhone,
 } from "../../../../utils/phone-utils";
 
-const MpesaInstructions = () => {
+const MpesaInstructions = ({ onSTKSuccess }) => {
   const { user } = useAuthContext();
 
-  const [activeTab, setActiveTab] = useState("mpesa");
-  const [mode, setMode] = useState("mpesa");
   const [phone, setPhone] = useState("");
   const [amount, setAmount] = useState("");
-  const [hasPaid, setHasPaid] = useState(false);
   const [paymentStarted, setPaymentStarted] = useState(false);
-  const [isPushSuccessful, setIsPushSuccessful] = useState(false);
 
   const accountNumber = user?.psCusCode;
 
@@ -45,42 +37,27 @@ const MpesaInstructions = () => {
     mutationFn: stkPushMutationFn,
     onSuccess: () => {
       toast({
-        title: "STK Push Initiated",
-        description: "Wait for MPESA prompt and enter your PIN.",
+        title: "STK Push Sent ✅",
+        description: (
+          <>
+            Confirm the payment on your phone and{" "}
+            <strong>log it below once done.</strong>
+          </>
+        ),
         variant: "success",
       });
-      setIsPushSuccessful(true);
-      setHasPaid(false);
+
       setPaymentStarted(true);
+
+      // 🔥 Notify parent to switch tab + scroll to confirmation
+      if (typeof onSTKSuccess === "function") {
+        onSTKSuccess();
+      }
     },
     onError: (err) => {
       toast({
         title: "STK Push Failed",
         description: err.message || "Try again.",
-        variant: "destructive",
-      });
-      setIsPushSuccessful(false);
-    },
-  });
-
-  const { mutate: confirmPayment, isPending: isConfirming } = useMutation({
-    mutationFn: confirmPaymentMutationFn,
-    onSuccess: (data) => {
-      if (data?.success) {
-        toast({
-          title: "Payment Confirmed 🎉",
-          description: data.message,
-          variant: "success",
-        });
-        setHasPaid(true);
-        setPaymentStarted(false);
-        setIsPushSuccessful(false);
-      }
-    },
-    onError: (err) => {
-      toast({
-        title: "Confirmation Failed",
-        description: err.message || "Transaction not found.",
         variant: "destructive",
       });
     },
@@ -115,24 +92,15 @@ const MpesaInstructions = () => {
     });
   };
 
-  const handleConfirm = () => {
-    confirmPayment({ accountNumber });
-  };
-
   return (
     <div className="bs">
       <Container>
         <Card className="mpesa-card p-4">
           <Card.Title className="mpesa-card-title mb-4 text-center">
-            Follow the Steps Below. Once you receive a reply from Mpesa, click
-            the complete button .
+            Follow the Steps Below.
           </Card.Title>
 
-          <Row
-            // className="w-100"
-            className="d-flex align-items-start"
-            // style={{ minHeight: "100%" }}
-          >
+          <Row className="d-flex align-items-start">
             <Col
               md={6}
               style={{ borderRight: "1px solid #ccc" }}
@@ -171,17 +139,6 @@ const MpesaInstructions = () => {
                   <strong>MPESA</strong>
                 </ListGroup.Item>
               </ListGroup>
-              <div
-                className="mt-5 d-flex justify-content-center"
-                style={{ paddingTop: "25px" }}
-              >
-                <Button
-                  className="custom-complete-button"
-                  onClick={handleConfirm}
-                >
-                  Complete
-                </Button>
-              </div>
             </Col>
 
             <Col md={6}>
@@ -192,30 +149,19 @@ const MpesaInstructions = () => {
                 setAmount={setAmount}
                 accountNumber={accountNumber}
               />
-              <Row className="mt-1 d-flex flex-column d-flex justify-content-center">
-                <Col className="mb-5 pe-2 ps-4">
-                  <Button
-                    className="custom-complete-button w-80  ps-2"
-                    disabled={isPushing || hasPaid}
-                    onClick={handlePushSTK}
-                  >
-                    {isPushing ? "Processing..." : "Pay"}
-                  </Button>
-                </Col>
-                <Col className="pe-2">
-                  <Button
-                    className="custom-complete-button w-80"
-                    disabled={!isPushSuccessful || isConfirming}
-                    onClick={handleConfirm}
-                  >
-                    {isConfirming ? "Confirming..." : "Complete"}
-                  </Button>
-                </Col>
-              </Row>
+
+              <div className="d-flex justify-content-center mt-4">
+                <Button
+                  className="custom-complete-button px-4 py-2"
+                  disabled={isPushing}
+                  onClick={handlePushSTK}
+                  style={{ minWidth: "200px" }}
+                >
+                  {isPushing ? "Processing..." : "Pay"}
+                </Button>
+              </div>
             </Col>
           </Row>
-
-          {mode === "confirm" && <Confirmation />}
         </Card>
       </Container>
     </div>

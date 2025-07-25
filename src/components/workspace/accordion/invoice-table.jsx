@@ -47,7 +47,7 @@ const InvoiceTable = ({ className }) => {
             dateIssued: item.transDate?.split("T")[0] ?? "N/A",
             description: item.transType ?? "—",
             amount: item.kshAmt ?? 0,
-            paymentMethod: item.branchName ?? "Unknown",
+            paymentMethod: item.dt ?? "Unknown",
         }));
     }, [data]);
 

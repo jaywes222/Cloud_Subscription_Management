@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "../../hooks/use-toast";
 import { Button } from "../../components/ui/button";
 import {
@@ -24,6 +24,7 @@ import { Input } from "../../components/ui/input";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { resetPasswordMutationFn } from "../../lib/api";
+import Logo from "../../components/logo";
 
 const formSchema = z
     .object({
@@ -91,6 +92,12 @@ const ResetPassword = () => {
             <div className="w-full max-w-md">
                 <Card>
                     <CardHeader className="text-center">
+                        <Link
+                            to="/"
+                            className="flex items-center gap-2 justify-center font-medium text-base"
+                        >
+                            <Logo />
+                        </Link>
                         <CardTitle className="text-xl">Reset Password</CardTitle>
                         <CardDescription>Enter and confirm your new password</CardDescription>
                     </CardHeader>

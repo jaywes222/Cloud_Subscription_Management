@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "../../hooks/use-toast";
 import { Button } from "../../components/ui/button";
 import {
@@ -24,6 +24,7 @@ import { Input } from "../../components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { forgotPasswordMutationFn } from "../../lib/api";
 import { Loader } from "lucide-react";
+import Logo from "../../components/logo";
 
 const formSchema = z.object({
     cusCode: z.string().min(1, { message: "Customer code is required" }),
@@ -70,8 +71,14 @@ const ForgotPassword = () => {
             <div className="w-full max-w-md">
                 <Card>
                     <CardHeader className="text-center">
+                        <Link
+                            to="/"
+                            className="flex items-center gap-2 justify-center font-medium text-base"
+                        >
+                            <Logo />
+                        </Link>
                         <CardTitle className="text-xl">Forgot Password</CardTitle>
-                        <CardDescription>Enter your customer code to proceed</CardDescription>
+                        <CardDescription>Enter your Customer Code to receive your new password</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Form {...form}>
@@ -84,7 +91,7 @@ const ForgotPassword = () => {
                                             <FormLabel>Customer Code</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="e.g. CX00123"
+                                                    placeholder="CX00123"
                                                     {...field}
                                                     disabled={isPending}
                                                 />

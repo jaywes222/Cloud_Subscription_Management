@@ -37,7 +37,21 @@ const SubscriptionScheduleTable = () => {
 
     if (isLoading) return <div>Loading schedule...</div>;
     if (isError) return <div>Error: {error.message}</div>;
-    if (!Array.isArray(data?.schedule)) return <div>No subscription schedule found.</div>;
+    if (!Array.isArray(data?.items)) return <div>No subscription schedule found.</div>;
+
+    const mappedSchedule = data.items.map((item) => ({
+        paymentDate: item.dueDate,
+        month: item.mnth,
+        amountDue: item.amtDue,
+        amountPaid: item.amtPaid,
+        balance: item.balance,
+        status:
+            item.status === true
+                ? "PAID"
+                : item.amtPaid > 0
+                    ? "PARTIAL"
+                    : "UNPAID",
+    }));
 
     return (
         <div className="space-y-6 w-full">
@@ -54,10 +68,10 @@ const SubscriptionScheduleTable = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data.schedule.map((r, index) => (
+                        {mappedSchedule.map((r, index) => (
                             <TableRow key={index}>
                                 <TableCell>
-                                    {r.nextPaymentOn
+                                    {r.paymentDate
                                         ? format(new Date(r.paymentDate), "yyyy-MM-dd")
                                         : "-"}
                                 </TableCell>

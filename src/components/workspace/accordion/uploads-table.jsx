@@ -19,7 +19,7 @@ const StatusIndicator = ({ status }) => {
             ? "bg-green-500"
             : normalized === "pending"
                 ? "bg-red-500"
-                : "bg-yellow-500"; // fallback or other statuses
+                : "bg-yellow-500";
 
     return (
         <div className="flex items-center gap-2">
@@ -53,7 +53,7 @@ const UploadsTable = ({className }) => {
         category: file.isTrainingSheet
             ? "Training Sheet"
             : file.isMasterDoc
-                ? "Master Doc"
+                ? "Master Document"
                 : "General",
         status: "approved",
     }));

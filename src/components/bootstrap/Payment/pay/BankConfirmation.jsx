@@ -8,6 +8,8 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import { parse, format } from "date-fns";
 import { useMutation } from "@tanstack/react-query";
 import { confirmPaymentMutationFn } from "../../../../lib/api";
 import { toast } from "../../../../hooks/use-toast";
@@ -17,7 +19,8 @@ const BankConfirmation = () => {
   const [selectedMode, setSelectedMode] = useState("Cash");
   const [reference, setReference] = useState("");
   const [amount, setAmount] = useState("");
-  const [paymentDate, setPaymentDate] = useState("");
+  const [paymentDate, setPaymentDate] = useState(""); // string in dd/mm/yyyy
+  const [selectedDate, setSelectedDate] = useState(null); // actual Date object
 
   const { user } = useAuthContext();
   const cusCode = user?.psCusCode;
@@ -34,6 +37,7 @@ const BankConfirmation = () => {
         setReference("");
         setAmount("");
         setPaymentDate("");
+        setSelectedDate(null);
       } else {
         toast({
           title: "Payment Not Found",
@@ -61,66 +65,76 @@ const BankConfirmation = () => {
       return;
     }
 
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please enter a valid amount.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const parsedDate = parse(paymentDate, "dd/MM/yyyy", new Date());
+    if (isNaN(parsedDate.getTime())) {
+      toast({
+        title: "Invalid Date",
+        description: "Please select a valid payment date.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const payload = {
-      bnkCode: selectedMode === "Bank Transfer" ? "MPESA" : selectedMode,
+      bnkCode: selectedMode === "Mpesa STK" ? "MPESA" : "BANK",
       reference: reference.trim(),
-      amount: parseFloat(amount),
-      theDate: new Date(paymentDate).toISOString(),
+      amount: parsedAmount,
+      paymentDate: parsedDate.toISOString(),
       cusCode,
     };
 
     confirmPayment(payload);
   };
 
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setPaymentDate(date ? format(date, "dd/MM/yyyy") : "");
+  };
+
   return (
     <div className="bs">
       <Card className="mpesa-card p-4">
         <Card.Title className="mpesa-card-title">
-          Once you have successfully made the payment, follow the steps . Then
+          Once you have successfully made the payment, follow the steps. Then
           click the Confirm button.
         </Card.Title>
 
-        <ListGroup as="ul" className="mpesa-steps-1 mb-1">
+        <ListGroup as="ul" className="mpesa-steps-1 mb-3">
           <ListGroup.Item as="li">
-            Select your preferred <strong>Mode of Payment.</strong>
+            Select your preferred <strong>Mode of Payment</strong>.
           </ListGroup.Item>
           <ListGroup.Item as="li">
-            Enter the following details in the fields below:
+            Enter the following details:
             <ul className="centered-list">
-              <li>
-                <strong>Reference / Cheque Number/ Transaction ID</strong>
-              </li>
-              <li>
-                <strong>Amount Paid</strong>
-              </li>
-              <li>
-                <strong>Payment Date</strong>
-              </li>
+              <li><strong>Reference / Cheque Number / Transaction ID</strong></li>
+              <li><strong>Amount Paid</strong></li>
+              <li><strong>Payment Date</strong></li>
             </ul>
           </ListGroup.Item>
           <ListGroup.Item as="li">
-            Once done please click <strong>'Confirm'</strong> button to proceed.
+            Click <strong>'Confirm'</strong> to complete.
           </ListGroup.Item>
         </ListGroup>
 
         <Form className="payment-form">
           <Form.Group controlId="payment-method" className="mb-3">
-            <Form.Label
-              style={{
-                fontWeight: "500",
-                fontSize: "18px",
-                paddingBottom: "10px",
-              }}
-            >
+            <Form.Label style={{ fontWeight: "500", fontSize: "18px" }}>
               Select Payment Mode
             </Form.Label>
             <Form.Select
               value={selectedMode}
               onChange={(e) => setSelectedMode(e.target.value)}
-              style={{
-                width: "40%",
-                fontSize: "16px",
-              }}
+              style={{ width: "40%", fontSize: "16px" }}
             >
               <option value="Cash">Cash Deposit</option>
               <option value="Cheque">Cheque Payment</option>
@@ -135,15 +149,15 @@ const BankConfirmation = () => {
                 {selectedMode === "Cheque"
                   ? "Cheque Number"
                   : selectedMode === "Mpesa STK"
-                  ? "MPESA Transaction ID"
-                  : "Reference Number"}
+                    ? "MPESA Transaction ID"
+                    : "Reference Number"}
               </Form.Label>
               <InputGroup>
                 <Form.Control
                   type="text"
                   placeholder={
                     selectedMode === "Mpesa STK"
-                      ? "Enter MPESA Transaction ID"
+                      ? "TGO6A4WSNE"
                       : "Enter Reference"
                   }
                   value={reference}
@@ -166,11 +180,17 @@ const BankConfirmation = () => {
 
             <Form.Group controlId="formDate" style={{ minWidth: "200px" }}>
               <Form.Label>Payment Date</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="DD/MM/YYYY"
-                onFocus={(e) => (e.target.type = "date")}
-                onBlur={(e) => (e.target.type = "text")}
+              <DatePicker
+                selected={selectedDate}
+                onChange={handleDateChange}
+                dateFormat="dd/MM/yyyy"
+                className="form-control"
+                placeholderText="23/07/2025"
+                maxDate={new Date()}
+                isClearable
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
               />
             </Form.Group>
           </div>
