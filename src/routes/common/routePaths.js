@@ -2,7 +2,7 @@ export const AUTH_ROUTES = {
 	SIGN_IN: '/',
 	CHANGE_PASSWORD: '/change-password/:cusCode',
 	FORGOT_PASSWORD: '/forgot-password',
-	RESET_PASSWORD: '/reset-password/:token',
+	RESET_PASSWORD: '/reset-password/:token'
 };
 
 export const PROTECTED_ROUTES = {
@@ -13,7 +13,6 @@ export const PROTECTED_ROUTES = {
 
 export const isAuthRoute = (pathname) => {
 	return Object.values(AUTH_ROUTES).some((routePattern) => {
-		// route param pattern to a regex
 		const regex = new RegExp(
 			`^${routePattern.replace(/:[^/]+/g, '[^/]+')}$`
 		);

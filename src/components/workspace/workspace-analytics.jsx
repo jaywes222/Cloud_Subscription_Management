@@ -95,7 +95,7 @@ const WorkspaceAnalytics = () => {
       {
         id: 'expiry-date',
         label: 'Subscription Expires',
-        value: formatDate(item.expiryDate)
+        value: formatDate(item.duedatepayment)
       },
       {
         id: 'next-payment-amt',
@@ -107,6 +107,16 @@ const WorkspaceAnalytics = () => {
           }).format(item.amtDue)
           : 'KES 0.00',
         isHighlight: true
+      },
+      {
+        id: 'balance',
+        label: 'Pending Balance',
+        value: item.bal
+          ? new Intl.NumberFormat('en-KE', {
+            style: 'currency',
+            currency: 'KES'
+          }).format(item.bal)
+          : 'KES 0.00'
       }
     ];
   }, [scheduleDates]);
@@ -144,9 +154,9 @@ const WorkspaceAnalytics = () => {
   return (
     <div className="flex flex-col px-4 py-3">
       <Card className="flex flex-col flex-1 rounded-2xl overflow-hidden">
-        <CardHeader className="flex flex-col md:flex-row gap-6 items-stretch pb-2">
-          {/* Left */}
-          <div className="flex-1 space-y-2 text-sm text-muted-foreground min-w-[140px]">
+        <CardHeader className="flex flex-col md:flex-row justify-between gap-6 items-start pb-2">
+          {/* Left Info Section */}
+          <div className="flex flex-col gap-2 text-sm text-muted-foreground min-w-[180px]">
             <div className="flex items-center gap-2">
               <CalendarDays className="w-4 h-4" />
               <span>{billingCycle}</span>
@@ -161,17 +171,24 @@ const WorkspaceAnalytics = () => {
             </div>
           </div>
 
-          {/* Center */}
-          <div className="flex-1 space-y-2 text-sm min-w-[200px]">
+          {/* Center Subscription Details */}
+          <div className="flex-1 space-y-2 text-sm min-w-[220px] max-w-[320px]">
             {loadingDates ? (
-              <div>Loading subscription details...</div>
+              <div className="text-muted-foreground">Loading subscription details...</div>
             ) : subDatesError || !subDetails.length ? (
               <div className="text-red-600">No subscription added.</div>
             ) : (
               subDetails.map((item) => (
                 <div key={item.id} className="flex justify-between">
                   <span className="text-muted-foreground">{item.label}:</span>
-                  <span className={`font-medium ${item.isHighlight ? 'text-green-700' : 'text-gray-800'}`}>
+                  <span
+                    className={`font-medium ${item.isHighlight
+                        ? 'text-green-700'
+                        : item.id === 'balance'
+                          ? 'text-red-600'
+                          : 'text-gray-900'
+                      }`}
+                  >
                     {item.value}
                   </span>
                 </div>
@@ -179,8 +196,8 @@ const WorkspaceAnalytics = () => {
             )}
           </div>
 
-          {/* Right */}
-          <div className="flex flex-col gap-2 min-w-[140px]">
+          {/* Right Action Buttons */}
+          <div className="flex flex-col gap-2 min-w-[160px]">
             <Button
               variant="outline"
               onClick={onActivateNowOpen}
@@ -190,11 +207,16 @@ const WorkspaceAnalytics = () => {
             >
               {user?.isAccountActive ? 'Active' : 'Activate Now'}
             </Button>
-            <Button onClick={onPayNowOpen} className="!text-[15px]" variant="outline">
+            <Button
+              onClick={onPayNowOpen}
+              className="!text-[15px]"
+              variant="outline"
+            >
               Pay Now
             </Button>
           </div>
         </CardHeader>
+
 
         <CardContent className="px-4 pb-4">
           <div className="flex flex-col space-y-4">
@@ -205,12 +227,14 @@ const WorkspaceAnalytics = () => {
               onToggle={() => handleToggle(0)}
             >
               <div className="flex justify-between items-center">
-                <a
+                <button
+                  type="button"
                   onClick={handleUploadClick}
-                  className="mt-2 ml-4 mb-3 text-sm font-medium text-caramel hover:underline cursor-pointer"
+                  disabled={isPending}
+                  className="mt-2 ml-4 mb-3 text-sm font-medium text-caramel hover:underline"
                 >
                   {isPending ? 'Uploading...' : 'Upload File'}
-                </a>
+                </button>
                 <h5 className="mt-2 mr-4 mb-3 font-bold text-caramel">
                   Max File Size: 5MB
                 </h5>
@@ -222,6 +246,7 @@ const WorkspaceAnalytics = () => {
                   accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png"
                 />
               </div>
+
               {isUploadsVisible && <UploadsTable />}
             </CollapsibleRow>
 
