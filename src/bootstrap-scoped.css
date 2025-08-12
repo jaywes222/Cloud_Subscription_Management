@@ -438,3 +438,62 @@ padding: 10px;
   border-radius: 5px;
   padding: 5px 10px;
 }
+
+
+@media (max-width: 768px) {
+  .bs .terms-container {
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .bs .terms-checkbox {
+    margin-top: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bs .activate-btn button {
+    width: 100%;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .bs .terms-container {
+    max-height: 150px;
+    font-size: 0.75rem;
+    padding: 0 0.5rem;
+  }
+
+  .bs .terms-checkbox label span {
+    font-size: 0.75rem;
+  }
+
+  .bs .activate-btn button {
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .bs .terms-container {
+    max-height: 120px;
+    font-size: 0.7rem;
+    padding: 0 0.25rem;
+  }
+
+  .bs .terms-checkbox label span {
+    font-size: 0.7rem;
+  }
+
+  .bs .activate-btn button {
+    width: 100%;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+}
