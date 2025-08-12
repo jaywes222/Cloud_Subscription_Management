@@ -49,7 +49,6 @@ const MpesaInstructions = ({ onSTKSuccess }) => {
 
       setPaymentStarted(true);
 
-      // 🔥 Notify parent to switch tab + scroll to confirmation
       if (typeof onSTKSuccess === "function") {
         onSTKSuccess();
       }

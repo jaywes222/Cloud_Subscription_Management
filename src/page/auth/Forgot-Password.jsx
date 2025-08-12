@@ -48,7 +48,7 @@ const ForgotPassword = () => {
                 description: "Please check your email for the reset instructions.",
                 variant: "success",
             });
-            form.reset(); // Clear the form after success
+            form.reset();
         },
         onError: (error) => {
             toast({

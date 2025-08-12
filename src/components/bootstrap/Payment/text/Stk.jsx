@@ -16,10 +16,6 @@ const Stk = ({ phone, setPhone, amount, setAmount, accountNumber }) => {
             <ListGroup.Item>
               When prompted, enter your <strong>MPESA PIN</strong>
             </ListGroup.Item>
-            <ListGroup.Item>
-              Click the <strong>'Complete'</strong> button once you receive the
-              MPESA confirmation
-            </ListGroup.Item>
           </ListGroup>
 
           <Form className="payment-form">

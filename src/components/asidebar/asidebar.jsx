@@ -17,7 +17,7 @@ const Asidebar = () => {
           <Logo />
           {open && (
             <span className="text-sm font-semibold tracking-wide whitespace-nowrap">
-              phAMAcore
+              CoreBase Solutions.
             </span>
           )}
         </div>
