@@ -1,6 +1,10 @@
 import axios from 'axios';
 
+console.log('api.js loaded');
+
 const baseURL = import.meta.env.VITE_API_BASE_URL;
+
+console.log('API base URL:', baseURL);
 
 const options = {
 	baseURL,

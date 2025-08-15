@@ -70,14 +70,6 @@ const WorkspaceDashboard = () => {
   return (
     <main className="flex flex-col py-3 md:pt-2 space-y-4">
       <div className="flex items-center justify-between space-y-2">
-        {/* <div>
-          <h2 className="text-xl font-bold tracking-tight">
-            Subscription Overview
-          </h2>
-          <p className="text-muted-foreground">
-            Here's an overview for this subscription.
-          </p>
-        </div> */}
         <div>
           <p className="text-xl font-semibold">{cusCode} - {companyName}</p>
           <p className="text-sm text-caramel font-medium mt-1">

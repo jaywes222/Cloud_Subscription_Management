@@ -76,7 +76,7 @@ export default function EditProfileFieldForm({ field, initialValue, onClose }) {
                     <PenBoxIcon className="w-5 h-5" />
                 </div>
                 <div>
-                    <h2 className="text-lg font-semibold">
+                    <h2 className="text-lg text-caramel font-semibold">
                         Edit {fieldLabels[field] || field}
                     </h2>
                     <p className="text-sm text-muted-foreground">
@@ -100,11 +100,17 @@ export default function EditProfileFieldForm({ field, initialValue, onClose }) {
             </div>
 
             <div className="flex justify-end gap-2 pt-4">
-                <Button type="button" variant="ghost" onClick={onClose}>
-                    Cancel
-                </Button>
-                <Button type="submit" disabled={isSubmitting}>
+                <Button 
+                type="submit" 
+                variant="success"
+                disabled={isSubmitting}>
                     {isSubmitting ? "Saving..." : "Save"}
+                </Button>
+                <Button 
+                type="button" 
+                variant="dangerOutline"
+                onClick={onClose}>
+                    Cancel
                 </Button>
             </div>
         </form>

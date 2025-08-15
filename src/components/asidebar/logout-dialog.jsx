@@ -56,11 +56,19 @@ const LogoutDialog = ({ isOpen, setIsOpen }) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button disabled={isLoading} type="button" onClick={handleLogout}>
+          <Button 
+          disabled={isLoading} 
+          type="button" 
+          variant="success"
+          onClick={handleLogout}
+          >
             {isLoading && <Loader className="animate-spin" />}
             Sign out
           </Button>
-          <Button type="button" onClick={() => setIsOpen(false)}>
+          <Button
+           type="button" 
+           variant="dangerOutline"
+           onClick={() => setIsOpen(false)}>
             Cancel
           </Button>
         </DialogFooter>

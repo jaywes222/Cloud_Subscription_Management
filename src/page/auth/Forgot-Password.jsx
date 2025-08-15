@@ -24,7 +24,7 @@ import { Input } from "../../components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { forgotPasswordMutationFn } from "../../lib/api";
 import { Loader } from "lucide-react";
-import Logo from "../../components/logo";
+import Logo from "../../components/logo/cloud";
 
 const formSchema = z.object({
     cusCode: z.string().min(1, { message: "Customer code is required" }),

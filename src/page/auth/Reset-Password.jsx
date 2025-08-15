@@ -24,7 +24,7 @@ import { Input } from "../../components/ui/input";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { resetPasswordMutationFn } from "../../lib/api";
-import Logo from "../../components/logo";
+import Logo from "../../components/logo/cloud";
 
 const formSchema = z
     .object({
