@@ -160,7 +160,11 @@ const ResetPassword = () => {
                                     )}
                                 />
 
-                                <Button type="submit" className="w-full" disabled={isPending}>
+                                <Button 
+                                type="submit" 
+                                variant="success"
+                                className="w-full" 
+                                disabled={isPending}>
                                     {isPending && <Loader className="animate-spin mr-2 h-4 w-4" />}
                                     Reset Password
                                 </Button>

@@ -102,18 +102,22 @@ const ForgotPassword = () => {
                                 />
 
                                 <div className="flex justify-between gap-4">
+                                    <Button 
+                                    type="submit" 
+                                    variant="success"
+                                    className="w-full" 
+                                    disabled={isPending}>
+                                        {isPending ? <Loader className="animate-spin mr-2 h-4 w-4" /> : null}
+                                        Reset
+                                    </Button>
                                     <Button
                                         type="button"
-                                        variant="ghost"
+                                        variant="dangerOutline"
                                         className="w-full"
                                         onClick={() => navigate("/")}
                                         disabled={isPending}
                                     >
                                         Cancel
-                                    </Button>
-                                    <Button type="submit" className="w-full" disabled={isPending}>
-                                        {isPending ? <Loader className="animate-spin mr-2 h-4 w-4" /> : null}
-                                        Reset
                                     </Button>
                                 </div>
 

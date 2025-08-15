@@ -20,11 +20,9 @@ const Asidebar = () => {
 
   return (
     <Sidebar collapsible="icon">
-      {/* Sidebar header with matching height to Header */}
       <SidebarHeader className="!py-0 h-12 flex items-center border-b">
-        <div className="flex items-center gap-2 pl-3">
-          <Logo2 />
-
+        <div className={`flex items-center gap-2 ${open ? "pl-3" : "justify-center w-full"}`}>
+          <Logo2 showText={open} />
         </div>
       </SidebarHeader>
 
